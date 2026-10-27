@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [{ "key": "cache-control", "value": "no-store" }]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "referrer-policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "x-content-type-options", "value": "nosniff" },
+        { "key": "x-frame-options", "value": "SAMEORIGIN" }
+      ]
+    }
+  ]
+}

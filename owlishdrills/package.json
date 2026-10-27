@@ -1,0 +1,10 @@
+{
+  "name": "owlish-drills",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Owlish English — workplace English self-drills with saved progress",
+  "dependencies": {
+    "@vercel/blob": "2.8.2"
+  }
+}
