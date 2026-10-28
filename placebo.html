@@ -147,6 +147,22 @@
     .source{background:#fff}
     .tts-word.reading{background:none;color:inherit}
   }
+
+  /* phones: stack each vocab row (word + type on top, meaning below) so the
+     table never pushes the page wider than the screen; thumb-sized speed buttons */
+  @media (max-width:520px){
+    table.vocab, table.vocab tbody{display:block;width:100%}
+    table.vocab tr:has(th){display:none}
+    table.vocab tr{display:grid;grid-template-columns:auto 1fr;column-gap:8px;padding:10px 14px;border-top:1px solid var(--line)}
+    table.vocab tr:nth-child(2){border-top:0}
+    table.vocab td{padding:0;border-top:0;background:none !important}
+    table.vocab td.w, table.vocab td.pos{white-space:normal}
+    table.vocab td.pos{align-self:center}
+    table.vocab td:not(.w):not(.pos){grid-column:1 / -1;margin-top:3px}
+    .spd{min-height:40px;min-width:48px}
+    .pbtn{min-height:44px}
+  }
+  html,body{overflow-x:hidden}
 </style>
 
 </head>
@@ -264,114 +280,237 @@
 <div class="printbar"><button onclick="window.print()">&#9112; Print this level</button></div>
 
 <script>
-  const LEVELS = ["A2","B1","C1"];
+/* ===================== Owlish tabbed-reading player (audio v7) =====================
+   Works with the page's own buttons: show(L), toggle(L), stop(L), setSpeed(L, s)
+   and the elements panel-L, play-L, status-L, article-L.
+   1) If GitHub has recorded an MP3 for a level (audio/<page>/<L>.mp3, made by
+      tools/make_audio.py) and its text still matches the page, play that. It works
+      inside the Naver / KakaoTalk app browsers, and speed / pause are exact.
+   2) Otherwise use the browser's own voice, with the speed / pause / long-sentence
+      fixes, and a notice in app browsers that have no voice.
+   ================================================================================== */
+  const LEVELS = Array.from(document.querySelectorAll('section.panel[id^="panel-"]')).map(function(s){ return s.id.slice(6); });
   let current = LEVELS[0];
   const state = {};
-  LEVELS.forEach(function(l){ state[l] = { rate:0.85, chunks:[], ci:0, playing:false, paused:false, u:null }; });
+  LEVELS.forEach(function(l){ state[l] = { rate:0.85, chunks:null, ci:0, status:'idle' }; });   // idle | playing | paused
+  const SS = window.speechSynthesis || null;
 
   function show(l){
-    if(current !== l) stop(current);
+    if(current !== l) stop(current, true);
     current = l;
     LEVELS.forEach(function(x){
       document.getElementById('panel-'+x).classList.toggle('active', x===l);
-      document.querySelector('.tab[data-l="'+x+'"]').classList.toggle('active', x===l);
+      var t = document.querySelector('.tab[data-l="'+x+'"]'); if(t) t.classList.toggle('active', x===l);
     });
   }
 
-  // ---- Voice: prefer an English Google voice (natural in Chrome); never force a robotic one ----
+  /* ---------- what gets spoken ---------- */
+  var ONES=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+  var TENS=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+  function three(n){ var s=""; if(n>=100){ s+=ONES[Math.floor(n/100)]+" hundred"; n%=100; if(n)s+=" "; }
+    if(n>=20){ s+=TENS[Math.floor(n/10)]; if(n%10)s+="-"+ONES[n%10]; } else if(n>0){ s+=ONES[n]; } return s; }
+  function intWords(n){ if(n===0)return "zero"; var g=["","thousand","million","billion","trillion"],p=[],i=0;
+    while(n>0){ var c=n%1000; if(c)p.unshift(three(c)+(g[i]?" "+g[i]:"")); n=Math.floor(n/1000); i++; } return p.join(" "); }
+  function numWords(s){ s=s.replace(/,/g,""); if(s.indexOf(".")>-1){ var q=s.split("."); return intWords(parseInt(q[0]||"0",10))+" point "+q[1].split("").map(function(d){return ONES[+d];}).join(" "); } return intWords(parseInt(s,10)); }
+  function speechText(t){
+    return t.replace(/\bU\.S\.A\./g,"USA").replace(/\bU\.S\.(?=\s+[A-Z])/g,"US.").replace(/\bU\.S\./g,"US")
+      .replace(/\$(\d[\d,]*(?:\.\d+)?)\s+(trillion|billion|million)/gi,function(m,n,g){return numWords(n)+" "+g.toLowerCase()+" dollars";})
+      .replace(/\$(\d[\d,]*(?:\.\d+)?)/g,function(m,n){return numWords(n)+(n==="1"?" dollar":" dollars");})
+      .replace(/(\d[\d,]*(?:\.\d+)?)%/g,function(m,n){return numWords(n)+" percent";})
+      // plain numbers, but leave years (1900-2099) for the voice to say naturally
+      .replace(/\b(\d[\d,]*(?:\.\d+)?)\b(?![\d.,%]|[A-Za-z])/g,function(m,n){ return /^(19|20)\d\d$/.test(n)?n:numWords(n); });
+  }
+  var MAX_WORDS=20;   // Chrome's Google voices cut off any single utterance after ~15 s
+  function words(s){ return s.trim().split(/\s+/).length; }
+  function splitLong(t){
+    if(words(t)<=MAX_WORDS) return [t];
+    var out=[],buf="";
+    t.split(/(?<=[,;:—–])\s+/).forEach(function(pt){
+      if(buf && words(buf+" "+pt)>MAX_WORDS){ out.push(buf); buf=pt; } else buf = buf ? buf+" "+pt : pt;
+    });
+    if(buf) out.push(buf);
+    return out.reduce(function(acc,s){
+      if(words(s)<=MAX_WORDS+6){ acc.push(s); return acc; }
+      var w=s.split(/\s+/); for(var i=0;i<w.length;i+=MAX_WORDS) acc.push(w.slice(i,i+MAX_WORDS).join(" ")); return acc;
+    },[]);
+  }
+  function buildChunks(l){
+    var art=document.getElementById('article-'+l), out=[];
+    var h=art.querySelector('h1,h2,h3');
+    if(h){ var tt=speechText(h.textContent.replace(/\s+/g,' ').trim().replace(/[.?!:]+$/,''))+'.'; out.push({text:tt,pauseAfter:1500}); }
+    art.querySelectorAll('p,li,blockquote').forEach(function(el){
+      if(el.closest('ul,ol')&&el.tagName!=='LI') return;
+      var raw=speechText(el.textContent.replace(/\s+/g,' ').trim()); if(!raw) return;
+      var parts=raw.match(/[^.!?]+(?:[.!?]+["'”’)]*|$)/g)||[raw];
+      parts.forEach(function(p){ p=p.trim(); if(p) splitLong(p).forEach(function(x){ out.push({text:x,pauseAfter:0}); }); });
+    });
+    return out;
+  }
+  function chunksFor(l){ if(!state[l].chunks) state[l].chunks=buildChunks(l); return state[l].chunks; }
+  // GitHub (tools/make_audio.py) calls this to record the MP3s. Keys are the level names.
+  window.owlishAudioScript=function(){ var o={}; LEVELS.forEach(function(l){ o[l]=buildChunks(l); }); return o; };
+
+  /* ---------- recorded audio (MP3) ---------- */
+  var AUDIO_BASE=(location.pathname.split('/').pop()||'').replace(/\.html$/i,'')||document.documentElement.dataset.audio||'';
+  var MANIFEST=null;
+  var audioEl=new Audio(); audioEl.preload='auto';
+  try{ audioEl.preservesPitch=true; audioEl.webkitPreservesPitch=true; }catch(_){}
+  var audioLevel=null;
+  function mp3For(l){
+    if(!MANIFEST||!MANIFEST.versions||!MANIFEST.versions[l]) return null;
+    var v=MANIFEST.versions[l], now=chunksFor(l).map(function(c){return c.text;}).join('\n');
+    return v.text===now ? v : null;     // page text edited after recording -> don't play stale audio
+  }
+  function usesMp3(l){ return !!mp3For(l); }
+  fetch('audio/'+AUDIO_BASE+'/manifest.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;})
+    .then(function(m){ if(!m) return; MANIFEST=m; LEVELS.forEach(function(l){ if(state[l].status==='idle') setStatus(l, idleText(l)); }); updateNotice(); })
+    .catch(function(){});
+  audioEl.addEventListener('ended',function(){ if(audioLevel) finish(audioLevel); });
+  audioEl.addEventListener('timeupdate',function(){
+    var l=audioLevel; if(!l||state[l].status!=='playing') return;
+    var v=mp3For(l); if(!v) return; var t=audioEl.currentTime, i=0;
+    for(var k=0;k<v.starts.length;k++){ if(t>=v.starts[k]) i=k; else break; }
+    state[l].ci=i;
+  });
+  audioEl.addEventListener('error',function(){       // file missing or broken -> browser voice
+    var l=audioLevel; if(!l||!audioEl.getAttribute('src')) return;
+    MANIFEST=null; audioEl.removeAttribute('src'); audioLevel=null;
+    var was=state[l].status==='playing'; state[l].status='idle'; updateNotice();
+    if(was) toggle(l); else setStatus(l, idleText(l));
+  });
+  function playMp3(l, fromStart){
+    var v=mp3For(l), url='audio/'+AUDIO_BASE+'/'+v.file+(MANIFEST.build?'?v='+MANIFEST.build:'');
+    if(audioEl.dataset.src!==url){ audioEl.src=url; audioEl.dataset.src=url; }
+    audioLevel=l;
+    if(fromStart){ try{ audioEl.currentTime=0; }catch(_){} }
+    audioEl.playbackRate=state[l].rate;
+    var p=audioEl.play(); if(p&&p.catch) p.catch(function(){ state[l].status='paused'; setBtn(l,'resume'); setStatus(l,'Tap Resume to listen.'); });
+  }
+
+  /* ---------- browser voice (fallback) ---------- */
   let lockedVoice = null;
+  var NOVELTY=/^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/i;
   function resolveVoice(){
-    var v = window.speechSynthesis.getVoices();
-    var isEn = function(x){ return x.lang && x.lang.toLowerCase().indexOf('en')===0; };
-    lockedVoice =
-         v.find(function(x){ return isEn(x) && /google/i.test(x.name); })
-      || v.find(function(x){ return isEn(x) && /natural|neural|online/i.test(x.name); })
-      || v.find(isEn)
-      || null;
+    if(!SS) return;
+    var all=SS.getVoices(); if(!all.length) return;
+    var en=all.filter(function(v){ return /^en/i.test(v.lang)&&!NOVELTY.test(v.name); });
+    var us=en.filter(function(v){ return /en[-_]?US/i.test(v.lang); });
+    var pref=[/^Google US English$/,/Microsoft (Aria|Jenny|Ava|Andrew|Emma|Guy).*Natural/i,/^Samantha/,/^Ava/,/^Allison/,/^Alex$/,/Microsoft (Zira|David)/i];
+    lockedVoice=null;
+    for(var i=0;i<pref.length&&!lockedVoice;i++) lockedVoice=us.find(function(v){ return pref[i].test(v.name); })||null;
+    lockedVoice = lockedVoice || us.find(function(v){return v.default;}) || us[0] || en[0] || null;
   }
-  window.speechSynthesis.onvoiceschanged = resolveVoice;
-  resolveVoice(); setTimeout(resolveVoice,300); setTimeout(resolveVoice,1200);
-
-  function setBtn(l, mode){
-    var b = document.getElementById('play-'+l); if(!b) return;
-    b.innerHTML = mode==='pause' ? '\u275A\u275A Pause' : (mode==='resume' ? '\u25B6 Resume' : '\u25B6 Play');
-  }
-  function setStatus(l, t){ var s = document.getElementById('status-'+l); if(s) s.textContent = t; }
-  function nowReading(l){ return 'Voice: ' + (lockedVoice?lockedVoice.name:'browser default') + '  \u00B7  ' + state[l].rate + '\u00D7'; }
-
-  // Split the article into short sentence-sized chunks (avoids the browser long-text cutoff)
-  function getChunks(l){
-    var raw = document.getElementById('article-'+l).innerText.replace(/\s+/g,' ').trim();
-    var parts = raw.match(/[^.!?]+[.!?]*/g) || [raw];
-    var chunks = [], buf = '';
-    parts.forEach(function(p){
-      p = p.trim(); if(!p) return;
-      if((buf + ' ' + p).trim().length > 180){ if(buf) chunks.push(buf.trim()); buf = p; }
-      else { buf = buf ? buf + ' ' + p : p; }
-    });
-    if(buf) chunks.push(buf.trim());
-    return chunks;
-  }
-
+  if(SS){ SS.onvoiceschanged=resolveVoice; resolveVoice(); setTimeout(resolveVoice,300); setTimeout(resolveVoice,1200); }
+  var token=0;
   function speakFrom(l, i){
-    var chunks = state[l].chunks;
-    if(i >= chunks.length){ finish(l); return; }
-    state[l].ci = i;
-    var u = new SpeechSynthesisUtterance(chunks[i]);
-    u.rate = state[l].rate; u.lang = 'en-US';
-    resolveVoice();
-    if(lockedVoice){ u.voice = lockedVoice; u.lang = lockedVoice.lang; }
-    u.onend = function(){ if(state[l].playing && !state[l].paused) speakFrom(l, i+1); };
-    u.onerror = function(){ if(state[l].playing && !state[l].paused) speakFrom(l, i+1); };
-    state[l].u = u;
-    window.speechSynthesis.speak(u);
+    var ch=chunksFor(l);
+    if(state[l].status!=='playing') return;
+    if(i>=ch.length){ finish(l); return; }
+    state[l].ci=i;
+    var my=++token, c=ch[i], done=false;
+    var u=new SpeechSynthesisUtterance(c.text);
+    u.rate=state[l].rate; u.lang='en-US';
+    if(lockedVoice){ u.voice=lockedVoice; u.lang=lockedVoice.lang; }
+    function next(){
+      if(done) return; done=true; clearTimeout(dog);
+      if(my!==token||state[l].status!=='playing') return;          // stale (speed change, pause, stop)
+      if(c.pauseAfter) setTimeout(function(){ if(my===token&&state[l].status==='playing') speakFrom(l,i+1); }, c.pauseAfter);
+      else speakFrom(l,i+1);
+    }
+    u.onend=next;
+    u.onerror=function(e){ if(e&&(e.error==='interrupted'||e.error==='canceled')) return; next(); };
+    var dog=setTimeout(function(){ if(my===token&&state[l].status==='playing'&&!done){ SS.cancel(); next(); } },
+                       (words(c.text)/(2.8*0.5*state[l].rate))*1000+4000);   // engine never reported the end
+    SS.speak(u);
   }
 
-  function start(l){
-    window.speechSynthesis.cancel();
-    LEVELS.forEach(function(x){ state[x].playing=false; state[x].paused=false; });
-    state[l].chunks = getChunks(l);
-    if(!state[l].chunks.length){ setStatus(l,'Nothing to read.'); return; }
-    state[l].playing = true; state[l].paused = false;
-    setBtn(l,'pause'); setStatus(l, nowReading(l));
-    setTimeout(function(){ speakFrom(l, 0); }, 60);
+  /* ---------- controls (called by the page's buttons) ---------- */
+  function setBtn(l, mode){
+    var b=document.getElementById('play-'+l); if(!b) return;
+    b.innerHTML = mode==='pause' ? '❚❚ Pause' : (mode==='resume' ? '▶ Resume' : '▶ Play');
   }
-
+  function setStatus(l, t){ var s=document.getElementById('status-'+l); if(s) s.textContent=t; }
+  function voiceName(l){ return usesMp3(l) ? 'Ava (recorded)' : (lockedVoice?lockedVoice.name:'browser default'); }
+  function nowReading(l){ return 'Voice: '+voiceName(l)+'  ·  '+state[l].rate+'×'; }
+  function idleText(l){ return 'Press Play to listen and read along.'; }
+  function silenceAll(except){
+    token++; if(SS) SS.cancel();
+    if(audioLevel&&audioLevel!==except){ audioEl.pause(); }
+    LEVELS.forEach(function(x){ if(x!==except&&state[x].status!=='idle'){ state[x].status='idle'; state[x].ci=0; setBtn(x,'play'); } });
+  }
+  function toggle(l){
+    var s=state[l];
+    if(usesMp3(l)){
+      if(s.status==='playing'){ s.status='paused'; audioEl.pause(); setBtn(l,'resume'); setStatus(l,'Paused.'); return; }
+      silenceAll(l);
+      var fresh = s.status==='idle' || audioLevel!==l;
+      s.status='playing'; setBtn(l,'pause'); setStatus(l, nowReading(l)); playMp3(l, fresh); return;
+    }
+    if(!SS){ s.status='idle'; setBtn(l,'play'); setStatus(l,'No audio in this app. Open the page in Chrome or Safari to listen.'); showNotice(true); return; }
+    if(s.status==='playing'){                // pause = stop, remember the sentence
+      s.status='paused'; token++; SS.cancel(); setBtn(l,'resume'); setStatus(l,'Paused.'); return;
+    }
+    silenceAll(l);
+    var from = s.status==='paused' ? s.ci : 0;     // resume = say the current sentence again
+    s.status='playing'; setBtn(l,'pause'); setStatus(l, nowReading(l));
+    setTimeout(function(){ speakFrom(l, from); }, 60);
+  }
   function finish(l){
-    state[l].playing=false; state[l].paused=false; state[l].ci=0;
+    state[l].status='idle'; state[l].ci=0; if(audioLevel===l){ audioEl.pause(); }
     setBtn(l,'play'); setStatus(l,'Finished. Press Play to read again.');
   }
+  function stop(l, quiet){
+    if(!state[l]) return;
+    var was=state[l].status!=='idle';
+    token++; if(SS) SS.cancel(); if(audioLevel===l){ audioEl.pause(); try{ audioEl.currentTime=0; }catch(_){} }
+    state[l].status='idle'; state[l].ci=0; setBtn(l,'play');
+    if(!quiet||was) setStatus(l, quiet ? idleText(l) : 'Stopped. Press Play to start again.');
+  }
+  function setSpeed(l, sp){
+    state[l].rate=sp;
+    document.querySelectorAll('#panel-'+l+' .spd').forEach(function(b){ b.classList.toggle('active', parseFloat(b.dataset.s)===sp); });
+    if(usesMp3(l)){ if(audioLevel===l) audioEl.playbackRate=sp; if(state[l].status==='playing') setStatus(l, nowReading(l)); return; }
+    if(state[l].status==='playing'){
+      token++; if(SS) SS.cancel(); setStatus(l, nowReading(l));
+      var at=state[l].ci; setTimeout(function(){ speakFrom(l, at); }, 80);
+    }
+    // paused: the new speed is used when Resume says the sentence again
+  }
 
-  function toggle(l){
-    if(state[l].playing && !state[l].paused){
-      window.speechSynthesis.pause(); state[l].paused=true; setBtn(l,'resume'); setStatus(l,'Paused.');
-    } else if(state[l].playing && state[l].paused){
-      window.speechSynthesis.resume(); state[l].paused=false; setBtn(l,'pause'); setStatus(l, nowReading(l));
+  /* ---------- in-app browsers (Naver, KakaoTalk, Instagram...) ---------- */
+  var UA=navigator.userAgent||'';
+  var IN_APP=/KAKAOTALK|NAVER\(inapp|; ?wv\)|Instagram|FBAN|FBAV|Line\//i.test(UA);
+  var IS_ANDROID=/Android/i.test(UA), IS_IOS=/iPhone|iPad|iPod/i.test(UA);
+  var notice=null;
+  function showNotice(force){
+    if(LEVELS.some(usesMp3)) { if(notice) notice.hidden=true; return; }   // recorded audio works everywhere
+    if(!(force||!SS||IN_APP)) return;
+    if(!notice){
+      notice=document.createElement('div');
+      notice.style.cssText='background:#fff6e8;border:1.5px solid #c9942f;border-radius:12px;padding:14px 16px;margin:0 0 16px;font-size:15px;line-height:1.55;word-break:keep-all';
+      var anchor=document.querySelector('nav.tabs')||document.querySelector('section.panel');
+      anchor.parentNode.insertBefore(notice, anchor);
+    }
+    var here=location.href, btn='';
+    var noVoice=!SS;
+    if(IS_IOS && !/KAKAOTALK/i.test(UA)){
+      notice.innerHTML='<p style="margin:0">'+(noVoice?'이 앱 안에서는 오디오가 나오지 않아요. ':'소리가 안 나면 ')+"앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요.</p>";
     } else {
-      start(l);
+      var url=/KAKAOTALK/i.test(UA) ? 'kakaotalk://web/openExternal?url='+encodeURIComponent(here)
+            : (IS_ANDROID ? 'intent://'+here.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package=com.android.chrome;end' : here);
+      notice.innerHTML='<p style="margin:0 0 10px">'+(noVoice?'이 앱 안에서는 오디오가 나오지 않아요. 아래 버튼을 눌러 브라우저에서 열어주세요.':'이 앱 안에서는 오디오가 나오지 않을 수 있어요. 소리가 안 나면 브라우저에서 열어주세요.')+'</p>'
+        +'<a href="'+url+'" style="display:inline-block;background:#22201c;color:#fff;text-decoration:none;font-weight:700;padding:11px 18px;border-radius:10px">브라우저에서 열기</a>';
     }
+    notice.hidden=false;
   }
+  function updateNotice(){ showNotice(false); }
+  updateNotice();
 
-  function stop(l){
-    window.speechSynthesis.cancel();
-    state[l].playing=false; state[l].paused=false; state[l].ci=0;
-    setBtn(l,'play'); setStatus(l,'Stopped. Press Play to start again.');
-  }
-
-  function setSpeed(l, s){
-    state[l].rate = s;
-    document.querySelectorAll('#panel-'+l+' .spd').forEach(function(b){
-      b.classList.toggle('active', parseFloat(b.dataset.s)===s);
-    });
-    if(state[l].playing){
-      var resume = state[l].ci;
-      window.speechSynthesis.cancel(); state[l].paused=false;
-      setStatus(l, nowReading(l));
-      setTimeout(function(){ speakFrom(l, resume); }, 80);
-    }
-  }
-
-  window.addEventListener('beforeunload', function(){ window.speechSynthesis.cancel(); });
+  // phones stop the browser voice when the screen locks; pause cleanly (recorded audio may keep going)
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden && state[current] && state[current].status==='playing' && !usesMp3(current)) toggle(current);
+  });
+  window.addEventListener('beforeunload', function(){ if(SS) SS.cancel(); });
 </script>
 
 </body>
