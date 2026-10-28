@@ -21,7 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      # always start from the newest main (not the commit that triggered the run),
+      # so audio another run already made is seen and skipped
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -30,14 +34,17 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           pip install -q "edge-tts>=7.0.0" playwright
           python -m playwright install --with-deps chromium
-      - name: Make audio
-        run: python tools/make_audio.py
-      - name: Save audio
+      - name: Make and save audio
         run: |
-          git add audio
-          if git diff --cached --quiet; then echo "No audio changes"; exit 0; fi
           git config user.name "owlish-audio-bot"
           git config user.email "owlish-audio-bot@users.noreply.github.com"
-          git commit -m "Update reading audio"
-          git pull --rebase origin main
-          git push
+          for attempt in 1 2 3; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            python tools/make_audio.py
+            git add audio
+            if git diff --cached --quiet; then echo "No audio changes"; exit 0; fi
+            git commit -q -m "Update reading audio"
+            if git push -q origin HEAD:main; then echo "Saved audio"; exit 0; fi
+            echo "main moved while making audio; starting again on top of it (try $attempt)"
+          done
+          exit 1
