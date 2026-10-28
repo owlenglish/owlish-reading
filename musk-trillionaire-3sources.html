@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elon Musk: The World's First Trillionaire — Owlish English</title>
+
+<!-- Owlish library auto-detect meta -->
+<meta name="reading-title" content="Elon Musk: The World's First Trillionaire (3 sources)">
+<meta name="reading-desc" content="One topic, three news sources (WSJ, Forbes, Reuters). Each source graded into Original, A2, and B1–B2 with a vocab quiz and MC comprehension.">
+<meta name="reading-levels" content="Original, A2, B1-B2">
+<meta name="reading-order" content="0">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#1c2b2d;--teal:#176b6e;--teal-deep:#0e4c4f;--amber:#e08a2b;--amber-soft:#f6e7cf;
+    --paper:#fbf7ee;--card:#ffffff;--line:#e2ddd0;--ok:#1f8a4c;--bad:#c23b3b;--muted:#6b6a62;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;}
+  .wrap{max-width:780px;margin:0 auto;padding:28px 20px 80px;}
+
+  header.masthead{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+  .owl{font-size:30px;line-height:1;}
+  .brand{font-weight:700;letter-spacing:.3px;color:var(--teal-deep);}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+  h1.title{font-family:Georgia,"Times New Roman",serif;font-size:30px;line-height:1.2;margin:18px 0 6px;color:var(--ink);}
+  p.dek{margin:0 0 16px;color:var(--muted);font-size:15px;}
+
+  .label-row{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:18px 0 7px;}
+
+  /* Source selector */
+  .sources{display:flex;flex-wrap:wrap;gap:8px;}
+  .sources button{
+    border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+    padding:10px 16px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;
+    display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.2;
+  }
+  .sources button small{font-weight:600;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .sources button:hover{border-color:var(--amber);}
+  .sources button.active{background:var(--amber);border-color:var(--amber);color:#3a2407;}
+  .sources button.active small{color:#7a4d12;}
+
+  /* Level toggle */
+  .levels{display:flex;flex-wrap:wrap;gap:8px;}
+  .levels button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;}
+  .levels button .lv{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;display:block;text-transform:uppercase;}
+  .levels button:hover{border-color:var(--teal);}
+  .levels button.active{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff;}
+  .levels button.active .lv{color:var(--amber-soft);}
+
+  /* Source citation */
+  .source-line{margin:16px 0 0;font-size:14px;color:var(--muted);}
+  .source-line a{color:var(--teal-deep);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--amber-soft);}
+  .source-line a:hover{border-color:var(--teal);}
+
+  /* Audio bar */
+  .audiobar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:12px 0 22px;}
+  .audiobar .play{background:var(--amber);color:#3a2407;border:none;font-weight:700;padding:9px 16px;border-radius:10px;cursor:pointer;font-size:14px;}
+  .audiobar .play.playing{background:var(--teal);color:#fff;}
+  .speeds{display:flex;gap:6px;align-items:center;}
+  .speeds span{font-size:12px;color:var(--muted);margin-right:2px;}
+  .speeds button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:5px 9px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;}
+  .speeds button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .pdf-group{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+  .pdf-btn{border:1.5px solid var(--teal);background:#fff;color:var(--teal-deep);padding:8px 13px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;}
+  .pdf-btn:hover{background:var(--teal);color:#fff;}
+  .pdf-btn.all{border-color:var(--amber);color:#7a4d12;}
+  .pdf-btn.all:hover{background:var(--amber);color:#3a2407;}
+  /* Transport + timeline */
+  .tcontrols{display:flex;gap:6px;}
+  .tbtn{border:1px solid var(--line);background:#fff;color:var(--ink);width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1;}
+  .tbtn:hover{border-color:var(--teal);color:var(--teal-deep);}
+  .tbtn:active{transform:translateY(1px);}
+  .audiover{font-size:11px;opacity:.55;white-space:nowrap;align-self:center;}
+  .timeline{flex:1 1 100%;display:flex;align-items:center;gap:10px;margin-top:2px;}
+  .ttime{font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);min-width:36px;text-align:center;}
+  .track{position:relative;flex:1;height:24px;display:flex;align-items:center;cursor:pointer;touch-action:none;}
+  .track:focus{outline:none;}
+  .track:focus-visible .handle{box-shadow:0 0 0 3px var(--amber-soft),0 1px 3px rgba(0,0,0,.3);}
+  .track .rail{position:absolute;left:0;right:0;height:6px;background:var(--amber-soft);border-radius:999px;}
+  .track .fill{position:absolute;left:0;height:6px;width:0;background:var(--teal);border-radius:999px;pointer-events:none;}
+  .track .ticks{position:absolute;left:0;right:0;height:6px;pointer-events:none;}
+  .track .ticks i{position:absolute;top:0;width:2px;height:6px;background:rgba(14,76,79,.18);transform:translateX(-1px);border-radius:1px;}
+  .track .handle{position:absolute;left:0;width:15px;height:15px;border-radius:50%;background:var(--teal-deep);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transform:translateX(-7.5px);pointer-events:none;transition:background .12s;}
+  .track:hover .handle{background:var(--amber);}
+
+  article.reading{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:26px;}
+  article.reading h2{font-family:Georgia,serif;font-size:23px;margin:0 0 14px;color:var(--teal-deep);border-bottom:3px solid var(--amber-soft);padding-bottom:10px;}
+  article.reading p{font-family:Georgia,serif;font-size:18px;margin:0 0 16px;}
+  article.reading p:last-child{margin-bottom:0;}
+
+  .sec-h{display:flex;align-items:center;gap:10px;margin:34px 0 14px;}
+  .sec-h .tag{background:var(--teal-deep);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px;}
+  .sec-h h3{margin:0;font-size:19px;color:var(--ink);}
+
+  table.vocab{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  table.vocab th{background:var(--amber-soft);text-align:left;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--teal-deep);padding:10px 12px;}
+  table.vocab td{padding:11px 12px;border-top:1px solid var(--line);font-size:15px;vertical-align:top;}
+  table.vocab td.word{font-weight:700;white-space:nowrap;}
+  table.vocab td.pos{color:var(--muted);font-style:italic;white-space:nowrap;}
+
+  .quiz{margin-top:4px;}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+  .q .stem{font-weight:600;margin-bottom:10px;}
+  .q .stem .num{color:var(--teal);font-weight:800;margin-right:6px;}
+  .opt{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px;cursor:pointer;transition:all .12s;font-size:15px;}
+  .opt:hover{border-color:var(--teal);background:#f3faf9;}
+  .opt input{margin-top:3px;accent-color:var(--teal);}
+  .opt .ltr{font-weight:700;color:var(--muted);}
+  .opt.correct{border-color:var(--ok);background:#eef9f1;}
+  .opt.wrong{border-color:var(--bad);background:#fbeeee;}
+  .opt.locked{cursor:default;}
+  .check-row{display:flex;align-items:center;gap:14px;margin-top:4px;}
+  .check-btn{background:var(--teal-deep);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .check-btn:hover{background:var(--teal);}
+  .score{font-weight:700;font-size:15px;}
+  .score.good{color:var(--ok);}
+  .score.mid{color:var(--amber);}
+
+  footer.foot{text-align:center;color:var(--muted);font-size:13px;margin-top:48px;border-top:1px solid var(--line);padding-top:18px;}
+  footer.foot .ob{color:var(--teal-deep);font-weight:700;}
+  @media (max-width:520px){
+    h1.title{font-size:25px;}
+    article.reading{padding:20px 18px;}
+    article.reading p{font-size:17px;}
+    .pdf-group{margin-left:0;width:100%;}
+    /* phones: stack each vocab row (word + type on top, meaning below) so the
+       table never pushes the page wider than the screen */
+    table.vocab thead{display:none;}
+    table.vocab, table.vocab tbody{display:block;width:100%;}
+    table.vocab tr{display:grid;grid-template-columns:auto 1fr;column-gap:8px;padding:11px 14px;border-top:1px solid var(--line);}
+    table.vocab tr:first-child{border-top:0;}
+    table.vocab td{padding:0;border-top:0;}
+    table.vocab td.word{white-space:normal;}
+    table.vocab td.pos{white-space:normal;align-self:center;font-size:13px;}
+    table.vocab td:not(.word):not(.pos){grid-column:1 / -1;margin-top:3px;color:var(--ink);}
+    /* thumb-sized controls */
+    .speeds button{min-height:40px;min-width:48px;}
+    #playBtn,#prevBtn,#nextBtn{min-height:44px;}
+  }
+  html,body{overflow-x:hidden;}
+  [hidden]{display:none !important;}
+  .appnotice{background:#fff6e8;border:1.5px solid var(--amber);border-radius:12px;padding:14px 16px;margin:0 0 14px;font-size:15px;line-height:1.55;}
+  .appnotice p{margin:0 0 10px;color:var(--ink);word-break:keep-all;}
+  .appnotice-btn{display:inline-block;background:var(--teal-deep);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:11px 18px;border-radius:10px;min-height:44px;box-sizing:border-box;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="owl">🦉</div>
+    <div class="brand">Owlish English<small>Graded Reading</small></div>
+  </header>
+
+  <h1 class="title">Elon Musk: The World's First Trillionaire</h1>
+  <p class="dek">One news event, three sources. Pick a source, then a level. Each reading has its own vocab, quiz, and comprehension.</p>
+
+  <div class="label-row">Source</div>
+  <div class="sources" id="sourceToggle"></div>
+
+  <div class="label-row">Level</div>
+  <div class="levels" id="levelToggle"></div>
+
+  <p class="source-line" id="sourceCite"></p>
+
+  <div class="appnotice" id="appNotice" hidden>
+    <p id="appNoticeMsg">이 앱 안에서는 오디오가 나오지 않을 수 있어요. 크롬이나 사파리에서 열면 들을 수 있어요.</p>
+    <a class="appnotice-btn" id="appNoticeBtn" href="#">브라우저에서 열기</a>
+  </div>
+
+  <div class="audiobar">
+    <button class="play" id="playBtn">▶ Listen</button>
+    <div class="tcontrols">
+      <button class="tbtn" id="prevBtn" title="Previous sentence" aria-label="Previous sentence">⏮</button>
+      <button class="tbtn" id="nextBtn" title="Next sentence" aria-label="Next sentence">⏭</button>
+    </div>
+    <div class="speeds">
+      <span>Speed</span>
+      <button data-rate="0.7">0.7×</button>
+      <button data-rate="0.85" class="active">0.85×</button>
+      <button data-rate="1">1×</button>
+      <button data-rate="1.1">1.1×</button>
+    </div>
+    <div class="pdf-group">
+      <button class="pdf-btn" id="pdfBtn">⤓ This reading</button>
+      <button class="pdf-btn all" id="pdfAllBtn">⤓ Download all 9</button>
+    </div>
+    <span class="audiover" id="audioVer">audio v7</span>
+    <div class="timeline">
+      <span class="ttime" id="tCur">0:00</span>
+      <div class="track" id="track" tabindex="0" role="slider" aria-label="Audio position" aria-valuemin="0" aria-valuenow="0">
+        <div class="rail"></div>
+        <div class="ticks" id="ticks"></div>
+        <div class="fill" id="tFill"></div>
+        <div class="handle" id="tHandle"></div>
+      </div>
+      <span class="ttime" id="tTot">0:00</span>
+    </div>
+  </div>
+
+  <article class="reading" id="reading"></article>
+
+  <div class="sec-h"><span class="tag">Vocabulary</span><h3 id="vocabLevelLabel"></h3></div>
+  <table class="vocab" id="vocabTable">
+    <thead><tr><th>Word</th><th>Part of speech</th><th>Meaning</th></tr></thead>
+    <tbody id="vocabBody"></tbody>
+  </table>
+
+  <div class="sec-h"><span class="tag">Vocab Quiz</span><h3>Choose the best meaning</h3></div>
+  <div class="quiz" id="vocabQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('vocab')">Check answers</button><span class="score" id="vocabScore"></span></div>
+
+  <div class="sec-h"><span class="tag">Comprehension</span><h3>Multiple choice</h3></div>
+  <div class="quiz" id="compQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('comp')">Check answers</button><span class="score" id="compScore"></span></div>
+
+  <footer class="foot">
+    <div>🦉 <span class="ob">Owlish English</span></div>
+    <div>3 sources (WSJ · Forbes · Reuters) × 3 levels · Original / A2 / B1–B2</div>
+  </footer>
+</div>
+
+<script>
+/* ===================== CONTENT ===================== */
+const SOURCES = {
+  wsj: {
+    outlet:"The Wall Street Journal", short:"WSJ",
+    url:"https://www.youtube.com/shorts/C5PMRAhTIyQ", byline:"Theo Francis",
+    levels:{
+      original:{ name:"Original", label:"Original (authentic news)",
+        title:"Elon Musk: The World's First Trillionaire",
+        paragraphs:[
+          "Elon Musk is the world's first trillionaire. Here's a look at how he got there. Calculating that worth for someone like Elon Musk isn't easy. A lot of his wealth is tied up in private companies, and valuing those can be a little tricky. But his wealth primarily comes from three different buckets.",
+          "The largest part of that is his stake in SpaceX, which went public on Friday. He owns about 40% of it, so his stake is valued at about $690 billion. Now, pair that with a second bucket: his stake in the electric automaker Tesla. That's valued at about $271 billion at recent stock prices. Musk also has a third, smaller bucket of miscellaneous assets. Estimates from wealth intelligence firm Altrata put the value of his ownership in Neuralink, a brain-implant company, at about $5 billion — and at about the same valuation, the Boring Company. He also has about $104 billion of other assets: investments, a jet, property, that kind of thing. Putting all those stakes together pushed him just over the $1 trillion mark.",
+          "Elon Musk's wealth has grown dramatically just in the past year. Late last summer, we estimated that he was worth just a little more than $400 billion. A few weeks ago, we checked back: $811 billion. And of course, now, he's crossed the trillion-dollar threshold. Most of that huge increase since last summer is really about SpaceX. Investors are very bullish about it, and that even managed to counteract some declines in Tesla's share price.",
+          "Musk's wealth is not money in the bank. You can't just go out and spend it. Almost all of it is tied up in these companies. And of course, he's not only the biggest shareholder in these companies, he's also their leader. If he starts selling, that could drive the share price down. He can borrow against his holdings to some degree, but ultimately his fortunes are tied up with the fortunes of these companies.",
+          "It's notable that this is happening at a time when a lot of Americans are struggling with the price of gas at the pump, or other everyday costs like groceries and housing. Wrapping your head around a trillion dollars is really hard. It's $1,000 billion, but that doesn't really help much. You could buy 2.4 million houses in the U.S. with that kind of money. You could buy every NFL and NBA team and have $500 billion left over. It's about 3% of all the goods and services that the U.S. produces in a year. My colleagues and I have estimated that over the course of his career, Elon Musk has built up wealth at an average of about $1,000 a second. In the time that you've watched this video, that would work out to about this much."
+        ],
+        vocab:[
+          ["tied up","phrase","(of money) invested in something, so it is not free to spend"],
+          ["miscellaneous","adj","made up of many different kinds of things"],
+          ["valuation","noun","an estimate of how much something is worth"],
+          ["bullish","adj","confident that a price or value will rise"],
+          ["counteract","verb","to reduce or cancel out the effect of something"],
+          ["threshold","noun","a level or point that marks the start of something"],
+          ["borrow against","phrase","to take a loan using something you own as security"],
+          ["notable","adj","worth paying attention to; significant"],
+          ["dramatically","adv","to a large and sudden degree"],
+          ["wrap your head around","idiom","to manage to fully understand something difficult"]
+        ],
+        vocabQuiz:[
+          ["What does \"tied up\" mean here?",["easy to spend immediately","invested in something and not free to use","lost forever","hidden from the government"],1],
+          ["\"Miscellaneous\" assets are assets that are…",["all the same type","extremely valuable","of many different kinds","owned by the government"],2],
+          ["A \"valuation\" is…",["a tax on companies","an estimate of how much something is worth","a type of company","a stock market"],1],
+          ["If investors are \"bullish\" about a company, they…",["want to shut it down","think its value will fall","are confident its value will rise","refuse to invest"],2],
+          ["To \"counteract\" something means to…",["reduce or cancel its effect","make it stronger","ignore it completely","repeat it"],0],
+          ["To \"wrap your head around\" something means to…",["measure it exactly","forget it quickly","argue about it","fully understand something difficult"],3]
+        ],
+        comp:[
+          ["What is the largest part of Musk's wealth?",["Tesla","SpaceX","Neuralink","The Boring Company"],1],
+          ["About how much is Musk's Tesla stake worth?",["$690 billion","$104 billion","$271 billion","$5 billion"],2],
+          ["What mainly caused Musk's wealth to grow so much over the past year?",["Rising Tesla share prices","The Boring Company","Selling his property","The rising value of SpaceX"],3],
+          ["Why can't Musk simply spend his fortune?",["The government has frozen it","Almost all of it is tied up in his companies","It is kept in foreign banks","He has already given it away"],1],
+          ["What might happen if Musk started selling his shares?",["The share price could fall","He would lose his citizenship","The companies would grow faster","Nothing would change"],0],
+          ["Roughly how fast has Musk built his wealth over his career?",["About $1,000 a minute","About $1 a second","About $1,000 a second","About $1 million a day"],2]
+        ]
+      },
+      a2:{ name:"A2", label:"A2 (elementary)",
+        title:"The Richest Person in the World",
+        paragraphs:[
+          "Elon Musk is the richest person in the world. He has one trillion dollars. That is a very, very big number. How did he get so much money?",
+          "It is not easy to count his money. A lot of his money is in his companies. His money comes from three big parts. The biggest part is SpaceX. SpaceX makes rockets. Musk owns about 40% of it. This part is worth about 690 billion dollars.",
+          "The second part is Tesla. Tesla makes electric cars. This part is worth about 271 billion dollars. The third part is smaller. He owns a brain company called Neuralink. He owns the Boring Company too. He also has other things, like a jet, houses, and money in other places. All of this is about 104 billion dollars. When you put all the parts together, he has more than one trillion dollars.",
+          "Musk got rich very fast. Last summer, he had about 400 billion dollars. A few weeks ago, he had 811 billion dollars. Now he has more than one trillion. Most of this new money is from SpaceX. Many people want to buy SpaceX, so it is worth more now.",
+          "But this money is not in the bank. He cannot spend it easily. Almost all of it is in his companies. He is the leader of these companies. If he sells his part, the price can go down.",
+          "This is happening when many Americans worry about money. Gas, food, and houses cost a lot. One trillion dollars is hard to imagine. You could buy 2.4 million houses in the U.S. You could buy every football and basketball team and still have 500 billion dollars. Musk made about 1,000 dollars every second in his life."
+        ],
+        vocab:[
+          ["rich","adj","having a lot of money"],
+          ["trillion","noun","one thousand billion (1,000,000,000,000)"],
+          ["billion","noun","one thousand million"],
+          ["own","verb","to have something that belongs to you"],
+          ["worth","adj","having a value of a certain amount"],
+          ["company","noun","a business that makes or sells things"],
+          ["leader","noun","the person in charge of a group or company"],
+          ["electric","adj","using electricity, not gas"],
+          ["price","noun","the money you pay to buy something"],
+          ["imagine","verb","to make a picture of something in your mind"]
+        ],
+        vocabQuiz:[
+          ["\"Rich\" means…",["very tall","having a lot of money","very fast","very old"],1],
+          ["If you \"own\" something, it…",["is broken","is for sale","belongs to you","is very far away"],2],
+          ["A \"company\" is a…",["business","country","school","car"],0],
+          ["The \"leader\" of a company is the person who…",["cleans it","buys things from it","visits it","is in charge of it"],3],
+          ["An \"electric\" car uses…",["gas","electricity","water","wood"],1],
+          ["To \"imagine\" something means to…",["sell it","buy it","see it in your mind","break it"],2]
+        ],
+        comp:[
+          ["How much money does Elon Musk have?",["One million dollars","One billion dollars","More than one trillion dollars","One hundred dollars"],2],
+          ["What does SpaceX make?",["Cars","Rockets","Phones","Houses"],1],
+          ["What does Tesla make?",["Electric cars","Rockets","Computers","Planes"],0],
+          ["Where is most of Musk's money?",["Under his bed","In the bank","In other countries","In his companies"],3],
+          ["How much money did Musk have last summer?",["About 400 billion dollars","About 5 billion dollars","About 2 trillion dollars","About 100 dollars"],0],
+          ["What can you buy with one trillion dollars, according to the text?",["One small house","2.4 million houses in the U.S.","One car","Nothing"],1]
+        ]
+      },
+      b12:{ name:"B1-B2", label:"B1–B2 (intermediate)",
+        title:"How Elon Musk Became the First Trillionaire",
+        paragraphs:[
+          "Elon Musk has become the world's first trillionaire. So how did he reach this point? Working out exactly how much someone like Musk is worth is not simple. Much of his wealth is locked inside private companies, and putting a value on those can be tricky. Still, his fortune comes mainly from three areas.",
+          "The biggest area is his share of SpaceX, the rocket company, which went public on Friday. He owns roughly 40% of it, and that share alone is worth about $690 billion. The second area is his share of Tesla, the electric car maker, which is worth around $271 billion at recent prices. The third area is smaller and more mixed. According to the research firm Altrata, his ownership of Neuralink, a brain-implant company, is worth about $5 billion, and his stake in the Boring Company is worth a similar amount. On top of that, he owns about $104 billion in other things — investments, a private jet, property, and so on. Added together, all of this pushes him just past the $1 trillion line.",
+          "Musk's wealth has grown very quickly over the past year. Late last summer, his fortune was estimated at a little over $400 billion. A few weeks ago, it had reached $811 billion. Now it has passed one trillion. Most of this rapid growth comes from SpaceX, because investors are very confident about its future — confident enough to cancel out the drop in Tesla's share price.",
+          "It is important to understand that this money is not sitting in a bank. Musk cannot simply spend it, because almost all of it is tied to his companies. He is not only the largest shareholder in these companies; he also runs them. If he started selling his shares, the price could fall. He can borrow money against what he owns, but in the end, his fortune rises and falls with these companies.",
+          "What makes this striking is the timing. Many Americans are struggling with everyday costs such as gas, groceries, and housing. A trillion dollars is very hard to imagine. With that much money, you could buy 2.4 million American homes, or every NFL and NBA team — and still have $500 billion left. It equals about 3% of everything the United States produces in a year. In fact, over his whole career, Musk has built his wealth at an average of around $1,000 every second."
+        ],
+        vocab:[
+          ["wealth","noun","a large amount of money and valuable things"],
+          ["fortune","noun","a very large amount of money"],
+          ["stake","noun","a part or share of a company that someone owns"],
+          ["estimate","verb","to guess an amount or value carefully"],
+          ["investor","noun","a person who puts money into a company to make a profit"],
+          ["shareholder","noun","a person who owns shares in a company"],
+          ["struggle","verb","to try hard to do something that is difficult"],
+          ["tricky","adj","difficult to do or deal with"],
+          ["roughly","adv","approximately; not exactly"],
+          ["striking","adj","very noticeable or surprising"]
+        ],
+        vocabQuiz:[
+          ["\"Wealth\" refers to…",["a person's age","a large amount of money and valuable things","a type of company","a kind of tax"],1],
+          ["A \"stake\" in a company is…",["a part of the company that someone owns","a meal served to workers","a loan from a bank","a company's main office"],0],
+          ["To \"estimate\" a value means to…",["pay it in full","hide it","guess it carefully","double it"],2],
+          ["An \"investor\" is a person who…",["sells houses","leads a country","repairs machines","puts money into a company to make a profit"],3],
+          ["If something is \"tricky,\" it is…",["cheap","difficult to deal with","very large","brand new"],1],
+          ["\"Roughly\" means…",["exactly","never","approximately","loudly"],2]
+        ],
+        comp:[
+          ["Why is it difficult to work out exactly how much Musk is worth?",["He refuses to talk to anyone","Much of his wealth is locked inside private companies","He has no money at all","His companies are secret"],1],
+          ["Which company makes up the largest part of Musk's fortune?",["Tesla","Neuralink","SpaceX","The Boring Company"],2],
+          ["According to Altrata, about how much is Musk's Neuralink ownership worth?",["$690 billion","$271 billion","$104 billion","About $5 billion"],3],
+          ["Why has Musk's wealth grown so quickly in the past year?",["Investors are very confident about SpaceX","Tesla's share price doubled","He sold the Boring Company","He won the lottery"],0],
+          ["What point does the writer make about the timing of this news?",["It happened during a holiday","Many Americans are struggling with everyday costs","It happened at night","Nobody noticed it"],1],
+          ["$1 trillion is equal to about what share of everything the U.S. produces in a year?",["50%","30%","3%","100%"],2]
+        ]
+      }
+    }
+  },
+
+  forbes:{
+    outlet:"Forbes", short:"Forbes",
+    url:"https://www.youtube.com/watch?v=wfQ45tPDjIw", byline:"",
+    levels:{
+      original:{ name:"Original", label:"Original (authentic news)",
+        title:"What $1,000,000,000,000 Looks Like",
+        paragraphs:[
+          "Elon Musk has become the world's first trillionaire, catapulted by the historic market debut of his rocket company, SpaceX. The tech mogul has officially amassed 13-figure wealth. SpaceX debuted on public markets Friday at $150 a share, locking in an unprecedented $1.97 trillion market valuation. Ahead of the first trade, Forbes put Musk's net worth at $982 billion. Much of his fortune comes from his electric car company, Tesla. He also cofounded the company that later became PayPal.",
+          "One trillion dollars is 1,000 times greater than one billion, and a million times greater than one million — a one followed by twelve zeros, four commas. Still, the number is hard to comprehend, so let's put it in perspective. If you made $100,000 a year and saved every penny, it would take you 10 million years to match that wealth. That means you would have had to start working when early human ancestors were first walking the Earth.",
+          "If Musk decided to buy every single American adult a $4 iced coffee every single day, he could keep the entire country caffeinated for almost three years straight. His wealth would sit just shy of the gross domestic product of Poland, while completely eclipsing the entire annual economic output of Taiwan. Only about 21 countries have a GDP higher than a trillion dollars today. And if you divided up a trillion dollars equally among all 8.2 billion people on Earth, every single person on the planet would instantly get nearly $122.",
+          "So what does he plan to do with all that cash? Musk says he doesn't plan to spend his trillion-dollar fortune solely on himself. Instead, he'll use it to fund a permanent settlement on Mars — and he's counting on SpaceX to get us there."
+        ],
+        vocab:[
+          ["catapult","verb","to suddenly send someone or something into a new position or situation"],
+          ["market debut","phrase","the first time a company's shares are traded publicly"],
+          ["amass","verb","to gather or collect a large amount of something"],
+          ["unprecedented","adj","never having happened before"],
+          ["valuation","noun","an estimate of how much something is worth"],
+          ["comprehend","verb","to understand something fully"],
+          ["put in perspective","idiom","to compare something so its size or importance is clearer"],
+          ["eclipse","verb","to be far greater or more important than something else"],
+          ["GDP","noun","the total value of goods and services a country produces in a year"],
+          ["permanent","adj","lasting for a very long time or forever"]
+        ],
+        vocabQuiz:[
+          ["To \"amass\" wealth means to…",["spend it quickly","gather a large amount of it","give it away","hide it"],1],
+          ["If something is \"unprecedented,\" it…",["has never happened before","happens every year","is very cheap","is easy to understand"],0],
+          ["To \"comprehend\" something means to…",["sell it","build it","fully understand it","measure it"],2],
+          ["To \"put something in perspective\" means to…",["forget about it","make it bigger","hide it from others","compare it so its size is clearer"],3],
+          ["If one thing \"eclipses\" another, it…",["copies it exactly","is far greater than it","is much smaller than it","is equal to it"],1],
+          ["A country's \"GDP\" is…",["its total population","the number of its companies","the total value of what it produces in a year","the amount of money it owes"],2]
+        ],
+        comp:[
+          ["What caused Musk to become a trillionaire, according to the report?",["Selling Tesla","The market debut (IPO) of SpaceX","Founding PayPal","A government prize"],1],
+          ["At what price did SpaceX shares start trading on Friday?",["$4 a share","$982 a share","$150 a share","$100 a share"],2],
+          ["How long would it take to match Musk's wealth if you saved $100,000 every year?",["100 years","10 million years","Three years","8.2 billion years"],1],
+          ["If a trillion dollars were shared equally among everyone on Earth, about how much would each person get?",["Nearly $122","About $4","About $1 million","Nothing"],0],
+          ["What does Musk say he wants to do with his fortune?",["Buy every American a coffee","Keep it all in a bank","Fund a permanent settlement on Mars","Buy the country of Poland"],2],
+          ["How does Musk's wealth compare to Taiwan's economy?",["It is exactly the same","It is much smaller","It is unknown","It is far greater than Taiwan's annual output"],3]
+        ]
+      },
+      a2:{ name:"A2", label:"A2 (elementary)",
+        title:"A Very, Very Big Number",
+        paragraphs:[
+          "Elon Musk is now the richest person in the world. He has one trillion dollars. This happened because his rocket company, SpaceX, started selling shares on Friday. The shares cost $150 each. Most of Musk's money comes from Tesla, his electric car company. Long ago, he also helped start the company that became PayPal.",
+          "One trillion is a very, very big number. It is a one with twelve zeros. It is hard to understand, so here are some examples. Imagine you make $100,000 every year and save all of it. It would take you 10 million years to get as much money as Musk.",
+          "Here is another example. Musk could buy a $4 coffee for every adult in America, every day, for almost three years. His money is almost as big as all the money Poland makes in one year. It is bigger than everything Taiwan makes in one year. Only about 21 countries make more than one trillion dollars a year. If you shared one trillion dollars with all 8.2 billion people on Earth, each person would get about $122.",
+          "So what will Musk do with all this money? He says he will not spend it only on himself. He wants to build a town on Mars. He hopes SpaceX can take people there."
+        ],
+        vocab:[
+          ["rich","adj","having a lot of money"],
+          ["trillion","noun","one thousand billion; a one with twelve zeros"],
+          ["company","noun","a business that makes or sells things"],
+          ["share","noun","a small part of a company that people can buy"],
+          ["cost","verb","to have a price"],
+          ["save","verb","to keep money instead of spending it"],
+          ["example","noun","a thing that shows what you mean"],
+          ["country","noun","a land with its own people and government"],
+          ["build","verb","to make something by putting parts together"],
+          ["hope","verb","to want something to happen"]
+        ],
+        vocabQuiz:[
+          ["\"Rich\" means…",["very fast","having a lot of money","very tall","very young"],1],
+          ["A \"share\" is…",["a small part of a company that people can buy","a kind of car","a country","a rocket"],0],
+          ["To \"save\" money means to…",["spend it all","lose it","keep it instead of spending it","burn it"],2],
+          ["To \"build\" something means to…",["eat it","sell it","throw it away","make it by putting parts together"],3],
+          ["If you \"hope\" for something, you…",["want it to happen","hate it","finish it","sell it"],0],
+          ["A \"country\" is…",["a small shop","a land with its own people and government","a type of money","a car company"],1]
+        ],
+        comp:[
+          ["Why did Musk become the richest person?",["He won a prize","His company SpaceX started selling shares","He sold his house","He found gold"],1],
+          ["What does Tesla make?",["Rockets","Coffee","Electric cars","Phones"],2],
+          ["How much did one SpaceX share cost on Friday?",["$4","$150","$1 million","$122"],1],
+          ["If you saved $100,000 every year, how long would it take to get as much money as Musk?",["10 million years","One year","Three years","100 years"],0],
+          ["What does Musk want to do with his money?",["Buy a new car","Keep it in a box","Build a town on Mars","Buy Poland"],2],
+          ["If one trillion dollars were shared with everyone on Earth, how much would each person get?",["$1 million","Nothing","$150","About $122"],3]
+        ]
+      },
+      b12:{ name:"B1-B2", label:"B1–B2 (intermediate)",
+        title:"Putting a Trillion Dollars in Perspective",
+        paragraphs:[
+          "Elon Musk has become the world's first trillionaire, and it happened thanks to his rocket company, SpaceX. On Friday, SpaceX sold shares to the public for the first time at $150 each, which gave the company a huge value of about $1.97 trillion. Just before trading began, Forbes estimated Musk's personal wealth at $982 billion. Most of his fortune actually comes from Tesla, his electric car company, and years ago he also helped create the company that later became PayPal.",
+          "A trillion dollars is an enormous number — a one followed by twelve zeros. It is so large that it is difficult to imagine, so it helps to compare it to everyday things. For example, if you earned $100,000 a year and saved every cent, it would still take you 10 million years to reach Musk's level of wealth. In other words, you would have had to start saving when the earliest humans first appeared on Earth.",
+          "Here is another comparison. With his fortune, Musk could buy every adult in America a $4 iced coffee every day for almost three years. His wealth is nearly as large as everything that Poland produces in a year, and far larger than the entire economy of Taiwan. In fact, only about 21 countries in the world have a GDP above one trillion dollars. And if that money were shared equally among the planet's 8.2 billion people, each person would receive roughly $122.",
+          "So what does Musk plan to do with such a vast fortune? He insists that he will not spend it only on himself. Instead, he wants to use it to build a permanent human settlement on Mars — and he is relying on SpaceX to take us there."
+        ],
+        vocab:[
+          ["fortune","noun","a very large amount of money"],
+          ["estimate","verb","to guess an amount or value carefully"],
+          ["enormous","adj","extremely large"],
+          ["compare","verb","to look at how two things are similar or different"],
+          ["earn","verb","to get money by working"],
+          ["produce","verb","to make or grow something, especially in large amounts"],
+          ["economy","noun","the system of money, jobs, and trade in a country"],
+          ["equally","adv","in the same amount for each person"],
+          ["vast","adj","extremely large in size or amount"],
+          ["rely on","phrasal verb","to need or depend on someone or something"]
+        ],
+        vocabQuiz:[
+          ["A \"fortune\" is…",["a small amount of change","a very large amount of money","a type of company","a kind of tax"],1],
+          ["To \"estimate\" a value is to…",["pay it exactly","hide it","guess it carefully","refuse it"],2],
+          ["Something \"enormous\" is…",["extremely large","very small","very fast","very cheap"],0],
+          ["A country's \"economy\" is…",["its national sport","its weather","its language","its system of money, jobs, and trade"],3],
+          ["To \"rely on\" someone means to…",["ignore them","depend on them","pay them","follow them"],1],
+          ["If money is shared \"equally,\" each person gets…",["more than the others","less than the others","the same amount","nothing at all"],2]
+        ],
+        comp:[
+          ["What made Musk the world's first trillionaire?",["A new Tesla model","SpaceX selling shares to the public","Selling PayPal","Winning a court case"],1],
+          ["What was Musk's net worth, according to Forbes, just before trading began?",["$982 billion","$4 billion","$122 billion","$8.2 billion"],0],
+          ["Why does the report compare a trillion dollars to everyday things?",["To sell coffee","Because the number is hard to imagine","To advertise SpaceX","To explain Tesla's cars"],1],
+          ["How does Musk's fortune compare with Poland's economy?",["It is much smaller","It is completely unrelated","It is nearly as large as everything Poland produces in a year","It is ten times larger"],2],
+          ["About how many countries have a GDP above one trillion dollars?",["About 21","About 200","About 5","About 8.2 billion"],0],
+          ["What does Musk say he wants to do with his wealth?",["Buy every country in the world","Keep it all in cash","Retire immediately","Build a permanent settlement on Mars"],3]
+        ]
+      }
+    }
+  },
+
+  reuters:{
+    outlet:"Reuters", short:"Reuters",
+    url:"https://www.youtube.com/shorts/UVaFcynbKFg", byline:"",
+    levels:{
+      original:{ name:"Original", label:"Original (authentic news)",
+        title:"What a $1.1 Trillion Fortune Really Means",
+        paragraphs:[
+          "Elon Musk has become the world's first \"on-paper\" trillionaire. But what does his reported wealth of over $1.1 trillion actually mean? For one thing, it is roughly equal to the GDP of Switzerland, the 20th-largest economy in the world.",
+          "If you were given a dollar every second, it would take 34,900 years to reach $1.1 trillion. Going that far back in time would take you to the heyday of the woolly mammoth. Laid end to end in dollar bills, $1.1 trillion would wrap around the sun 139 times.",
+          "But Musk's arrival as the first member of the trillionaire club, thanks to his SpaceX IPO, is also a powerful symbol of the gap between rich and poor. In January, the global poverty charity Oxfam said billionaire wealth grew last year to its highest level on record — $188.3 trillion — even as one in four people struggle to eat regularly and half the world's population lives in poverty.",
+          "In a clash with Musk in 2021, the World Food Programme produced a detailed plan showing how it would spend $6.6 billion to save 42 million people who were on the brink of starvation. With $1.1 trillion, you could fund that plan for 167 years."
+        ],
+        vocab:[
+          ["on paper","idiom","in theory or in writing, but not necessarily in reality"],
+          ["reported","adj","said to be true by a source, though not always confirmed"],
+          ["heyday","noun","the time when someone or something was most successful or popular"],
+          ["symbol","noun","something that strongly represents an idea"],
+          ["accelerate","verb","to happen or increase faster"],
+          ["on record","phrase","officially written down or known"],
+          ["struggle","verb","to try hard to do something difficult"],
+          ["poverty","noun","the state of being very poor"],
+          ["on the brink of","idiom","very close to a (usually bad) situation"],
+          ["fund","verb","to provide money for something"]
+        ],
+        vocabQuiz:[
+          ["If something is true \"on paper,\" it is…",["printed in a newspaper","true in theory but maybe not in reality","completely false","hidden from the public"],1],
+          ["The \"heyday\" of something is…",["its first day","its worst moment","the time when it was most successful","the day it ended"],2],
+          ["To \"accelerate\" means to…",["stop completely","stay the same","happen more slowly","happen or increase faster"],3],
+          ["\"Poverty\" is the state of…",["being very poor","being very rich","being very famous","being very busy"],0],
+          ["To be \"on the brink of\" something means to be…",["far away from it","very close to it","tired of it","afraid of it"],1],
+          ["To \"fund\" a plan means to…",["cancel it","explain it","provide money for it","criticize it"],2]
+        ],
+        comp:[
+          ["Musk's $1.1 trillion is roughly equal to the GDP of which country?",["Taiwan","Switzerland","Poland","South Africa"],1],
+          ["If you received a dollar every second, how long would it take to reach $1.1 trillion?",["167 years","139 years","34,900 years","One million years"],2],
+          ["According to Oxfam, what happened to billionaire wealth last year?",["It fell sharply","It stayed the same","It disappeared","It grew to its highest level on record"],3],
+          ["What does the report say about half of the world's population?",["They live in poverty","They are billionaires","They live in Switzerland","They work for Musk"],0],
+          ["How much did the World Food Programme say it needed to save 42 million people from starvation?",["$1.1 trillion","$6.6 billion","$188.3 trillion","$34,900"],1],
+          ["How many years could $1.1 trillion fund that World Food Programme plan?",["139 years","21 years","167 years","1,000 years"],2]
+        ]
+      },
+      a2:{ name:"A2", label:"A2 (elementary)",
+        title:"What Does $1.1 Trillion Mean?",
+        paragraphs:[
+          "Elon Musk is now the world's first trillionaire — at least on paper. He has more than $1.1 trillion. But what does this big number really mean? Switzerland is the 20th richest country in the world. Musk has about as much money as Switzerland makes in one year.",
+          "Here are some ways to understand the number. Imagine you got one dollar every second. To reach $1.1 trillion, you would need 34,900 years. That is a very, very long time — back when woolly mammoths were alive. If you put $1.1 trillion in dollar bills in a long line, the line would go around the sun 139 times.",
+          "But this news also shows a big problem: the gap between rich people and poor people. A charity called Oxfam said that rich people's money grew very fast last year. At the same time, one in four people in the world does not have enough food. Half of all people in the world are poor.",
+          "In 2021, the World Food Programme made a plan. With $6.6 billion, it could save 42 million hungry people. Musk's money is so big that it could pay for this plan for 167 years."
+        ],
+        vocab:[
+          ["trillionaire","noun","a person who has one trillion dollars"],
+          ["on paper","phrase","true in writing, but maybe not real money you can use"],
+          ["country","noun","a land with its own people and government"],
+          ["imagine","verb","to make a picture in your mind"],
+          ["line","noun","a long row of things, one after another"],
+          ["problem","noun","something that is wrong and needs to be fixed"],
+          ["gap","noun","a big space or difference between two things"],
+          ["charity","noun","a group that helps people who need help"],
+          ["poor","adj","having very little money"],
+          ["save","verb","to help someone stay alive or safe"]
+        ],
+        vocabQuiz:[
+          ["A \"trillionaire\" is a person who has…",["one hundred dollars","one trillion dollars","no money","one car"],1],
+          ["A \"charity\" is a group that…",["sells cars","makes rockets","helps people who need help","builds houses"],2],
+          ["If you are \"poor,\" you have…",["a lot of money","many cars","many houses","very little money"],3],
+          ["A \"gap\" is…",["a big difference between two things","a small coin","a type of food","a country"],0],
+          ["To \"imagine\" something is to…",["sell it","make a picture of it in your mind","eat it","buy it"],1],
+          ["Here, to \"save\" people means to…",["help them stay alive","sell them","count them","teach them"],0]
+        ],
+        comp:[
+          ["How much money does Musk have?",["One million dollars","More than $1.1 trillion","One hundred dollars","One billion dollars"],1],
+          ["Musk has about as much money as which country makes in a year?",["Taiwan","Poland","Switzerland","America"],2],
+          ["If you got one dollar every second, how long would it take to reach $1.1 trillion?",["34,900 years","One year","167 years","139 years"],0],
+          ["What problem does the news show?",["Rockets are too expensive","The gap between rich and poor people","Coffee costs too much","Mars is far away"],1],
+          ["What did Oxfam say about poor people?",["They are all rich now","They live on Mars","One in four people does not have enough food","They all have cars"],2],
+          ["How many years could Musk's money pay for the World Food Programme plan?",["One year","10 years","100 years","167 years"],3]
+        ]
+      },
+      b12:{ name:"B1-B2", label:"B1–B2 (intermediate)",
+        title:"One Fortune, and the Gap It Reveals",
+        paragraphs:[
+          "Elon Musk has become the world's first trillionaire — at least \"on paper.\" His reported wealth is now more than $1.1 trillion, but what does such a number actually mean? To start with, it is roughly equal to the GDP of Switzerland, the 20th-largest economy in the world. In other words, one person now holds about as much wealth as an entire wealthy nation produces in a year.",
+          "Some comparisons make the figure easier to grasp. If you were handed one dollar every second, it would take you 34,900 years to collect $1.1 trillion — a journey back to the age of the woolly mammoth. And if all those dollar bills were laid end to end, the line would wrap around the sun 139 times.",
+          "Yet Musk's place as the first member of the trillionaire club, won through the SpaceX IPO, is also a powerful symbol of the growing gap between rich and poor. In January, the charity Oxfam reported that billionaire wealth had risen last year to its highest level ever recorded — $188.3 trillion — even though one in four people struggles to eat regularly and half the world's population lives in poverty.",
+          "The contrast becomes sharper with one example. In 2021, during a public disagreement with Musk, the World Food Programme laid out a detailed plan to spend $6.6 billion and rescue 42 million people who were close to starvation. With $1.1 trillion, that same plan could be funded for 167 years."
+        ],
+        vocab:[
+          ["on paper","idiom","true in theory or in writing, but not as cash that can be spent"],
+          ["reported","adj","said to be true by a source, though not fully confirmed"],
+          ["grasp","verb","to understand something, especially something difficult"],
+          ["symbol","noun","something that represents a larger idea"],
+          ["gap","noun","a large difference between two things or groups"],
+          ["record","noun","the highest or best level ever measured"],
+          ["poverty","noun","the state of being very poor"],
+          ["contrast","noun","a clear difference between two things"],
+          ["starvation","noun","suffering or death caused by not having enough food"],
+          ["fund","verb","to provide the money needed for something"]
+        ],
+        vocabQuiz:[
+          ["If something is true \"on paper,\" it is…",["printed on real paper only","true in theory but not necessarily usable as cash","completely fake","kept secret"],1],
+          ["To \"grasp\" an idea means to…",["forget it","ignore it","understand it","repeat it"],2],
+          ["A \"symbol\" is something that…",["costs a lot of money","is very small","is always written down","represents a larger idea"],3],
+          ["\"Poverty\" means…",["the state of being very poor","the state of being very rich","the state of being very busy","the state of being very famous"],0],
+          ["A \"gap\" between rich and poor is…",["a friendship","a large difference between them","an agreement","a kind of tax"],1],
+          ["\"Starvation\" is suffering caused by…",["too much money","bad weather","not having enough food","working too hard"],2]
+        ],
+        comp:[
+          ["Why does the report say Musk is a trillionaire \"on paper\"?",["Because his money is printed on paper","Because his wealth is in theory, not cash he can simply spend","Because he wrote it down himself","Because Switzerland paid him"],1],
+          ["Musk's wealth is roughly equal to the GDP of which country?",["Taiwan","Poland","Switzerland","South Africa"],2],
+          ["What point does the comparison with the woolly mammoth make?",["Musk owns a mammoth","Mammoths were rich","Reaching $1.1 trillion at a dollar per second would take an almost unimaginable amount of time","Switzerland is very old"],2],
+          ["What did Oxfam report in January?",["Billionaire wealth fell to a record low","Poverty had ended worldwide","Everyone now has enough food","Billionaire wealth rose to its highest level ever recorded"],3],
+          ["According to the report, how many people struggle to eat regularly?",["One in four people","Half of all billionaires","Only people in Switzerland","Nobody"],0],
+          ["For how many years could $1.1 trillion fund the World Food Programme's plan?",["139 years","167 years","21 years","34,900 years"],1]
+        ]
+      }
+    }
+  }
+};
+
+const SRC_ORDER = ["wsj","forbes","reuters"];
+const LVL_ORDER = ["original","a2","b12"];
+let currentSource = "wsj";
+let currentLevel = "original";
+let rate = 0.85;
+
+function cur(){ return SOURCES[currentSource].levels[currentLevel]; }
+
+/* ===================== RENDER ===================== */
+function buildSourceToggle(){
+  const wrap=document.getElementById("sourceToggle"); wrap.innerHTML="";
+  SRC_ORDER.forEach(k=>{
+    const s=SOURCES[k];
+    const b=document.createElement("button");
+    b.innerHTML=`${s.short}<small>${s.outlet.replace("The ","")}</small>`;
+    b.dataset.key=k;
+    if(k===currentSource) b.classList.add("active");
+    b.onclick=()=>setSource(k);
+    wrap.appendChild(b);
+  });
+}
+function buildLevelToggle(){
+  const wrap=document.getElementById("levelToggle"); wrap.innerHTML="";
+  LVL_ORDER.forEach(k=>{
+    const d=SOURCES[currentSource].levels[k];
+    const b=document.createElement("button");
+    const desc=(d.label.split(" (")[1]||"").replace(")","");
+    b.innerHTML=`<span class="lv">${d.name}</span>${desc}`;
+    b.dataset.key=k;
+    if(k===currentLevel) b.classList.add("active");
+    b.onclick=()=>setLevel(k);
+    wrap.appendChild(b);
+  });
+}
+function renderCite(){
+  const s=SOURCES[currentSource];
+  const by=s.byline?` (${s.byline})`:"";
+  document.getElementById("sourceCite").innerHTML=
+    `Source: <strong>${s.outlet}</strong>${by} — <a href="${s.url}" target="_blank" rel="noopener">Watch the original ▶</a>`;
+}
+function renderLevel(){
+  const d=cur();
+  document.getElementById("reading").innerHTML=`<h2>${d.title}</h2>`+d.paragraphs.map(p=>`<p>${p}</p>`).join("");
+  document.getElementById("vocabLevelLabel").textContent=`${SOURCES[currentSource].short} · ${d.label}`;
+  document.getElementById("vocabBody").innerHTML=d.vocab.map(v=>`<tr><td class="word">${v[0]}</td><td class="pos">${v[1]}</td><td>${v[2]}</td></tr>`).join("");
+  renderQuiz("vocab",d.vocabQuiz,"vocabQuiz");
+  renderQuiz("comp",d.comp,"compQuiz");
+  document.getElementById("vocabScore").textContent="";
+  document.getElementById("compScore").textContent="";
+  renderCite();
+  resetAudio();
+}
+function renderQuiz(kind,items,mountId){
+  const L=["A","B","C","D"];
+  document.getElementById(mountId).innerHTML=items.map((it,qi)=>{
+    const opts=it[1].map((o,oi)=>`<label class="opt" data-q="${qi}" data-o="${oi}"><input type="radio" name="${kind}_${qi}" value="${oi}"><span class="ltr">${L[oi]}.</span><span>${o}</span></label>`).join("");
+    return `<div class="q" data-q="${qi}"><div class="stem"><span class="num">${qi+1}.</span>${it[0]}</div>${opts}</div>`;
+  }).join("");
+}
+function checkQuiz(kind){
+  const items=kind==="vocab"?cur().vocabQuiz:cur().comp;
+  const mount=document.getElementById(kind==="vocab"?"vocabQuiz":"compQuiz");
+  let correct=0;
+  items.forEach((it,qi)=>{
+    const ans=it[2];
+    const chosen=mount.querySelector(`input[name="${kind}_${qi}"]:checked`);
+    const opts=mount.querySelectorAll(`label.opt[data-q="${qi}"]`);
+    opts.forEach(o=>{o.classList.remove("correct","wrong");o.classList.add("locked");});
+    opts[ans].classList.add("correct");
+    if(chosen){const ci=parseInt(chosen.value); if(ci===ans) correct++; else opts[ci].classList.add("wrong");}
+  });
+  const total=items.length;
+  const el=document.getElementById(kind==="vocab"?"vocabScore":"compScore");
+  el.textContent=`Score: ${correct} / ${total}`;
+  el.className="score "+(correct===total?"good":correct>=Math.ceil(total/2)?"mid":"");
+}
+function setSource(k){
+  currentSource=k;
+  document.querySelectorAll("#sourceToggle button").forEach(b=>b.classList.toggle("active",b.dataset.key===k));
+  buildLevelToggle();
+  renderLevel();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function setLevel(k){
+  currentLevel=k;
+  document.querySelectorAll("#levelToggle button").forEach(b=>b.classList.toggle("active",b.dataset.key===k));
+  renderLevel();
+}
+
+/* ===================== TTS ===================== */
+let queue=[],qi=0;
+let audioState="idle";              // idle | playing | paused
+let selectedVoice=null;
+let speakToken=0;                   // invalidates stale utterance callbacks
+let durations=[],starts=[],totalDur=0;
+let lastSyncElapsed=0,lastSyncWall=0,playElapsed=0,scrubbing=false;
+const playBtn=document.getElementById("playBtn");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+const track=document.getElementById("track");
+const tFill=document.getElementById("tFill");
+const tHandle=document.getElementById("tHandle");
+const tCur=document.getElementById("tCur");
+const tTot=document.getElementById("tTot");
+const ticksEl=document.getElementById("ticks");
+
+function loadVoice(){
+  if(!(!!window.speechSynthesis)) return;
+  const all=speechSynthesis.getVoices();
+  if(!all.length) return; // fires again via onvoiceschanged
+  // macOS/iOS list joke voices (Albert, Bubbles, Bad News…) as en-US, and they
+  // sort first alphabetically — never pick those.
+  const NOVELTY=/^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/i;
+  const en=all.filter(v=>/^en/i.test(v.lang)&&!NOVELTY.test(v.name));
+  const us=en.filter(v=>/en[-_]?US/i.test(v.lang));
+  const PREFERRED=[/^Google US English$/,/Microsoft (Aria|Jenny|Ava|Andrew|Emma|Guy).*Natural/i,/^Samantha/,/^Ava/,/^Allison/,/^Alex$/,/Microsoft (Zira|David)/i];
+  selectedVoice=null;
+  for(const re of PREFERRED){ selectedVoice=us.find(v=>re.test(v.name)); if(selectedVoice)break; }
+  selectedVoice = selectedVoice ||
+    us.find(v=>v.default) || us.find(v=>v.localService) || us[0] ||   // any normal US English
+    en[0] || null;                                                   // any English (else browser default)
+}
+if(!!window.speechSynthesis){
+  loadVoice();
+  speechSynthesis.onvoiceschanged=loadVoice;
+}
+
+// --- Spoken-only number normalization -------------------------------------
+// Converts figures to written words for the TTS engine ONLY. The displayed
+// reading text is never touched. e.g. "$1.1 trillion" is spoken as
+// "one point one trillion dollars" instead of "one dollar one trillion".
+const _ones=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+const _tens=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+function _threeDigits(n){
+  let s="";
+  if(n>=100){ s+=_ones[Math.floor(n/100)]+" hundred"; n%=100; if(n)s+=" "; }
+  if(n>=20){ s+=_tens[Math.floor(n/10)]; const r=n%10; if(r)s+="-"+_ones[r]; }
+  else if(n>0){ s+=_ones[n]; }
+  return s;
+}
+function _intToWords(n){
+  if(n===0)return "zero";
+  const groups=["","thousand","million","billion","trillion","quadrillion"];
+  let parts=[],g=0;
+  while(n>0){ const c=n%1000; if(c)parts.unshift(_threeDigits(c)+(groups[g]?" "+groups[g]:"")); n=Math.floor(n/1000); g++; }
+  return parts.join(" ");
+}
+function numToWords(numStr){
+  numStr=numStr.replace(/,/g,"");
+  if(numStr.includes(".")){
+    const p=numStr.split(".");
+    return _intToWords(parseInt(p[0]||"0",10))+" point "+p[1].split("").map(d=>_ones[+d]).join(" ");
+  }
+  return _intToWords(parseInt(numStr,10));
+}
+function speechText(t){
+  return t
+    // "U.S." -> "US" so the voice reads it as letters ("you ess") and the
+    // sentence splitter doesn't break at the dots. Keep one period only when
+    // it genuinely ends a sentence (next word is capitalized).
+    .replace(/\bU\.S\.A\./g,"USA")
+    .replace(/\bU\.S\.(?=\s+[A-Z])/g,"US.")
+    .replace(/\bU\.S\./g,"US")
+    // $X[.Y] trillion/billion/million  ->  words + magnitude + "dollars"
+    .replace(/\$(\d[\d,]*(?:\.\d+)?)\s+(trillion|billion|million)/gi,(m,n,mag)=>numToWords(n)+" "+mag.toLowerCase()+" dollars")
+    // remaining $X  ->  words + "dollar(s)"
+    .replace(/\$(\d[\d,]*(?:\.\d+)?)/g,(m,n)=>numToWords(n)+(n==="1"?" dollar":" dollars"))
+    // X%  ->  words + "percent"
+    .replace(/(\d[\d,]*(?:\.\d+)?)%/g,(m,n)=>numToWords(n)+" percent")
+    // standalone figures (skips ordinals like "20th" — digits followed by a letter)
+    .replace(/\b(\d[\d,]*(?:\.\d+)?)\b(?![\d.,%]|[A-Za-z])/g,(m,n)=>numToWords(n));
+}
+function buildChunks(){
+  const d=cur();
+  const chunks=[{text:speechText(d.title.replace(/[.?!]+$/,""))+".",pauseAfter:2000}];
+  d.paragraphs.forEach(p=>{const sp=speechText(p);(sp.match(/[^.!?]+[.!?]+/g)||[sp]).forEach(s=>{const t=s.trim();if(t)splitLong(t).forEach(x=>chunks.push({text:x,pauseAfter:0}));});});
+  return chunks;
+}
+// Chrome's Google voices cut off any single utterance after ~15 s and then never
+// fire onend, which freezes playback. Split long sentences at commas/dashes so
+// each piece stays well under that, even at the slowest speed.
+const MAX_WORDS=20;
+function splitLong(t){
+  const n=s=>s.trim().split(/\s+/).length;
+  if(n(t)<=MAX_WORDS) return [t];
+  const parts=t.split(/(?<=[,;:—–])\s+/);
+  const out=[];let buf="";
+  parts.forEach(pt=>{
+    if(buf && n(buf+" "+pt)>MAX_WORDS){out.push(buf);buf=pt;}
+    else buf=buf?buf+" "+pt:pt;
+  });
+  if(buf)out.push(buf);
+  // a single comma-free run that is still too long: cut it at word boundaries
+  return out.flatMap(s=>{
+    if(n(s)<=MAX_WORDS+6) return [s];
+    const w=s.split(/\s+/),r=[];for(let i=0;i<w.length;i+=MAX_WORDS)r.push(w.slice(i,i+MAX_WORDS).join(" "));return r;
+  });
+}
+/* ----- audio script for the MP3 generator -------------------------------------
+   GitHub (tools/make_audio.py) calls this to get exactly what the page would say
+   for every version, and records it as MP3. Keys look like "wsj-a2". */
+window.owlishAudioScript=function(){
+  const keep=[currentSource,currentLevel],out={};
+  SRC_ORDER.forEach(s=>LVL_ORDER.forEach(l=>{
+    currentSource=s;currentLevel=l;
+    out[s+"-"+l]=buildChunks().map(c=>({text:c.text,pauseAfter:c.pauseAfter||0}));
+  }));
+  [currentSource,currentLevel]=keep;
+  return out;
+};
+
+/* ----- recorded audio (MP3) ------------------------------------------------------
+   If GitHub has made an MP3 for this version and its text still matches the page,
+   play that: it works inside the Naver/KakaoTalk app browsers, speed is exact, and
+   pause/seek are real. Otherwise fall back to the browser's own voice below. */
+const AUDIO_BASE=(location.pathname.split("/").pop()||"").replace(/\.html$/i,"")||"musk-trillionaire-3sources";
+let MANIFEST=null, mode="tts";
+const audioEl=new Audio();
+audioEl.preload="auto";
+try{audioEl.preservesPitch=true;audioEl.webkitPreservesPitch=true;}catch(_){}
+function versionKey(){return currentSource+"-"+currentLevel;}
+function mp3For(){
+  if(!MANIFEST||!MANIFEST.versions)return null;
+  const v=MANIFEST.versions[versionKey()];
+  if(!v)return null;
+  const now=buildChunks().map(c=>c.text).join("\n");
+  return v.text===now?v:null;           // text edited since the MP3 was made -> don't use it
+}
+function useMp3IfReady(){
+  const v=mp3For();
+  if(!v){mode="tts";return false;}
+  mode="mp3";
+  const url="audio/"+AUDIO_BASE+"/"+v.file+(MANIFEST.build?"?v="+MANIFEST.build:"");
+  if(audioEl.dataset.src!==url){audioEl.src=url;audioEl.dataset.src=url;}
+  audioEl.playbackRate=rate;
+  starts=v.starts.slice();totalDur=v.duration;
+  if(tTot)tTot.textContent=fmt(totalDur);
+  renderTicks();
+  const box=document.getElementById("appNotice");if(box)box.hidden=true;  // audio will work here
+  return true;
+}
+fetch("audio/"+AUDIO_BASE+"/manifest.json",{cache:"no-cache"})
+  .then(r=>r.ok?r.json():null)
+  .then(m=>{ if(!m)return; MANIFEST=m; if(audioState==="idle"){resetAudio();} })
+  .catch(()=>{});
+audioEl.addEventListener("ended",()=>{ if(mode==="mp3")finishAudio(); });
+audioEl.addEventListener("error",()=>{            // file missing/broken -> browser voice
+  if(mode!=="mp3")return;
+  MANIFEST=null;mode="tts";audioEl.removeAttribute("src");delete audioEl.dataset.src;
+  const wasPlaying=audioState==="playing";resetAudio();
+  showAppNotice(false);
+  if(wasPlaying)togglePlay();
+});
+
+/* ----- timeline model ----------------------------------------------------- */
+const BASE_WPS=2.8;                 // approx words/sec at rate 1 (estimate only)
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+function estimate(){
+  if(mode==="mp3"){audioEl.playbackRate=rate;return;}
+  durations=queue.map(c=>{
+    const words=(c.text.trim().split(/\s+/).length)||1;
+    const speak=Math.max(0.45, words/(BASE_WPS*rate));
+    return speak + (c.pauseAfter||0)/1000 + 0.18;   // + inter-sentence gap
+  });
+  starts=[];let acc=0;durations.forEach(d=>{starts.push(acc);acc+=d;});
+  totalDur=acc;
+  if(tTot)tTot.textContent=fmt(totalDur);
+}
+function renderTicks(){
+  if(!ticksEl)return;ticksEl.innerHTML="";
+  if(totalDur<=0)return;
+  for(let i=1;i<starts.length;i++){
+    const t=document.createElement("i");
+    t.style.left=(starts[i]/totalDur*100)+"%";
+    ticksEl.appendChild(t);
+  }
+}
+function ensureQueue(){
+  if(!queue.length){queue=buildChunks();qi=0;if(!useMp3IfReady()){estimate();renderTicks();}}
+}
+function setUI(){
+  const pct=totalDur>0?Math.min(100,(playElapsed/totalDur)*100):0;
+  if(tFill)tFill.style.width=pct+"%";
+  if(tHandle)tHandle.style.left=pct+"%";
+  if(tCur)tCur.textContent=fmt(playElapsed);
+  if(track)track.setAttribute("aria-valuenow",Math.round(playElapsed));
+  playBtn.textContent = audioState==="playing" ? "⏸ Pause" : (audioState==="paused" ? "▶ Resume" : "▶ Listen");
+  playBtn.classList.toggle("playing", audioState!=="idle");
+}
+function syncTo(i){lastSyncElapsed=starts[i]||0;lastSyncWall=performance.now();playElapsed=lastSyncElapsed;}
+(function raf(){
+  if(audioState==="playing" && !scrubbing){
+    if(mode==="mp3"){playElapsed=Math.min(totalDur,audioEl.currentTime||0);qi=timeToChunk(playElapsed);}
+    else playElapsed=Math.min(totalDur, lastSyncElapsed+(performance.now()-lastSyncWall)/1000);
+    setUI();
+  }
+  requestAnimationFrame(raf);
+})();
+
+/* ----- speaking ----------------------------------------------------------- */
+function playMp3From(i){
+  try{audioEl.currentTime=starts[i]||0;}catch(_){}
+  audioEl.playbackRate=rate;
+  const p=audioEl.play();
+  if(p&&p.catch)p.catch(()=>{audioState="paused";setUI();});   // e.g. autoplay blocked: wait for a tap
+}
+function speakCurrent(){
+  if(mode==="mp3"){ if(audioState!=="playing")return; playMp3From(qi); return; }
+  if(!window.speechSynthesis){audioState="idle";setUI();showAppNotice(true);return;}
+  if(audioState!=="playing")return;
+  if(qi>=queue.length){finishAudio();return;}
+  const myToken=++speakToken;
+  const c=queue[qi];
+  syncTo(qi);
+  const u=new SpeechSynthesisUtterance(c.text);
+  u.rate=rate;
+  if(selectedVoice){u.voice=selectedVoice;u.lang=selectedVoice.lang;}
+  else u.lang="en-US";
+  let done=false;
+  const advance=()=>{
+    if(done)return;done=true;clearTimeout(watchdog);
+    if(myToken!==speakToken||audioState!=="playing")return;  // stale or stopped
+    qi++;
+    if(qi>=queue.length){finishAudio();return;}
+    const gap=c.pauseAfter||0;
+    if(gap) setTimeout(()=>{if(myToken===speakToken&&audioState==="playing")speakCurrent();},gap);
+    else speakCurrent();
+  };
+  u.onend=advance;
+  // a voice that errors out would otherwise leave playback stuck forever
+  u.onerror=e=>{ if(e&&(e.error==="interrupted"||e.error==="canceled"))return; advance(); };
+  // last resort: if the engine never reports the end, move on anyway
+  const words=c.text.split(/\s+/).length;
+  // (generous: twice the slowest plausible speaking time, plus 4 s)
+  const watchdog=setTimeout(()=>{ if(myToken===speakToken&&audioState==="playing"&&!done){(window.speechSynthesis&&speechSynthesis.cancel());advance();} },
+                            (words/(BASE_WPS*0.5*rate))*1000+4000);
+  speechSynthesis.speak(u);
+}
+function finishAudio(){
+  if(mode==="mp3")audioEl.pause();
+  speakToken++;audioState="idle";(window.speechSynthesis&&speechSynthesis.cancel());
+  playElapsed=totalDur;qi=queue.length;setUI();
+}
+function timeToChunk(t){
+  let i=0;for(let k=0;k<starts.length;k++){if(t>=starts[k])i=k;else break;}return i;
+}
+function seekToTime(t,play){
+  ensureQueue();if(totalDur<=0)return;
+  t=Math.max(0,Math.min(totalDur,t));
+  qi=timeToChunk(t);
+  if(mode==="mp3"){
+    playElapsed=starts[qi];
+    if(play){audioState="playing";playMp3From(qi);}
+    else{try{audioEl.currentTime=starts[qi];}catch(_){}}
+    setUI();return;
+  }
+  playElapsed=starts[qi];           // snap handle to the sentence we'll speak
+  syncTo(qi);
+  if(play){audioState="playing";speakToken++;(window.speechSynthesis&&speechSynthesis.cancel());speakCurrent();}
+  setUI();
+}
+
+/* ----- transport controls ------------------------------------------------- */
+/* ----- in-app browsers (KakaoTalk, Naver, Instagram…) ------------------------
+   Links tapped inside these apps open in a built-in browser that often has no
+   speech voice (always on Android). Tell the reader and offer the real browser. */
+const UA=navigator.userAgent||"";
+const IN_APP=/KAKAOTALK|NAVER\(inapp|; ?wv\)|Instagram|FBAN|FBAV|Line\//i.test(UA);
+const IS_ANDROID=/Android/i.test(UA), IS_IOS=/iPhone|iPad|iPod/i.test(UA);
+function externalUrl(){
+  const here=location.href;
+  if(/KAKAOTALK/i.test(UA)) return "kakaotalk://web/openExternal?url="+encodeURIComponent(here);
+  if(IS_ANDROID) return "intent://"+here.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end";
+  return here;
+}
+function showAppNotice(force){
+  const box=document.getElementById("appNotice");if(!box)return;
+  if(mode==="mp3"){box.hidden=true;return;}
+  const noVoice=!(!!window.speechSynthesis);
+  if(!(force||noVoice||IN_APP))return;
+  const msg=document.getElementById("appNoticeMsg"),btn=document.getElementById("appNoticeBtn");
+  if(IS_IOS && !/KAKAOTALK/i.test(UA)){
+    msg.textContent = noVoice
+      ? "이 앱 안에서는 오디오가 나오지 않아요. 앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요."
+      : "소리가 안 나면 앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요.";
+    btn.hidden=true;
+  } else {
+    msg.textContent = noVoice
+      ? "이 앱 안에서는 오디오가 나오지 않아요. 아래 버튼을 눌러 브라우저에서 열어주세요."
+      : "이 앱 안에서는 오디오가 나오지 않을 수 있어요. 소리가 안 나면 브라우저에서 열어주세요.";
+    btn.href=externalUrl();
+  }
+  box.hidden=false;
+}
+showAppNotice(false);
+
+function togglePlay(){
+  ensureQueue();
+  if(mode==="mp3"){
+    if(audioState==="playing"){audioState="paused";audioEl.pause();playElapsed=audioEl.currentTime||0;setUI();}
+    else if(audioState==="paused"){audioState="playing";audioEl.playbackRate=rate;const p=audioEl.play();if(p&&p.catch)p.catch(()=>{audioState="paused";setUI();});setUI();}
+    else{let t=playElapsed;if(t>=totalDur)t=0;seekToTime(t,true);}
+    return;
+  }
+  if(!(!!window.speechSynthesis)){showAppNotice(true);document.getElementById("appNotice").scrollIntoView({behavior:"smooth",block:"center"});return;}
+  ensureQueue();
+  // Pause = stop the voice and remember the sentence; Resume = say that sentence
+  // again. speechSynthesis.pause()/resume() is broken on Chrome's Google voices
+  // and on Android, and it keeps the OLD speed if the speed is changed while paused.
+  if(audioState==="playing"){                       // -> pause
+    audioState="paused";speakToken++;(window.speechSynthesis&&speechSynthesis.cancel());
+    playElapsed=starts[qi]||0;lastSyncElapsed=playElapsed;setUI();
+  } else if(audioState==="paused"){                  // -> resume (current sentence, current speed)
+    audioState="playing";speakCurrent();setUI();
+  } else {                                           // idle -> play
+    let t=playElapsed;if(t>=totalDur)t=0;
+    seekToTime(t,true);
+  }
+}
+function stopTTS(){speakToken++;audioState="idle";(window.speechSynthesis&&speechSynthesis.cancel());try{audioEl.pause();}catch(_){}}
+function resetAudio(){
+  stopTTS();queue=[];qi=0;playElapsed=0;
+  ensureQueue();playElapsed=0;setUI();
+}
+playBtn.onclick=togglePlay;
+prevBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.max(0,qi-1)]||0,true);};
+nextBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.min(queue.length-1,qi+1)]||0,true);};
+
+/* ----- scrubbing ---------------------------------------------------------- */
+function clientXToTime(clientX){
+  const r=track.getBoundingClientRect();
+  const frac=Math.max(0,Math.min(1,(clientX-r.left)/r.width));
+  return frac*totalDur;
+}
+track.addEventListener("pointerdown",e=>{
+  ensureQueue();if(totalDur<=0)return;
+  scrubbing=true;try{track.setPointerCapture(e.pointerId);}catch(_){}
+  playElapsed=clientXToTime(e.clientX);setUI();
+});
+track.addEventListener("pointermove",e=>{
+  if(!scrubbing)return;playElapsed=clientXToTime(e.clientX);setUI();
+});
+function endScrub(e){
+  if(!scrubbing)return;scrubbing=false;
+  try{track.releasePointerCapture(e.pointerId);}catch(_){}
+  seekToTime(clientXToTime(e.clientX),true);
+}
+track.addEventListener("pointerup",endScrub);
+track.addEventListener("pointercancel",endScrub);
+track.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"){e.preventDefault();nextBtn.onclick();}
+  else if(e.key==="ArrowLeft"){e.preventDefault();prevBtn.onclick();}
+  else if(e.key===" "||e.key==="Enter"){e.preventDefault();togglePlay();}
+});
+
+/* ----- speed -------------------------------------------------------------- */
+document.querySelectorAll(".speeds button").forEach(b=>{
+  b.onclick=()=>{
+    const wasPlaying=audioState==="playing",at=qi;
+    rate=parseFloat(b.dataset.rate);
+    document.querySelectorAll(".speeds button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    if(mode==="mp3"){audioEl.playbackRate=rate;return;}
+    if(queue.length){estimate();renderTicks();}
+    if(wasPlaying){seekToTime(starts[at]||0,true);}
+    else{if(queue.length)playElapsed=starts[Math.min(qi,starts.length-1)]||0;setUI();}
+  };
+});
+
+/* ===================== PDF ===================== */
+function buildDoc(items, combined){
+  const { jsPDF }=window.jspdf;
+  const doc=new jsPDF({unit:"pt",format:"a4"});
+  const M=48,W=595,RW=W-M*2,BOTTOM=792,L=["A","B","C","D"];
+  let y=54;
+  const H=()=>{doc.setFont("helvetica","bold");doc.setFontSize(15);doc.setTextColor(14,76,79);doc.text("Owlish English",M,y);
+    doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(120);doc.text("Graded Reading Worksheet",W-M,y,{align:"right"});
+    y+=10;doc.setDrawColor(224,138,43);doc.setLineWidth(1.5);doc.line(M,y,W-M,y);y+=22;doc.setTextColor(20);};
+  const newPage=(withHead)=>{doc.addPage();y=54;if(withHead)H();};
+  const need=(hh)=>{if(y+hh>BOTTOM)newPage(true);};
+  const h3=(t)=>{need(34);doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(14,76,79);doc.text(t,M,y);y+=6;doc.setDrawColor(230);doc.setLineWidth(.6);doc.line(M,y,W-M,y);y+=16;doc.setTextColor(20);};
+  const para=(t,size,gap)=>{doc.setFont("helvetica","normal");doc.setFontSize(size);doc.splitTextToSize(t,RW).forEach(ln=>{need(size*1.4);doc.text(ln,M,y);y+=size*1.4;});y+=(gap||6);};
+  const mc=(it,i)=>{need(24);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.splitTextToSize(`${i+1}. ${it[0]}`,RW).forEach(ln=>{need(14);doc.text(ln,M,y);y+=14;});
+    doc.setFont("helvetica","normal");it[1].forEach((o,oi)=>{doc.splitTextToSize(`${L[oi]}. ${o}`,RW-24).forEach(ln=>{need(13);doc.text(ln,M+18,y);y+=13;});});y+=8;};
+
+  if(combined){
+    H();
+    doc.setFont("helvetica","bold");doc.setFontSize(20);doc.text("Elon Musk: The World's First Trillionaire",M,y+8);y+=38;
+    doc.setFont("helvetica","normal");doc.setFontSize(12);doc.setTextColor(90);
+    doc.text("Graded reading pack — 3 sources × 3 levels (Original / A2 / B1–B2)",M,y);y+=22;doc.setTextColor(20);
+    doc.setFontSize(11);
+    items.forEach((it,i)=>{const s=SOURCES[it.src],lv=s.levels[it.lvl];need(15);doc.text(`${i+1}.  ${s.outlet} — ${lv.name}`,M+10,y);y+=15;});
+  }
+
+  let firstDone=false;
+  items.forEach(it=>{
+    const s=SOURCES[it.src], d=s.levels[it.lvl];
+    if(combined||firstDone) newPage(false);
+    H();
+    doc.setFont("helvetica","bold");doc.setFontSize(16);doc.splitTextToSize(d.title,RW).forEach(ln=>{doc.text(ln,M,y);y+=18;});
+    doc.setFont("helvetica","normal");doc.setFontSize(10);doc.setTextColor(110);
+    doc.text(`${s.outlet}${s.byline?" ("+s.byline+")":""}  ·  Level: ${d.label}`,M,y);y+=13;
+    doc.splitTextToSize(`Source: ${s.url}`,RW).forEach(ln=>{doc.text(ln,M,y);y+=12;});
+    doc.setTextColor(20);y+=8;
+    if(!combined){doc.setFontSize(11);doc.text("Name: ______________________________",M,y);doc.text("Date: ________________",W-M-150,y);y+=22;}
+    h3("Reading");
+    doc.setFont("helvetica","bold");doc.setFontSize(12);need(18);doc.splitTextToSize(d.title,RW).forEach(ln=>{doc.text(ln,M,y);y+=16;});
+    d.paragraphs.forEach(p=>para(p,11,8));y+=4;
+    h3("Vocabulary");
+    d.vocab.forEach(v=>{need(20);doc.setFont("helvetica","bold");doc.setFontSize(11);const wl=doc.splitTextToSize(`${v[0]} (${v[1]})`,150);doc.text(wl,M,y);doc.setFont("helvetica","normal");const dl=doc.splitTextToSize(v[2],RW-160);doc.text(dl,M+160,y);y+=Math.max(wl.length,dl.length)*13+5;});y+=4;
+    h3("Vocab Quiz  (circle the best answer)");
+    d.vocabQuiz.forEach((q,i)=>mc(q,i));
+    h3("Comprehension  (circle the best answer)");
+    d.comp.forEach((q,i)=>mc(q,i));
+    if(!combined){
+      newPage(false);H();h3("Answer Key");
+      doc.setFont("helvetica","normal");doc.setFontSize(11);
+      const vk=d.vocabQuiz.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ");
+      const ck=d.comp.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ");
+      doc.setFont("helvetica","bold");doc.text("Vocab Quiz:",M,y);doc.setFont("helvetica","normal");doc.text(vk,M+78,y);y+=18;
+      doc.setFont("helvetica","bold");doc.text("Comprehension:",M,y);doc.setFont("helvetica","normal");doc.text(ck,M+98,y);y+=18;
+    }
+    firstDone=true;
+  });
+
+  if(combined){
+    newPage(false);H();h3("Answer Keys — all readings");
+    items.forEach(it=>{
+      const s=SOURCES[it.src],d=s.levels[it.lvl];
+      need(42);
+      doc.setFont("helvetica","bold");doc.setFontSize(11);doc.setTextColor(14,76,79);doc.text(`${s.outlet} — ${d.name}`,M,y);y+=14;doc.setTextColor(20);
+      doc.setFont("helvetica","normal");
+      doc.text(`Vocab: ${d.vocabQuiz.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ")}`,M+10,y);y+=13;
+      doc.text(`Comprehension: ${d.comp.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ")}`,M+10,y);y+=16;
+    });
+  }
+
+  const pages=doc.getNumberOfPages();
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(140);doc.text("Owlish English",M,812);doc.text(`Page ${p} of ${pages}`,W-M,812,{align:"right"});}
+  return doc;
+}
+document.getElementById("pdfBtn").onclick=()=>{
+  buildDoc([{src:currentSource,lvl:currentLevel}],false)
+    .save(`Owlish-Musk-${SOURCES[currentSource].short}-${cur().name}.pdf`);
+};
+document.getElementById("pdfAllBtn").onclick=()=>{
+  const items=[];
+  SRC_ORDER.forEach(s=>LVL_ORDER.forEach(l=>items.push({src:s,lvl:l})));
+  buildDoc(items,true).save("Owlish-Musk-Trillionaire-ALL-9.pdf");
+};
+
+/* ===================== INIT ===================== */
+buildSourceToggle();
+buildLevelToggle();
+renderLevel();
+window.addEventListener("beforeunload",stopTTS);
+// phones stop the voice when the screen locks or the app is switched; pause
+// cleanly so Resume picks up at the same sentence instead of skipping ahead
+document.addEventListener("visibilitychange",()=>{ if(document.hidden&&audioState==="playing"&&mode!=="mp3")togglePlay(); });
+</script>
+</body>
+</html>

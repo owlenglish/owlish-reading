@@ -1,0 +1,43 @@
+# Makes MP3 audio for readings automatically.
+# Upload a reading .html -> a few minutes later audio/<reading>/ appears and the
+# page plays it (works inside the Naver and KakaoTalk app browsers too).
+name: Make reading audio
+
+on:
+  push:
+    branches: [main]
+    paths: ["*.html", "tools/make_audio.py", ".github/workflows/audio.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: reading-audio
+  cancel-in-progress: false
+
+jobs:
+  audio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install tools
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q "edge-tts>=7.0.0" playwright
+          python -m playwright install --with-deps chromium
+      - name: Make audio
+        run: python tools/make_audio.py
+      - name: Save audio
+        run: |
+          git add audio
+          if git diff --cached --quiet; then echo "No audio changes"; exit 0; fi
+          git config user.name "owlish-audio-bot"
+          git config user.email "owlish-audio-bot@users.noreply.github.com"
+          git commit -m "Update reading audio"
+          git pull --rebase origin main
+          git push
