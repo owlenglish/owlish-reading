@@ -1,80 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Owlish English — Reading Library</title>
+<meta name="description" content="레벨별 영어 리딩과 오디오를 무료로. 직장인을 위한 1:1 Zoom 영어 수업, Owlish English.">
+<meta property="og:title" content="Owlish English — Reading Library">
+<meta property="og:description" content="내 레벨로 읽고, 들으면서 배우는 영어. 무료 리딩과 1:1 Zoom 수업.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
   :root{
-    --paper:#f6f2e9;--ink:#22201c;--muted:#6b6358;--line:#d8cfbe;--card:#fffdf8;
-    --shadow:0 1px 0 rgba(0,0,0,.04), 0 14px 34px -20px rgba(40,30,10,.4);
+    --mint-50:#F4FBF7; --mint-100:#E6F6EE; --mint-200:#D3EFE1; --mint-300:#B9E4CE;
+    --coral:#E8514A; --coral-deep:#D6403A;
+    --ink:#2B3142; --muted:#586074; --line:#D2E6DB; --white:#FFFFFF;
+    --display:"Bricolage Grotesque","Pretendard Variable",Pretendard,system-ui,sans-serif;
+    --text:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
   }
   *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  html{scroll-behavior:smooth}
   body{
-    margin:0;padding:0 18px 90px;
-    background:
-      radial-gradient(circle at 12% -10%, #fbf7ee 0, transparent 45%),
-      radial-gradient(circle at 100% 0, #f0eadc 0, transparent 40%),
-      var(--paper);
-    color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.7;
+    margin:0;background:var(--mint-50);color:var(--ink);
+    font-family:var(--text);font-size:17px;line-height:1.7;word-break:keep-all;
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:820px;margin:0 auto}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
 
-  header.mast{padding:46px 0 22px;border-bottom:2px solid var(--ink);margin-bottom:26px}
-  .brand{display:flex;align-items:center;gap:12px}
-  .owl{font-size:34px;line-height:1}
-  .brandtext{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
-  h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(32px,6vw,50px);line-height:1.04;margin:.2em 0 .18em;letter-spacing:-.01em}
-  .lede{font-family:"Newsreader",serif;font-style:italic;color:var(--muted);font-size:20px;margin:0;max-width:60ch}
+  /* ── Hero ── */
+  .hero{background:var(--mint-200);border-radius:0 0 44px 44px;padding-bottom:56px}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+  .wordmark{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.01em;text-decoration:none}
+  .pill{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
+    font-weight:700;font-size:15px;line-height:1;padding:12px 20px;border-radius:999px;
+    border:2px solid var(--ink);color:var(--ink);background:transparent;
+    transition:background .15s ease,color .15s ease}
+  .pill:hover{background:var(--ink);color:var(--white)}
+  .pill.solid{background:var(--coral-deep);border-color:var(--coral-deep);color:var(--white)}
+  .pill.solid:hover{background:var(--ink);border-color:var(--ink)}
 
-  .count{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;color:var(--muted);
-    text-transform:uppercase;margin:0 0 14px;min-height:16px}
+  .herogrid{display:grid;gap:30px;align-items:center;padding-top:14px}
+  .owl{justify-self:start;--eye:clamp(78px,24vw,128px);
+    background:var(--mint-300);border-radius:50%;
+    padding:calc(var(--eye)*.42) calc(var(--eye)*.34) calc(var(--eye)*.5);
+    position:relative;display:flex;gap:calc(var(--eye)*.14)}
+  .eye{width:var(--eye);height:var(--eye);border-radius:50%;background:var(--white);
+    border:calc(var(--eye)*.15) solid var(--coral);position:relative;--px:0px;--py:0px}
+  .pupil{position:absolute;left:50%;top:50%;width:34%;height:34%;border-radius:50%;background:var(--ink);
+    transform:translate(calc(-50% + var(--px)),calc(-50% + var(--py)));transition:transform .12s ease-out}
+  .beak{position:absolute;left:50%;bottom:calc(var(--eye)*.2);width:calc(var(--eye)*.2);height:calc(var(--eye)*.2);
+    background:var(--coral);transform:translateX(-50%) rotate(45deg);border-radius:3px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,6.2vw,54px);line-height:1.16;
+    letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
+  .sub{font-size:19px;color:var(--ink);max-width:34em;margin:0 0 26px}
+  .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .cta .pill{padding:15px 24px;font-size:16px}
 
-  .grid{display:grid;gap:18px}
-  .card{
-    display:block;text-decoration:none;color:inherit;background:var(--card);
-    border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);
-    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  @media (min-width:760px){
+    .herogrid{grid-template-columns:1.4fr .6fr;gap:40px}
+    .owl{order:2;justify-self:center;--eye:clamp(96px,14vw,128px)}
   }
-  .card:hover{transform:translateY(-3px);box-shadow:0 1px 0 rgba(0,0,0,.04),0 22px 44px -22px rgba(40,30,10,.5);border-color:#c8bda7}
-  .card h2{font-family:"Fraunces",serif;font-weight:600;font-size:25px;line-height:1.15;margin:0 0 .25em}
-  .card p{margin:0 0 14px;color:var(--muted);font-size:17px}
-  .levels{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-  .lv{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.04em;
-    color:#fff;background:#6b6358;padding:3px 9px;border-radius:6px}
-  .lv.a1{background:#c2603a}.lv.a2{background:#c9942f}.lv.b1{background:#2f7d5b}.lv.c1{background:#2f6f8f}.lv.c2{background:#5b4b8a}
-  .go{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
-  .card:hover .go{color:#000}
 
-  .msg{background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:26px;color:var(--muted);text-align:center}
+  /* ── Readings ── */
+  .readings{padding-top:48px}
+  .rhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:16px}
+  h2{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.5vw,34px);line-height:1.2;letter-spacing:-.02em;margin:0}
+  .count{color:var(--muted);font-size:15px;font-weight:600}
+  .list{background:var(--white);border:1px solid var(--line);border-radius:28px;overflow:hidden}
+  .row{display:grid;gap:18px;padding:26px 28px;text-decoration:none;color:inherit;
+    border-top:1px solid var(--line);transition:background .15s ease}
+  .row:first-child{border-top:0}
+  .row:hover{background:var(--mint-100)}
+  .row h3{font-family:var(--display);font-weight:700;font-size:24px;line-height:1.22;letter-spacing:-.015em;margin:0 0 6px}
+  .row p{margin:0;color:var(--muted);font-size:16px;line-height:1.6;max-width:44em}
+  .side{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+  .lvwrap{display:inline-flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+  .ladder{display:inline-flex;align-items:flex-end;gap:6px}
+  .xtag{font-size:12px;font-weight:800;color:var(--ink);background:var(--mint-200);border-radius:999px;padding:5px 11px;line-height:1}
+  .step{display:flex;flex-direction:column;align-items:center;gap:4px;width:26px}
+  .step i{display:block;width:100%;height:var(--h);border-radius:7px 7px 3px 3px;background:var(--mint-200)}
+  .step b{font-size:12px;font-weight:600;color:#8A93A5;line-height:1}
+  .step.on i{background:var(--coral)}
+  .step.on b{color:var(--ink);font-weight:800}
+  .readbtn{font-weight:800;font-size:15px;padding:11px 20px;border-radius:999px;background:var(--ink);color:var(--white);
+    transition:background .15s ease}
+  .row:hover .readbtn{background:var(--coral-deep)}
+  .msg{padding:34px 28px;color:var(--muted);text-align:center}
+  .note{color:var(--muted);font-size:15px;margin:14px 4px 0}
 
-  footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);
-    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;color:var(--muted);text-align:center}
+  @media (min-width:700px){
+    .row{grid-template-columns:1fr auto;align-items:center;gap:32px}
+    .side{flex-direction:column;align-items:flex-end;gap:14px}
+  }
+
+  /* ── About ── */
+  .about{background:var(--ink);color:#F1F6F3;margin-top:64px;border-radius:40px 40px 0 0;padding:56px 0 60px}
+  .about h2{color:var(--white);margin-bottom:14px}
+  .about p{max-width:36em;margin:0 0 .9em;font-size:18px;line-height:1.75}
+  .about p.dim{color:#B7C4BD;font-size:16px}
+
+  /* ── Contact ── */
+  .contact{background:var(--mint-200);padding:56px 0 64px}
+  .contact h2{margin-bottom:10px}
+  .contact p{max-width:34em;margin:0 0 20px;font-size:18px}
+  .contact p.en{color:var(--muted);font-size:15px;margin:18px 0 0}
+  .contact .pill{padding:16px 26px;font-size:17px}
+  .actions{display:flex;gap:12px;flex-wrap:wrap}
+
+  footer{background:var(--mint-200);padding:0 0 36px;color:var(--muted);font-size:14px;text-align:center}
+
+  @media (max-width:520px){
+    .row{padding:22px 20px}
+    .actions .pill,.cta .pill{width:100%}
+    .hero{border-radius:0 0 32px 32px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .pupil,.row,.pill,.readbtn{transition:none}
+  }
 </style>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<div class="wrap">
 
-  <header class="mast">
-    <div class="brand"><span class="owl">🦉</span><span class="brandtext">Owlish English</span></div>
-    <h1>Reading Library</h1>
-    <p class="lede">Graded readings with read-aloud audio — choose your level, listen, and answer along.</p>
-  </header>
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav">
+      <a class="wordmark" href="#top">Owlish English</a>
+      <a class="pill" href="#contact">문의하기</a>
+    </nav>
+    <div class="herogrid" id="top">
+      <div class="owl" aria-hidden="true">
+        <div class="eye"><div class="pupil"></div></div>
+        <div class="eye"><div class="pupil"></div></div>
+        <div class="beak"></div>
+      </div>
+      <div>
+        <h1>내 레벨로 읽고,<br>들으면서 배우는 영어</h1>
+        <p class="sub">시사 기사를 초급부터 고급까지 레벨별 리딩으로 만들었어요. 오디오와 함께 무료로 읽어보세요.</p>
+        <div class="cta">
+          <a class="pill solid" href="#readings">무료 리딩 읽기</a>
+          <a class="pill" href="#contact">1:1 수업 문의</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <p class="count" id="count">Loading readings…</p>
-  <div class="grid" id="grid"></div>
+<main>
+  <section class="readings wrap" id="readings">
+    <div class="rhead">
+      <h2>무료 영어 리딩</h2>
+      <span class="count" id="count">불러오는 중…</span>
+    </div>
+    <div class="list" id="grid"></div>
+    <p class="note">모든 리딩에 자연스러운 AI 음성 오디오가 있어요. 휴대폰과 네이버·카카오톡 앱 안에서도 들을 수 있어요.</p>
+  </section>
+</main>
 
-  <footer>Owlish English · Reading Library</footer>
-</div>
+<section class="about" id="about">
+  <div class="wrap">
+    <h2>안녕하세요, April이에요</h2>
+    <p>미국에서 14년을 살았고, 지금은 직장인과 성인 학습자를 위한 1:1 Zoom 영어 수업을 하고 있어요.</p>
+    <p class="dim">이 리딩은 실제 기사로 제가 직접 만든 자료예요. 수업에서도 이런 자료를 함께 써요.</p>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>1:1 수업이 궁금하다면</h2>
+    <p>레벨과 목표를 먼저 이야기해요. 편하게 메시지 주세요.</p>
+    <div class="actions">
+      <a class="pill solid" id="talk" href="https://talk.naver.com/w5xkjw" target="_blank" rel="noopener">네이버 톡톡으로 문의하기</a>
+      <a class="pill" id="blog" href="#" target="_blank" rel="noopener" hidden>블로그 보기</a>
+    </div>
+    <p class="en">1:1 Zoom English lessons for working adults. Message me on Naver Talk.</p>
+  </div>
+</section>
+
+<footer>Owlish English</footer>
+
+<script>
+  /* ───────────────────────────────────────────────────────────────────────
+     CONTACT LINKS — edit here only.
+     Leave BLOG_URL empty ("") to hide the blog button.
+     ─────────────────────────────────────────────────────────────────────── */
+  const BLOG_URL = "";
+  (function(){
+    if(BLOG_URL){
+      var b = document.getElementById("blog");
+      b.href = BLOG_URL;
+      b.hidden = false;
+    }
+  })();
+</script>
+
+<script>
+  /* Owl pupils follow the pointer (or a finger dragging). Off when reduced motion is set. */
+  (function(){
+    var eyes = [].slice.call(document.querySelectorAll(".eye"));
+    if(!eyes.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    function look(x, y){
+      eyes.forEach(function(e){
+        var r = e.getBoundingClientRect();
+        var dx = x - (r.left + r.width/2), dy = y - (r.top + r.height/2);
+        var d = Math.sqrt(dx*dx + dy*dy) || 1;
+        var reach = r.width * 0.17 * Math.min(1, d/180);
+        e.style.setProperty("--px", (dx/d*reach) + "px");
+        e.style.setProperty("--py", (dy/d*reach) + "px");
+      });
+    }
+    window.addEventListener("pointermove", function(ev){ look(ev.clientX, ev.clientY); }, {passive:true});
+  })();
+</script>
 
 <script>
   /* ───────────────────────────────────────────────────────────────────────
      AUTO-DETECTING LIBRARY
-     This page reads the repo's file list and builds a card for every reading
+     This page reads the repo's file list and builds a row for every reading
      it finds. To add a new reading: just upload its .html file to this repo.
      Each reading describes itself with these tags in its <head>:
          <meta name="reading-title"  content="…">
@@ -82,6 +232,8 @@
          <meta name="reading-levels" content="A2,B1,C1">
          <meta name="reading-order"  content="2">   (optional; lower = higher up)
      You never need to edit this file again.
+     NOTE: every .html file in the repo except index.html becomes a row, so
+     keep all extra page content (about, contact) inside this index.html.
      ─────────────────────────────────────────────────────────────────────── */
   const OWNER = "owlenglish";
   const REPO  = "owlish-reading";
@@ -93,28 +245,59 @@
       levels:["a1","a2","b1","c1","c2"], file:"kimchi.html", order:1 },
     { title:"Can a Sugar Pill Really Heal You?",
       desc:"The placebo effect — how belief, expectation, and care produce real, measurable healing.",
-      levels:["a2","b1","c1"], file:"placebo.html", order:2 }
+      levels:["a2","b1","c1"], file:"placebo.html", order:2 },
+    { title:"Elon Musk: The World's First Trillionaire (3 sources)",
+      desc:"One topic, three news sources (WSJ, Forbes, Reuters). Each source graded into Original, A2, and B1–B2 with a vocab quiz and MC comprehension.",
+      levels:["Original","A2","B1-B2"], file:"musk-trillionaire-3sources.html", order:3 }
   ];
+
+  const SLOTS = ["a1","a2","b1","b2","c1","c2"];
+  const HEIGHTS = { a1:10, a2:16, b1:22, b2:28, c1:34, c2:40 };
 
   const grid = document.getElementById("grid");
   const count = document.getElementById("count");
 
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; });
+  }
+
+  // Levels come from each reading's <meta name="reading-levels">. CEFR levels fill the
+  // staircase (ranges like "B1-B2" light both steps); anything else, e.g. "Original"
+  // for the untouched news text, shows as a small tag next to it.
+  function ladder(levels){
+    var have = [], extra = [];
+    (levels||[]).forEach(function(l){
+      var k = String(l).trim().toLowerCase(), m = k.match(/^([abc][12])\s*[-\u2013~]\s*([abc][12])$/);
+      if(m){ var a=SLOTS.indexOf(m[1]), z=SLOTS.indexOf(m[2]); if(a>-1&&z>=a){ SLOTS.slice(a,z+1).forEach(function(s){ have.push(s); }); return; } }
+      if(SLOTS.indexOf(k) > -1) have.push(k);
+      else if(k) extra.push(k.charAt(0).toUpperCase()+k.slice(1));
+    });
+    var names = SLOTS.filter(function(s){ return have.indexOf(s) > -1; }).map(function(s){ return s.toUpperCase(); });
+    var html = "";
+    if(names.length){
+      html += '<span class="ladder" role="img" aria-label="레벨 '+names.concat(extra).join(", ")+'">'
+            + SLOTS.map(function(s){
+                return '<span class="step'+(have.indexOf(s) > -1 ? ' on' : '')+'" style="--h:'+HEIGHTS[s]+'px" aria-hidden="true">'
+                     + '<i></i><b>'+s.toUpperCase()+'</b></span>';
+              }).join("")
+            + '</span>';
+    }
+    if(extra.length) html += extra.map(function(x){ return '<span class="xtag">'+esc(x)+'</span>'; }).join("");
+    return html ? '<span class="lvwrap">'+html+'</span>' : "";
+  }
+
   function render(readings){
     if(!readings.length){
       count.textContent = "";
-      grid.innerHTML = '<div class="msg">No readings yet — upload one to this repo and it will appear here.</div>';
+      grid.innerHTML = '<div class="msg">아직 리딩이 없어요. 곧 새 리딩이 올라와요.</div>';
       return;
     }
     readings.sort(function(a,b){ return (a.order||999)-(b.order||999) || a.title.localeCompare(b.title); });
-    count.textContent = readings.length + (readings.length===1 ? " reading" : " readings");
+    count.textContent = "리딩 " + readings.length + "개";
     grid.innerHTML = readings.map(function(r){
-      return '<a class="card" href="'+r.file+'">'
-           +   '<h2>'+r.title+'</h2>'
-           +   (r.desc ? '<p>'+r.desc+'</p>' : '')
-           +   '<div class="levels">'
-           +     (r.levels||[]).map(function(l){ return '<span class="lv '+l+'">'+l.toUpperCase()+'</span>'; }).join('')
-           +     '<span class="go">Open &rarr;</span>'
-           +   '</div>'
+      return '<a class="row" href="'+esc(r.file)+'">'
+           +   '<div class="rtext"><h3>'+esc(r.title)+'</h3>'+(r.desc ? '<p>'+esc(r.desc)+'</p>' : '')+'</div>'
+           +   '<div class="side">'+ladder(r.levels)+'<span class="readbtn">읽기</span></div>'
            + '</a>';
     }).join("");
   }
