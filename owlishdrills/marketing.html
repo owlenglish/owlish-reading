@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="owlish-title" content="SPA Chart Chunks — Marketing Edition (Self-Drill)">
+<meta name="owlish-department" content="Marketing / Analytics">
+<title>SPA Chart Chunks — Marketing Edition · Owlish English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#14213d; --data:#2a6f97; --data2:#bc4749; --amber:#e09f3e;
+    --paper:#ffffff; --panel:#f4f6f9; --line:#dde3ea; --muted:#5b6b7b;
+    --good:#2f855a; --slow:#b7791f; --miss:#c53030;
+    --shadow:0 1px 2px rgba(20,33,61,.06),0 8px 24px rgba(20,33,61,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);
+    background:var(--panel);line-height:1.55;-webkit-font-smoothing:antialiased;padding:24px 16px 64px}
+  .wrap{max-width:760px;margin:0 auto}
+  header.top{margin-bottom:18px}
+  .eyebrow{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--data);margin:0 0 6px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.55rem;line-height:1.15;margin:0 0 8px;letter-spacing:-.01em}
+  .lede{color:var(--muted);font-size:.95rem;margin:0}
+  .how{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:16px 0 0;
+    font-size:.9rem;color:var(--muted);box-shadow:var(--shadow)}
+  .how b{color:var(--ink)}
+  .how ol{margin:8px 0 0;padding-left:20px}
+  .how li{margin:3px 0}
+  details.bank{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  details.bank summary{cursor:pointer;font-family:"Space Grotesk",sans-serif;font-weight:600;color:var(--data);font-size:.9rem}
+  details.bank dl{margin:10px 0 0;display:grid;grid-template-columns:132px 1fr;gap:6px 12px;font-size:.86rem}
+  details.bank dt{font-weight:700;color:var(--ink)}
+  details.bank dd{margin:0}
+
+  .sectionbar{display:flex;align-items:center;gap:10px;margin:22px 0 0}
+  .sectionbar label{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted)}
+  .sectionbar select{flex:1;min-width:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.95rem;color:var(--ink);
+    background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235b6b7b' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;
+    border:1px solid var(--line);border-radius:11px;padding:11px 38px 11px 14px;box-shadow:var(--shadow);
+    appearance:none;-webkit-appearance:none;cursor:pointer}
+  .sectionbar select:focus-visible{outline:2px solid var(--data);outline-offset:2px}
+
+  .progress{display:flex;align-items:center;gap:12px;margin:16px 0 14px}
+  .bar{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar span{display:block;height:100%;width:0;background:var(--data);border-radius:99px;transition:width .35s ease}
+  .count{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.85rem;color:var(--muted);white-space:nowrap}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+  .card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:16px 20px 0}
+  .tag{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.95rem;color:var(--data);letter-spacing:.02em}
+  .tag small{display:block;font-weight:500;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .tier{font-family:"Space Grotesk",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:4px 10px;white-space:nowrap}
+  .scene{margin:12px 20px 0;padding:9px 12px;background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    font-size:.84rem;color:var(--muted)}
+  .scene b{font-family:"Space Grotesk",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--data);display:block;margin-bottom:1px}
+  .chartbox{padding:8px 16px 4px}
+  svg.chart{width:100%;height:auto;display:block}
+  .caption{text-align:center;color:var(--muted);font-size:.78rem;margin:2px 0 6px}
+  .qrow{display:flex;align-items:flex-start;gap:12px;padding:4px 20px}
+  .q{font-size:1.06rem;font-weight:500;margin:0;flex:1}
+  .q .lead{color:var(--muted);font-weight:600;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .speak{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--data);width:40px;height:40px;border-radius:10px;
+    font-size:1.1rem;cursor:pointer;display:grid;place-items:center;transition:background .15s,border-color .15s}
+  .speak:hover{background:#eaf1f6;border-color:var(--data)}
+  .speak:focus-visible{outline:2px solid var(--data);outline-offset:2px}
+
+  .answer{margin:14px 20px 0}
+  .answer .alab{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+  .answer textarea{width:100%;min-height:74px;font-family:"Inter",system-ui,sans-serif;font-size:.97rem;line-height:1.5;
+    color:var(--ink);background:#fcfdfe;border:1px solid var(--line);border-radius:10px;padding:11px 13px;
+    resize:none;overflow:hidden;transition:border-color .15s,background .15s}
+  .answer textarea::placeholder{color:#9aa7b4}
+  .answer textarea:focus{outline:none;border-color:var(--data);background:#fff}
+  .recrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:9px;min-height:36px}
+  .recbtn{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.86rem;border-radius:9px;padding:8px 14px;
+    cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);display:inline-flex;align-items:center;gap:7px}
+  .recbtn:hover{background:#eaf1f6;border-color:var(--data)}
+  .recbtn.on{background:#fbe9e9;border-color:#f0c4c4;color:var(--miss)}
+  .recbtn .dotrec{width:9px;height:9px;border-radius:99px;background:var(--miss);flex:none}
+  .recbtn.on .dotrec{animation:blink 1s steps(2,start) infinite}
+  @keyframes blink{to{visibility:hidden}}
+  @media (prefers-reduced-motion:reduce){.recbtn.on .dotrec{animation:none}}
+  .rectime{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.86rem;color:var(--miss)}
+  .recrow audio{height:34px;max-width:230px;flex:1 1 180px;min-width:150px}
+  .reclink{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.82rem;color:var(--data);text-decoration:none;
+    border-bottom:1px solid var(--line);padding-bottom:1px}
+  .reclink:hover{border-color:var(--data)}
+  .recnote{font-size:.82rem;color:var(--muted)}
+  @media print{
+    .answer textarea{overflow:visible;height:auto;border-color:#bbb}
+    .recrow{display:none}
+  }
+  .reveal{margin:12px 20px 18px;border-left:4px solid var(--amber);background:linear-gradient(180deg,#fdf6ea,#fbf3e3);
+    border-radius:0 12px 12px 0;padding:14px 16px;display:none}
+  .reveal.show{display:block;animation:pop .28s ease}
+  @media (prefers-reduced-motion:reduce){.reveal.show{animation:none}}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .reveal .lbl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slow);font-weight:700;margin:0 0 4px}
+  .reveal .chunk{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.18rem;color:var(--ink);margin:0 0 8px}
+  .reveal .model{margin:0;font-size:.94rem;color:#6b5327}
+  .reveal .model em{font-style:normal;color:var(--ink);font-weight:600}
+  .reveal .up{margin:12px 0 0;padding-top:10px;border-top:1px dashed #e3cf9f}
+  .reveal .up .lbl{color:var(--data)}
+  .reveal .up p{margin:0;font-size:.94rem;color:#4a5a6a}
+  .reveal .up em{font-style:normal;color:var(--ink);font-weight:600}
+  .reveal .watch{margin:12px 0 0;padding-top:10px;border-top:1px dashed #e3cf9f}
+  .reveal .watch .lbl{color:var(--miss)}
+  .reveal .watch p{margin:0;font-size:.9rem;color:#6b4a4a}
+  .reveal .watch em{font-style:normal;font-weight:600;color:var(--ink)}
+
+  .actions{padding:0 20px 20px;display:flex;flex-direction:column;gap:12px}
+  .btn{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1rem;border:none;border-radius:11px;padding:13px 18px;
+    cursor:pointer;transition:transform .08s ease,filter .15s ease}
+  .btn:active{transform:translateY(1px)}
+  .btn-reveal{background:var(--ink);color:#fff;width:100%}
+  .btn-reveal:hover{filter:brightness(1.12)}
+  .tally{display:none;gap:10px}
+  .tally.show{display:flex}
+  .tally .btn{flex:1}
+  .t-check{background:#e7f4ec;color:var(--good);border:1px solid #bfe3cc}
+  .t-slow{background:#fbf1dd;color:var(--slow);border:1px solid #ecd8ac}
+  .t-miss{background:#fbe9e9;color:var(--miss);border:1px solid #f0c4c4}
+  .t-check:hover,.t-slow:hover,.t-miss:hover{filter:brightness(.97)}
+
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+  .nav button{background:none;border:none;color:var(--muted);font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:.9rem;cursor:pointer;padding:8px 6px;border-radius:8px}
+  .nav button:hover{color:var(--ink)}
+  .nav button:disabled{opacity:.3;cursor:default}
+  .nav button:focus-visible{outline:2px solid var(--data);outline-offset:2px}
+
+  .results{display:none;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:26px 24px}
+  .results.show{display:block}
+  .results h2{font-family:"Space Grotesk",sans-serif;font-size:1.4rem;margin:0 0 4px}
+  .results .sub{color:var(--muted);margin:0 0 20px;font-size:.92rem}
+  .scoregrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+  .score{border-radius:12px;padding:16px 12px;text-align:center}
+  .score .n{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:2rem;line-height:1}
+  .score .k{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+  .s-check{background:#e7f4ec}.s-check .n,.s-check .k{color:var(--good)}
+  .s-slow{background:#fbf1dd}.s-slow .n,.s-slow .k{color:var(--slow)}
+  .s-miss{background:#fbe9e9}.s-miss .n,.s-miss .k{color:var(--miss)}
+  .tiers{margin:0 0 22px;display:grid;gap:8px}
+  .tiers .row{display:flex;align-items:center;gap:12px;font-size:.9rem}
+  .tiers .row .nm{width:185px;font-weight:600}
+  .tiers .row .tb{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden;display:flex}
+  .tiers .row .tb i{display:block;height:100%}
+  .tiers .row .ft{width:48px;text-align:right;color:var(--muted);font-family:"Space Grotesk",sans-serif;font-weight:600}
+  .redrill h3{font-family:"Space Grotesk",sans-serif;font-size:1rem;margin:0 0 8px}
+  .redrill ul{margin:0;padding:0;list-style:none}
+  .redrill li{padding:9px 12px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px;font-size:.92rem;display:flex;gap:10px;align-items:center}
+  .redrill li .dot{width:9px;height:9px;border-radius:99px;flex:none}
+  .redrill li.slow .dot{background:var(--slow)}
+  .redrill li.miss .dot{background:var(--miss)}
+  .redrill .allclear{color:var(--good);font-weight:600}
+  .results .btnrow{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  .results .btn{flex:1;min-width:150px}
+  .btn-pdf{background:var(--data);color:#fff}
+  .btn-pdf:hover{filter:brightness(1.08)}
+  .btn-restart{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+
+  /* sign-in gate */
+  .gate{position:fixed;inset:0;background:rgba(20,33,61,.55);backdrop-filter:blur(3px);z-index:50;
+    display:grid;place-items:center;padding:20px;overflow:auto}
+  .gate[hidden]{display:none}
+  .gatebox{background:var(--paper);border-radius:16px;box-shadow:0 20px 60px rgba(20,33,61,.3);
+    padding:26px 24px;max-width:400px;width:100%}
+  .gatebox h2{font-family:"Space Grotesk",sans-serif;font-size:1.3rem;margin:0 0 6px}
+  .gatebox .gsub{color:var(--muted);font-size:.9rem;margin:0 0 18px}
+  .gatebox label{display:block;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.7rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+  .gatebox input{width:100%;font-family:"Inter",sans-serif;font-size:1rem;color:var(--ink);background:#fcfdfe;
+    border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:14px}
+  .gatebox input:focus{outline:none;border-color:var(--data);background:#fff}
+  .gatebox #gcode{letter-spacing:.5em;font-family:"Space Grotesk",sans-serif;font-weight:700;max-width:140px}
+  .gatebox .ghint{font-size:.82rem;color:var(--muted);margin:0 0 16px}
+  .gatebox .gerr{font-size:.88rem;color:var(--miss);background:#fbe9e9;border:1px solid #f0c4c4;
+    border-radius:9px;padding:9px 11px;margin:0 0 14px}
+  .gatebox .gerr[hidden]{display:none}
+  .gatebox .btn-reveal{width:100%}
+  .glink{display:block;width:100%;background:none;border:none;color:var(--muted);font-family:"Inter",sans-serif;
+    font-size:.86rem;cursor:pointer;margin-top:12px;text-decoration:underline}
+  .glink:hover{color:var(--ink)}
+
+  /* sync status */
+  .syncpill{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.02em;
+    color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+  .syncpill i{width:7px;height:7px;border-radius:99px;background:var(--line);flex:none}
+  .syncpill.ok i{background:var(--good)}
+  .syncpill.busy i{background:var(--amber)}
+  .syncpill.bad i{background:var(--miss)}
+  .resume{background:#e7f4ec;border:1px solid #bfe3cc;color:#24694a;border-radius:10px;padding:10px 13px;
+    font-size:.88rem;margin:14px 0 0}
+  .resume[hidden]{display:none}
+
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:28px}
+  footer .brand{font-family:"Space Grotesk",sans-serif;font-weight:600;color:var(--ink)}
+  @media (max-width:480px){
+    h1{font-size:1.35rem}.q{font-size:1rem}.scoregrid{gap:8px}.score .n{font-size:1.6rem}
+    details.bank dl{grid-template-columns:1fr}.tiers .row .nm{width:120px}
+  }
+</style>
+</head>
+<body>
+<div class="gate" id="gate" hidden>
+  <div class="gatebox">
+    <p class="eyebrow">Owlish English</p>
+    <h2>Save your progress</h2>
+    <p class="gsub">Your notes, recordings and your place are saved, so you can stop part-way and pick up later on any device.</p>
+    <label for="gmail">Email</label>
+    <input id="gmail" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com">
+    <label for="gcode">4-digit code</label>
+    <input id="gcode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="0000">
+    <p class="ghint">First time? Pick any 4 digits — that becomes your code. Use the same email and code every time.</p>
+    <p class="gerr" id="gerr" hidden></p>
+    <button class="btn btn-reveal" id="gbtn">Start</button>
+    <button class="glink" id="gskip">Continue without saving</button>
+  </div>
+</div>
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Owlish Workplace English · Marketing &amp; Analytics</p>
+    <h1>SPA Chart Chunks — Marketing Edition</h1>
+    <p class="lede">30 chunks for presenting numbers in marketing meetings — campaign readouts, channel and budget decisions, funnel and attribution, experiments, and defending a recommendation. Each card sets the scene first: read the chart, answer aloud, then check the target chunk.</p>
+    <div class="how">
+      <b>How to run it solo:</b>
+      <ol>
+        <li>Read the <b>meeting</b> line, then the chart and the prompt. <b>Say your answer aloud</b> in a full sentence — record it on your phone.</li>
+        <li><b>Write it or record it</b> in the answer box, so you can compare your real wording with the model — speaking it aloud first is still the point.</li>
+        <li>Tap <b>Reveal</b>. Compare with the target chunk, then try the <b>Level-up</b> line. Read the <b>Watch out</b> note — it covers the mistakes that change the meaning of a number.</li>
+        <li>Mark yourself: <b>✓</b> nailed it · <b>△</b> got it but slow/clunky · <b>✗</b> missed it. Re-say every △ and ✗ twice before moving on.</li>
+        <li>Use the <b>Section</b> dropdown to drill one meeting type at a time.</li>
+        <li><b>Download the PDF at the end</b> — it includes everything you typed. Nothing is saved once you close the page.</li>
+      </ol>
+      <details class="bank">
+        <summary>Marketing word bank (tap to open)</summary>
+        <dl>
+          <dt>Spend</dt><dd>budget · spend · CPI (cost per install) · CPA · CPM · CPC · bid · pacing · burn</dd>
+          <dt>Return</dt><dd>ROAS · blended ROAS · payback period · LTV · incremental · marginal · diminishing returns</dd>
+          <dt>Funnel</dt><dd>impression · click-through rate · install · registration · activation · drop-off · end to end</dd>
+          <dt>Attribution</dt><dd>last click · multi-touch · view-through · click-through · holdout · incrementality · cannibalization</dd>
+          <dt>Testing</dt><dd>control · variant · arm · lift · statistical significance · confidence · null result · rollout</dd>
+          <dt>Say it right</dt><dd>“ROAS” = “ross” or “R-O-A-S” · “CPI” = “C-P-I” · “2.1x” = “two point one times” · “ASO” = “A-S-O” · “A/B test” = “A B test”</dd>
+        </dl>
+      </details>
+    </div>
+  </header>
+
+  <div class="sectionbar" id="sectionbar">
+    <label for="sec">Section</label>
+    <select id="sec" aria-label="Choose a section"></select>
+    <span class="syncpill" id="sync" aria-live="polite"></span>
+  </div>
+  <p class="resume" id="resume" hidden></p>
+
+  <div class="progress" id="progress">
+    <span class="count" id="count">1 / 30</span>
+    <div class="bar"><span id="barfill"></span></div>
+  </div>
+
+  <section class="card" id="card" aria-live="polite"></section>
+
+  <div class="nav" id="nav">
+    <button id="prev">‹ Back</button>
+    <button id="seeRes">Results</button>
+    <button id="next">Skip ›</button>
+  </div>
+
+  <section class="results" id="results" aria-live="polite"></section>
+
+  <footer><span class="brand">Owlish English</span> · SPA Chunks · Marketing Edition</footer>
+</div>
+
+<script>
+/* ---------------- palette ---------------- */
+const C={ink:'#14213d',data:'#2a6f97',data2:'#bc4749',amber:'#e09f3e',
+  grid:'#dde3ea',axis:'#9aa7b4',muted:'#5b6b7b',pie2:'#dde3ea',soft:'#9dc0d6'};
+
+/* ---------------- chart geometry ---------------- */
+const W=480,H=250,padL=50,padR=18,padT=24,padB=40;
+const x0=padL, xR=W-padR, y0=H-padB, yT=padT;
+const plotW=xR-x0, plotH=y0-yT;
+const xAt=(i,n)=> n<=1 ? (x0+xR)/2 : x0 + plotW*(i/(n-1));
+const yAt=(v,max)=> y0 - (v/max)*plotH;
+const fmt=n=>(Math.round(n*10)/10).toLocaleString('en-US');
+
+function axisBase(max,xlabels){
+  let s=`<line x1="${x0}" y1="${yT}" x2="${x0}" y2="${y0}" stroke="${C.axis}" stroke-width="1"/>`;
+  s+=`<line x1="${x0}" y1="${y0}" x2="${xR}" y2="${y0}" stroke="${C.axis}" stroke-width="1"/>`;
+  [0,.5,1].forEach(f=>{
+    const y=y0-f*plotH, v=Math.round(max*f*10)/10;
+    if(f>0) s+=`<line x1="${x0}" y1="${y}" x2="${xR}" y2="${y}" stroke="${C.grid}" stroke-width="1"/>`;
+    s+=`<text x="${x0-8}" y="${y+4}" text-anchor="end" font-size="11" fill="${C.muted}">${v}</text>`;
+  });
+  if(xlabels) xlabels.forEach((l,i)=>{
+    s+=`<text x="${xAt(i,xlabels.length)}" y="${y0+18}" text-anchor="middle" font-size="11" fill="${C.muted}">${l}</text>`;
+  });
+  return s;
+}
+function svgWrap(inner){return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;}
+function legend(items){
+  let s='<g font-size="11" font-weight="600">',cx=x0+6;
+  items.forEach(it=>{
+    s+=`<rect x="${cx}" y="${yT-6}" width="12" height="3" rx="1.5" fill="${it.c}"/>`+
+       `<text x="${cx+17}" y="${yT-1}" fill="${C.muted}">${it.n}</text>`;
+    cx+=22+it.n.length*6.1;
+  });
+  return s+'</g>';
+}
+function threshLine(max,t){
+  const y=yAt(t.v,max);
+  return `<line x1="${x0}" y1="${y}" x2="${xR}" y2="${y}" stroke="${C.data2}" stroke-width="1.8" stroke-dasharray="6 4"/>`+
+         `<text x="${xR}" y="${y-6}" text-anchor="end" font-size="11" font-weight="700" fill="${C.data2}">${t.label}</text>`;
+}
+
+/* ---- vertical bars ---- */
+function bars(data,{labels,max,highlight=-1,values=false,thresh=null}){
+  let s=axisBase(max,null);
+  const n=data.length, band=plotW/n, bw=Math.min(band*0.56,54);
+  data.forEach((v,i)=>{
+    const cx=x0+band*(i+0.5), x=cx-bw/2, y=yAt(v,max), h=y0-y;
+    const fill=i===highlight?C.amber:C.data;
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" fill="${fill}"/>`;
+    if(labels) s+=`<text x="${cx}" y="${y0+18}" text-anchor="middle" font-size="11" fill="${C.muted}">${labels[i]}</text>`;
+    if(values||i===highlight)
+      s+=`<text x="${cx}" y="${y-6}" text-anchor="middle" font-size="12" font-weight="700" fill="${i===highlight?'#a86a1e':C.ink}">${fmt(v)}</text>`;
+  });
+  if(thresh) s+=threshLine(max,thresh);
+  return svgWrap(s);
+}
+
+/* ---- grouped bars (actual vs plan) ---- */
+function gbars(a,b,{labels,max,names,values=true}){
+  let s=axisBase(max,null);
+  const n=a.length, band=plotW/n, bw=Math.min(band*0.3,30), gap=3;
+  for(let i=0;i<n;i++){
+    const cx=x0+band*(i+0.5);
+    [[a[i],C.data,-1],[b[i],C.soft,1]].forEach(([v,col,side])=>{
+      const x=cx+side*(gap/2)+(side<0?-bw:0), y=yAt(v,max);
+      s+=`<rect x="${x}" y="${y}" width="${bw}" height="${y0-y}" rx="3" fill="${col}"/>`;
+      if(values) s+=`<text x="${x+bw/2}" y="${y-5}" text-anchor="middle" font-size="10.5" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;
+    });
+    s+=`<text x="${cx}" y="${y0+18}" text-anchor="middle" font-size="11" fill="${C.muted}">${labels[i]}</text>`;
+  }
+  s+=legend([{n:names[0],c:C.data},{n:names[1],c:C.soft}]);
+  return svgWrap(s);
+}
+
+/* ---- stacked bars ---- */
+function sbars(series,{labels,max,names}){
+  let s=axisBase(max,null);
+  const cols=[C.data,C.amber,C.soft];
+  const n=labels.length, band=plotW/n, bw=Math.min(band*0.5,48);
+  for(let i=0;i<n;i++){
+    const cx=x0+band*(i+0.5), x=cx-bw/2;
+    let run=0, tot=0;
+    series.forEach(sr=>tot+=sr[i]);
+    series.forEach((sr,k)=>{
+      const yTop=yAt(run+sr[i],max), yBot=yAt(run,max);
+      s+=`<rect x="${x}" y="${yTop}" width="${bw}" height="${Math.max(yBot-yTop,0)}" fill="${cols[k%3]}"/>`;
+      run+=sr[i];
+    });
+    s+=`<text x="${cx}" y="${yAt(tot,max)-6}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${C.ink}">${fmt(tot)}</text>`;
+    s+=`<text x="${cx}" y="${y0+18}" text-anchor="middle" font-size="11" fill="${C.muted}">${labels[i]}</text>`;
+  }
+  s+=legend(names.map((nm,k)=>({n:nm,c:cols[k%3]})));
+  return svgWrap(s);
+}
+
+/* ---- horizontal bars ---- */
+function hbars(data,{labels,max,highlight=-1,unit=''}){
+  const n=data.length, top=16, rowH=(H-top-14)/n, lx=86, bx=94, maxW=W-bx-70;
+  let s='';
+  data.forEach((v,i)=>{
+    const y=top+rowH*i+rowH*0.18, h=rowH*0.62, w=maxW*(v/max);
+    const fill=i===highlight?C.amber:C.data;
+    s+=`<text x="${lx}" y="${y+h/2+4}" text-anchor="end" font-size="12" fill="${C.muted}">${labels[i]}</text>`;
+    s+=`<rect x="${bx}" y="${y}" width="${w}" height="${h}" rx="3" fill="${fill}"/>`;
+    s+=`<text x="${bx+w+8}" y="${y+h/2+4}" font-size="12" font-weight="700" fill="${i===highlight?'#a86a1e':C.ink}">${fmt(v)}${unit}</text>`;
+  });
+  s+=`<line x1="${bx}" y1="${top-6}" x2="${bx}" y2="${H-8}" stroke="${C.axis}" stroke-width="1"/>`;
+  return svgWrap(s);
+}
+
+/* ---- waterfall / bridge ---- */
+function waterfall(items,{max}){
+  let s=axisBase(max,null);
+  const n=items.length, band=plotW/n, bw=Math.min(band*0.58,44);
+  let run=0;
+  items.forEach((it,i)=>{
+    const cx=x0+band*(i+0.5), x=cx-bw/2;
+    let top,bot,fill;
+    if(it.total){bot=0;top=it.v;run=it.v;fill=C.ink;}
+    else{bot=run;top=run+it.v;run=top;fill=it.v>=0?C.data:C.data2;}
+    const yA=yAt(Math.max(top,bot),max), yB=yAt(Math.min(top,bot),max);
+    s+=`<rect x="${x}" y="${yA}" width="${bw}" height="${Math.max(yB-yA,3)}" rx="2" fill="${fill}"/>`;
+    const lab=it.total?fmt(it.v):(it.v>=0?'+':'−')+fmt(Math.abs(it.v));
+    s+=`<text x="${cx}" y="${yA-6}" text-anchor="middle" font-size="11" font-weight="700" fill="${it.total?C.ink:(it.v>=0?C.data:C.data2)}">${lab}</text>`;
+    (it.label.split('|')).forEach((ln,k)=>{
+      s+=`<text x="${cx}" y="${y0+16+k*12}" text-anchor="middle" font-size="10" fill="${C.muted}">${ln}</text>`;
+    });
+    if(i<n-1 && !items[i+1].total){
+      const yr=yAt(run,max);
+      s+=`<line x1="${x+bw}" y1="${yr}" x2="${x0+band*(i+1.5)-bw/2}" y2="${yr}" stroke="${C.axis}" stroke-width="1" stroke-dasharray="3 3"/>`;
+    }
+  });
+  return svgWrap(s);
+}
+
+/* ---- single line ---- */
+function line(data,{labels,max,mark={},startEnd=false,thresh=null,event=null,zoom=null,values=false}){
+  let s=axisBase(max,labels);
+  const n=data.length;
+  const pts=data.map((v,i)=>[xAt(i,n),yAt(v,max)]);
+  if(zoom){
+    const a=xAt(zoom[0],n)-10,b=xAt(zoom[1],n)+10;
+    s+=`<rect x="${a}" y="${yT}" width="${b-a}" height="${plotH}" fill="${C.amber}" opacity=".16" rx="4"/>`;
+  }
+  if(thresh) s+=threshLine(max,thresh);
+  if(event){
+    const ex=xAt(event.i,n);
+    s+=`<line x1="${ex}" y1="${yT}" x2="${ex}" y2="${y0}" stroke="${C.ink}" stroke-width="1.5" stroke-dasharray="4 4"/>`+
+       `<text x="${ex-6}" y="${yT+12}" text-anchor="end" font-size="11" font-weight="700" fill="${C.ink}">${event.label}</text>`;
+  }
+  s+=`<polyline fill="none" stroke="${C.data}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="${pts.map(p=>p.join(',')).join(' ')}"/>`;
+  pts.forEach(p=> s+=`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#fff" stroke="${C.data}" stroke-width="2"/>`);
+  if(values) data.forEach((v,i)=> s+=`<text x="${pts[i][0]}" y="${pts[i][1]-9}" text-anchor="middle" font-size="11" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`);
+  if(startEnd){
+    [[0,data[0]],[n-1,data[n-1]]].forEach(([i,v])=>{
+      const p=pts[i];
+      s+=`<text x="${p[0]}" y="${p[1]-9}" text-anchor="middle" font-size="12" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;
+    });
+  }
+  if(mark.peak!=null){const i=data.indexOf(Math.max(...data));const p=pts[i];
+    s+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="${C.amber}"/>`+
+       `<text x="${p[0]+10}" y="${p[1]+4}" text-anchor="start" font-size="12.5" font-weight="700" fill="#a86a1e">${mark.peak}</text>`;}
+  if(mark.low!=null){const i=data.indexOf(Math.min(...data));const p=pts[i];
+    s+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="${C.amber}"/>`+
+       `<text x="${p[0]}" y="${p[1]+18}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a86a1e">${mark.low}</text>`;}
+  return svgWrap(s);
+}
+
+/* ---- two-series line ---- */
+function twoLine(a,b,{labels,max,names}){
+  let s=axisBase(max,labels);const n=a.length;
+  const mk=(d,col)=>{const pts=d.map((v,i)=>[xAt(i,n),yAt(v,max)]);
+    let g=`<polyline fill="none" stroke="${col}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="${pts.map(p=>p.join(',')).join(' ')}"/>`;
+    pts.forEach(p=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#fff" stroke="${col}" stroke-width="2"/>`);return g;};
+  s+=mk(a,C.data2)+mk(b,C.data);
+  s+=legend([{n:names[0],c:C.data2},{n:names[1],c:C.data}]);
+  return svgWrap(s);
+}
+
+/* ---- pie ---- */
+function pie(pct,{labelA,labelB}){
+  const cx=150,cy=128,r=84;
+  const pol=(deg)=>{const a=(deg-90)*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];};
+  const end=pct/100*360;
+  const [x1,y1]=pol(0),[x2,y2]=pol(end);
+  let s=`<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${end>180?1:0} 1 ${x2} ${y2} Z" fill="${C.data}"/>`;
+  const [x3,y3]=pol(end),[x4,y4]=pol(360);
+  s+=`<path d="M ${cx} ${cy} L ${x3} ${y3} A ${r} ${r} 0 ${end<180?1:0} 1 ${x4} ${y4} Z" fill="${C.pie2}"/>`;
+  const [lx,ly]=pol(end/2);
+  s+=`<text x="${(cx+lx)/2}" y="${(cy+ly)/2+4}" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">${pct}%</text>`;
+  s+=`<g font-size="12.5" font-weight="600">
+      <rect x="290" y="98" width="14" height="14" rx="3" fill="${C.data}"/>
+      <text x="312" y="110" fill="${C.ink}">${labelA} · ${pct}%</text>
+      <rect x="290" y="128" width="14" height="14" rx="3" fill="${C.pie2}"/>
+      <text x="312" y="140" fill="${C.muted}">${labelB} · ${100-pct}%</text></g>`;
+  return svgWrap(s);
+}
+
+/* ---------------- sections + cards ---------------- */
+const TIERS={
+  R:'Open the readout',
+  C:'Campaign performance',
+  H:'Channels &amp; budget',
+  F:'Funnel &amp; attribution',
+  X:'Experiments',
+  D:'Recommend &amp; defend'
+};
+const W6=['W1','W2','W3','W4','W5','W6'];
+const M6=['May','Jun','Jul','Aug','Sep','Oct'];
+const MKT=['Japan','Korea','Taiwan','SE Asia','India'];
+const CH=['Search','Social','ASO','Influencer','Display'];
+
+const CARDS=[
+/* ===== R · Open the readout ===== */
+ {id:'R1',t:'R',chunk:'This is the readout for',
+  sc:'Monday marketing stand-up. You own the weekly numbers slide and you are speaking first.',
+  chart:line([52,55,54,58,61,64],{labels:W6,max:80,startEnd:true}),
+  cap:"Paid app installs · '000 per week",
+  q:"Open the meeting. In one sentence, say what these numbers cover.",
+  model:"<em>This is the readout for</em> our paid campaigns over the last six weeks.",
+  up:"<em>This is the readout for</em> six weeks of paid acquisition, and I'll finish with what I'd change next week.",
+  watch:"“Readout” is a noun: “this is the readout for…”. There is no verb “to readout” — you walk through or take people through the numbers."},
+ {id:'R2',t:'R',chunk:"I'll cover … and finish with",
+  sc:'Monthly review with the regional head. You have 15 minutes and three things to get through.',
+  chart:sbars([[180,195,210],[120,130,140]],{labels:['Aug','Sep','Oct'],max:400,names:['Paid social','Search']}),
+  cap:"Monthly spend by channel · $K",
+  q:"Signpost your agenda in one sentence, so they know what is coming.",
+  model:"<em>I'll cover</em> channel performance and the funnel, <em>and finish with</em> the test results.",
+  up:"<em>I'll cover</em> three things: channel performance, where the funnel is leaking, <em>and finish with</em> what the creative test told us.",
+  watch:"Keep the list parallel — all nouns, as above. Mixing “channel performance, then I will talk about the funnel” makes the agenda hard to follow."},
+ {id:'R3',t:'R',chunk:'the data runs through',
+  sc:'Mid-month check-in. The month is not over, so your last bar looks alarming.',
+  chart:bars([14.2,15.1,14.8,6.4],{labels:['W1','W2','W3','W4'],max:20,values:true,highlight:3}),
+  cap:"Installs · '000 per week",
+  q:"Stop anyone reading that last bar as a real drop. Say why it is short.",
+  model:"<em>The data runs through</em> the 20th, so the last week is incomplete.",
+  up:"<em>The data only runs through</em> the 20th — the last bar is a partial week, not a fall in installs.",
+  watch:"“Runs through the 20th” means up to and including it. Give the actual cut-off date; “until now” leaves people guessing."},
+ {id:'R4',t:'R',chunk:'indexed to 100',
+  sc:'Comparing five markets of very different sizes. Raw costs would start an argument about Japan.',
+  chart:bars([100,92,78,61,54],{labels:MKT,max:120,values:true}),
+  cap:"Cost per install · indexed, Japan = 100",
+  q:"Explain what these numbers are before anyone reads them as dollars.",
+  model:"These are <em>indexed to 100</em>, with Japan as the baseline.",
+  up:"Everything here is <em>indexed to 100</em> against Japan, so India at 54 costs us about half what Japan does.",
+  watch:"Always name the baseline. An index with no baseline tells the audience nothing, and they will assume the number is a currency."},
+ {id:'R5',t:'R',chunk:'this excludes',
+  sc:'A colleague is about to compare your figure with a bigger number from the brand team.',
+  chart:sbars([[62,65,68],[26,27,29]],{labels:['Aug','Sep','Oct'],max:120,names:['Paid installs','Organic installs']}),
+  cap:"Installs · '000",
+  q:"Make the scope of your headline number explicit before the comparison happens.",
+  model:"<em>This excludes</em> organic installs.",
+  up:"These are paid only — <em>this excludes</em> organic, which adds roughly another 40 percent on top.",
+  watch:"“Excludes” takes a noun: “this excludes organic”. “This is excluded organic” says something else entirely."},
+
+/* ===== C · Campaign performance ===== */
+ {id:'C1',t:'C',chunk:'at a cost per install of',
+  sc:'Reporting a finished campaign back to the team that funded it.',
+  chart:bars([38,44,49,49],{labels:['W1','W2','W3','W4'],max:60,values:true}),
+  cap:"Installs · '000 per week",
+  q:"The campaign delivered 180,000 installs and cost 1.44 million. Give volume and efficiency in one sentence.",
+  model:"The campaign delivered 180,000 installs <em>at a cost per install of</em> 8 dollars.",
+  up:"180,000 installs <em>at a cost per install of</em> 8 dollars, about 12 percent below our target.",
+  watch:"The preposition is “at”, not “with”. And say “eight dollars”, never “eight dollar”."},
+ {id:'C2',t:'C',chunk:'came in under target',
+  sc:'Performance review. Your agreed CPA target was 45 dollars.',
+  chart:line([40,47,38,35,34,34],{labels:W6,max:60,thresh:{v:45,label:'Target $45'}}),
+  cap:"Cost per acquisition · $",
+  q:"You beat the dashed target line in most weeks. Report it.",
+  model:"CPA <em>came in under target</em>, averaging 38 dollars.",
+  up:"CPA <em>came in under target</em> in every week but one, averaging 38 against a 45 target.",
+  watch:"Under target is good for a cost and bad for a volume. Name the metric, or half the room hears the opposite of what you mean."},
+ {id:'C3',t:'C',chunk:'a blended ROAS of',
+  sc:'Finance asks what the whole marketing budget returned, not channel by channel.',
+  chart:bars([3.4,1.8,2.9,1.2,0.8],{labels:CH,max:4,values:true,thresh:{v:2.1,label:'Blended 2.1'}}),
+  cap:"Return on ad spend by channel",
+  q:"Give the overall return across all channels, then flag what it hides.",
+  model:"We're running at <em>a blended ROAS of</em> 2.1.",
+  up:"<em>A blended ROAS of</em> 2.1, though that hides a wide spread — search is at 3.4 and display is under one.",
+  watch:"“Blended” means averaged across channels. If you are quoting one channel, drop the word, or you will be asked to re-cut the whole deck."},
+ {id:'C4',t:'C',chunk:'scaled spend to … without',
+  sc:'You tripled the budget and everyone expects efficiency to have collapsed.',
+  chart:twoLine([100,140,190,240,280,300],[100,102,99,101,98,100],{labels:W6,max:320,names:['Spend','CPI']}),
+  cap:"Indexed · week 1 = 100",
+  q:"Spend tripled and cost per install held flat. Say it as one claim.",
+  model:"We <em>scaled spend to</em> three times the starting level <em>without</em> a rise in cost per install.",
+  up:"We <em>scaled spend to</em> 600,000 a month <em>without</em> any rise in CPI, so the channel still has headroom.",
+  watch:"“Without” takes a noun or an -ing form: “without a rise”, “without raising”. “Without to rise” is not English."},
+ {id:'C5',t:'C',chunk:'creative fatigue',
+  sc:'Click-through has fallen every week on the same set of ads.',
+  chart:line([1.8,1.6,1.4,1.2,1.0,0.9],{labels:W6,max:2.5,values:true}),
+  cap:"Click-through rate · %",
+  q:"Name what is happening to this campaign, in the term marketers use.",
+  model:"We're seeing <em>creative fatigue</em> — click-through has fallen every week.",
+  up:"Click-through has halved in six weeks, which is textbook <em>creative fatigue</em>; we need new assets, not more budget.",
+  watch:"“Fatigue” is the noun you need: creative fatigue set in. “The creative tired” doesn't work. Note that “creative” is also a noun here — “new creative”."},
+
+/* ===== H · Channels & budget ===== */
+ {id:'H1',t:'H',chunk:'outperformed on',
+  sc:'Channel review. The question is which channel is cheapest, not which is biggest.',
+  chart:bars([32,41,18,56,78],{labels:CH,max:90,values:true,highlight:2}),
+  cap:"Cost per acquisition by channel · $",
+  q:"One channel is clearly cheapest. Compare it with the rest.",
+  model:"ASO <em>outperformed</em> every other channel <em>on</em> cost per acquisition.",
+  up:"ASO <em>outperformed on</em> CPA at 18 dollars, less than half what we pay on paid social.",
+  watch:"Say what it outperformed on. A bare “ASO outperformed” invites the question “on what?” and you lose the floor."},
+ {id:'H2',t:'H',chunk:'over-indexed on',
+  sc:'Leadership asks how exposed the plan is to any single platform.',
+  chart:pie(62,{labelA:'Paid social',labelB:'All other channels'}),
+  cap:"Share of marketing spend",
+  q:"Describe the concentration, and make it sound like the risk it is.",
+  model:"We're <em>over-indexed on</em> paid social, at 62 percent of spend.",
+  up:"We're <em>over-indexed on</em> paid social — 62 percent of spend — so one algorithm change could hit the whole plan.",
+  watch:"“Over-indexed on” is marketing shorthand for too concentrated. With a mixed audience, add the plain version: “too dependent on”."},
+ {id:'H3',t:'H',chunk:'shifting budget from … into …',
+  sc:'Proposing next quarter`s channel split to the team whose budget you want to move.',
+  chart:gbars([18,46,12,14,10],[20,31,27,14,8],{labels:CH,max:60,names:['Current %','Proposed %']}),
+  cap:"Share of marketing budget · %",
+  q:"Describe the reallocation you are proposing, in the direction you mean it.",
+  model:"I'm proposing <em>shifting budget from</em> display and social <em>into</em> ASO.",
+  up:"I'd <em>shift</em> about 15 points <em>from</em> paid social <em>into</em> ASO, where payback is fastest.",
+  watch:"Keep the order: from the source, then into the destination. Reversing it quietly proposes the opposite plan."},
+ {id:'H4',t:'H',chunk:'diminishing returns',
+  sc:'Someone suggests simply doubling the budget to double the installs.',
+  chart:line([22,42,58,68,73,76],{labels:['$100k','$200k','$300k','$400k','$500k','$600k'],max:90}),
+  cap:"Monthly installs · '000 at each spend level",
+  q:"Explain why more money stops buying proportionally more installs.",
+  model:"We hit <em>diminishing returns</em> above about 400,000 a month.",
+  up:"Above roughly 400,000 we hit <em>diminishing returns</em> — each extra dollar buys fewer installs than the last.",
+  watch:"Always plural: diminishing returns. “A diminishing return” sounds like one specific payment shrinking."},
+ {id:'H5',t:'H',chunk:'the incremental cost of',
+  sc:'A director asks what the next block of users would actually cost.',
+  chart:bars([6,9,14],{labels:['First $200k','Next $200k','Next $200k'],max:18,values:true,highlight:2}),
+  cap:"Cost per install within each spend tier · $",
+  q:"Give the cost of the next users, not the average so far.",
+  model:"<em>The incremental cost of</em> the next 10,000 installs is about 14 dollars each.",
+  up:"Our average is 8 dollars, but <em>the incremental cost of</em> the next 10,000 is 14 — that's the number the decision turns on.",
+  watch:"Incremental (the next one) is not average (all of them so far). Quoting the average when asked for the incremental is how budgets get over-committed."},
+
+/* ===== F · Funnel & attribution ===== */
+ {id:'F1',t:'F',chunk:'the biggest drop-off is between',
+  sc:'Growth review. The funnel leaks badly somewhere and product wants to know where.',
+  chart:hbars([100,55,44,31,12],{labels:['Install','Register','Profile','Match','Subscribe'],max:100,highlight:1,unit:'%'}),
+  cap:"Users remaining at each step · % of installs",
+  q:"Point to the worst step in the funnel.",
+  model:"<em>The biggest drop-off is between</em> install and registration.",
+  up:"<em>The biggest drop-off is between</em> install and registration — we lose 45 percent before anyone finishes a profile.",
+  watch:"“Between” needs both ends: between install and registration. “The drop-off between registration” is an unfinished sentence."},
+ {id:'F2',t:'F',chunk:'on a last-click basis',
+  sc:'Your attribution model flatters search, and you would rather say so than be caught.',
+  chart:gbars([48,22,18,8,4],[31,28,21,13,7],{labels:CH,max:60,names:['Last click %','Multi-touch %']}),
+  cap:"Share of credited conversions · %",
+  q:"State which attribution model your numbers use, and what it hides.",
+  model:"<em>On a last-click basis,</em> search takes 48 percent of the credit.",
+  up:"<em>On a last-click basis</em> search takes 48 percent, but under multi-touch it drops to 31 — the rest belongs upper funnel.",
+  watch:"“On a … basis” is the fixed phrase. Not “in a last-click base”. Say the model before the number, or the number gets quoted without it."},
+ {id:'F3',t:'F',chunk:'view-through versus click-through',
+  sc:'A colleague is quoting your biggest conversion number in a board slide.',
+  chart:sbars([[22,24,22],[9,8,9]],{labels:['Aug','Sep','Oct'],max:40,names:['Click-through','View-through']}),
+  cap:"Attributed conversions · '000",
+  q:"Separate the two kinds of conversion inside that number.",
+  model:"That figure mixes <em>view-through</em> and <em>click-through</em> conversions.",
+  up:"<em>Click-through</em> alone is 22,000; the 31,000 includes <em>view-through</em>, which I'd treat as softer evidence.",
+  watch:"Both are hyphenated, and the order matters less than the labelling — always say which one your headline number uses."},
+ {id:'F4',t:'F',chunk:'converts at X percent end to end',
+  sc:'An executive asks one question: how efficient is the whole funnel?',
+  chart:line([2.4,2.5,2.7,2.8,2.9,3.0],{labels:M6,max:4,values:true}),
+  cap:"Install-to-subscriber conversion · %",
+  q:"Give the whole-funnel rate in a single number.",
+  model:"The funnel <em>converts at</em> about 3 <em>percent end to end</em>.",
+  up:"<em>End to end</em> we <em>convert</em> about 3 <em>percent</em> of installs into subscribers, up from 2.4 in the spring.",
+  watch:"“End to end” as an adverb takes no hyphens; “an end-to-end rate” as an adjective does."},
+ {id:'F5',t:'F',chunk:'would have converted anyway',
+  sc:'Defending a brand campaign whose conversions may not have been caused by it.',
+  chart:gbars([2.8],[2.1],{labels:['Conversion rate %'],max:4,names:['Exposed','Holdout']}),
+  cap:"Holdout test · % of users converting",
+  q:"Explain what the holdout group tells you about the campaign's real effect.",
+  model:"Only part of that is incremental — some of those users <em>would have converted anyway</em>.",
+  up:"The holdout converted at 2.1 against 2.8, so the real lift is 0.7 points; the rest <em>would have converted anyway</em>.",
+  watch:"“Would have converted” — past conditional. Reporting total conversions as if all were caused by the campaign is the fastest way to lose credibility with finance."},
+
+/* ===== X · Experiments ===== */
+ {id:'X1',t:'X',chunk:'we tested … against …',
+  sc:'Presenting a creative test to a team that was not involved in designing it.',
+  chart:gbars([1.9,2.1],[1.4,1.3],{labels:['Week 1','Week 2'],max:3,names:['New video','Current static']}),
+  cap:"Click-through rate · %",
+  q:"Set the test up before you give any result.",
+  model:"<em>We tested</em> the new video creative <em>against</em> the existing static ad.",
+  up:"<em>We tested</em> new video <em>against</em> our current static creative, split evenly, about 50,000 users per arm over two weeks.",
+  watch:"Test A against B, or A versus B. “We tested A with B” sounds like they ran together as one campaign."},
+ {id:'X2',t:'X',chunk:'a X percent lift in',
+  sc:'The variant won and you need to size the win for people who will fund the rollout.',
+  chart:bars([4.2,5.0],{labels:['Control','Variant'],max:6,values:true,highlight:1}),
+  cap:"Install rate · %",
+  q:"Report the improvement as a relative lift.",
+  model:"We saw <em>a</em> 19 <em>percent lift in</em> install rate.",
+  up:"The variant drove <em>a</em> 19 <em>percent lift in</em> install rate — worth roughly 6,000 extra installs a month at current spend.",
+  watch:"A “lift” is relative. The absolute gap here is 0.8 percentage points. Quote the wrong one and the forecast comes out several times too big."},
+ {id:'X3',t:'X',chunk:'reached significance',
+  sc:'A stakeholder wants to call the winner on day three and move on.',
+  chart:line([48,55,63,70,77,84,89,93,96],{labels:['D1','D2','D3','D4','D5','D6','D7','D8','D9'],max:100,thresh:{v:95,label:'95% confidence'}}),
+  cap:"Statistical confidence · %",
+  q:"Say whether the result was solid yet, and from when.",
+  model:"The test <em>reached significance</em> on day nine.",
+  up:"It only <em>reached significance</em> on day nine, so anything we read before that was noise.",
+  watch:"Significance is reached, not “arrived” or “got”. And a result is significant at a level — say “at 95 percent”."},
+ {id:'X4',t:'X',chunk:'no measurable difference',
+  sc:'A test everyone hoped would win came back flat, and you are reporting it.',
+  chart:bars([3.1,3.1],{labels:['Control','Variant'],max:4,values:true}),
+  cap:"Install rate · % · n = 60,000 per arm",
+  q:"Report a null result honestly, without dressing it up.",
+  model:"There was <em>no measurable difference</em> between the two.",
+  up:"The variant came out flat — <em>no measurable difference</em> — so I'd keep the current creative and put the effort elsewhere.",
+  watch:"Don't call a flat result “a small win”. “No measurable difference” is the honest phrase, and it protects you when someone re-runs the numbers."},
+ {id:'X5',t:'X',chunk:'roll it out to',
+  sc:'Deciding what happens to the winning variant now the test has closed.',
+  chart:hbars([18.4,14.6,7.7,7.2,6.1],{labels:['Japan','Korea','India','Taiwan','SE Asia'],max:20,unit:'k'}),
+  cap:"Weekly installs by market · '000",
+  q:"State the next step for the winning variant, and in what order.",
+  model:"We'll <em>roll it out to</em> all five markets next week.",
+  up:"We'll <em>roll it out to</em> Japan and Korea first, then the rest, so we can catch any market-specific effect early.",
+  watch:"You roll something out to a market or an audience. “Roll out in all markets” describes where it is already live, not extending it."},
+
+/* ===== D · Recommend & defend ===== */
+ {id:'D1',t:'D',chunk:"I'd recommend shifting",
+  sc:'Closing slide. You want a decision today, not another round of discussion.',
+  chart:gbars([34,28,12,10,16],[26,22,18,10,24],{labels:MKT,max:40,names:['Current %','Proposed %']}),
+  cap:"Share of budget by market · %",
+  q:"Close with one concrete recommendation from this chart.",
+  model:"<em>I'd recommend shifting</em> 20 percent of the budget into India and Taiwan.",
+  up:"<em>I'd recommend shifting</em> 20 percent into India and Taiwan, where cost per install is lowest and growth is fastest.",
+  watch:"“Recommend shifting”, or “recommend that we shift”. “I recommend to shift” is the single most common mistake in this sentence."},
+ {id:'D2',t:'D',chunk:'the trade-off is',
+  sc:'Your recommendation has a real cost. Better you name it than someone else.',
+  chart:twoLine([100,88,84,90,104],[100,96,90,84,80],{labels:['Q1','Q2','Q3','Q4','Q5'],max:120,names:['Installs','CPI']}),
+  cap:"Indexed · Q1 = 100 · under the proposed shift",
+  q:"Name the downside of your own proposal before you are asked.",
+  model:"<em>The trade-off is</em> that volume drops while we build up the new markets.",
+  up:"<em>The trade-off is</em> two quarters of lower volume in exchange for a materially better CPI from Q3 onward.",
+  watch:"“Trade-off” is the noun — the trade-off is. The verb is two words: “we'd trade volume off against efficiency”."},
+ {id:'D3',t:'D',chunk:'if we hold spend flat',
+  sc:'Leadership asks what happens if they give you no extra budget at all.',
+  chart:twoLine([60,60,61,60,61,60],[60,66,72,79,86,94],{labels:M6,max:120,names:['Spend held flat','With added budget']}),
+  cap:"Projected monthly installs · '000",
+  q:"Give the no-change scenario as a conditional, not a promise.",
+  model:"<em>If we hold spend flat, we'd expect</em> installs to stay around 60,000 a month.",
+  up:"<em>If we hold spend flat,</em> installs plateau near 60,000 — we'd reach the annual target about a quarter late.",
+  watch:"No “will” after if: “if we hold … we'd expect”, never “if we will hold”. And it's “hold spend flat”, not “flatly”."},
+ {id:'D4',t:'D',chunk:"I'd push back on that",
+  sc:'Someone has just proposed cutting the channel with your fastest payback.',
+  chart:bars([7,9,4,11,14],{labels:CH,max:16,values:true,highlight:2}),
+  cap:"Payback period by channel · months",
+  q:"Disagree with the proposal — clearly, but without making an enemy.",
+  model:"<em>I'd push back on that</em> — ASO has our fastest payback.",
+  up:"<em>I'd push back on</em> cutting ASO; it pays back in four months, faster than anything else we run.",
+  watch:"You push back ON a proposal. “Push back a proposal” means delay it, which is a different argument. Starting with “I'd” rather than “I will” keeps it collegial."},
+ {id:'D5',t:'D',chunk:'what would change my recommendation is',
+  sc:'A senior leader asks what would make you change your mind. This is a test of judgement, not of loyalty.',
+  chart:line([8.2,8.9,9.6,10.4,11.2,12.1],{labels:M6,max:16,thresh:{v:12,label:'My limit: $12'},startEnd:true}),
+  cap:"India cost per install · $",
+  q:"Name the evidence that would make you reverse your own recommendation.",
+  model:"<em>What would change my recommendation is</em> cost per install rising above 12 dollars.",
+  up:"<em>What would change my recommendation is</em> CPI above 12 dollars for two months running — past that, the India case stops working.",
+  watch:"Naming your own disconfirming evidence reads as confidence in English-speaking meetings, not as doubt. It is one of the strongest moves available to you."}
+];
+const N=CARDS.length;
+
+/* ---------------- app state ---------------- */
+let deck=CARDS;
+let idx=0;
+const results={};
+const answers={};      /* id -> typed text */
+const recordings={};   /* id -> {url, ms, ext} */
+const revealed={};     /* id -> true */
+const cardEl=document.getElementById('card');
+const barfill=document.getElementById('barfill');
+const countEl=document.getElementById('count');
+
+function render(){
+  const c=deck[idx];
+  const prev=results[c.id];
+  const open=prev||revealed[c.id];
+  stopRecording();
+  cardEl.innerHTML=`
+    <div class="card-head">
+      <span class="tag">${c.id}<small>Chunk ${idx+1} of ${deck.length}</small></span>
+      <span class="tier">${TIERS[c.t]}</span>
+    </div>
+    <div class="scene"><b>The meeting</b>${c.sc}</div>
+    <div class="chartbox">${c.chart}<div class="caption">${c.cap}</div></div>
+    <div class="qrow">
+      <p class="q"><span class="lead">Answer aloud</span>${c.q}</p>
+      <button class="speak" id="speak" title="Hear the prompt" aria-label="Hear the prompt">🔊</button>
+    </div>
+    <div class="answer">
+      <p class="alab">Your answer — type it, or record it</p>
+      <textarea id="ans" rows="2" spellcheck="true"
+        placeholder="Say it aloud first, then type what you said here.">${(answers[c.id]||'').replace(/</g,'&lt;')}</textarea>
+      <div class="recrow" id="recbox"></div>
+    </div>
+    <div class="reveal ${open?'show':''}" id="reveal">
+      <p class="lbl">Target chunk</p>
+      <p class="chunk">${c.chunk}</p>
+      <p class="model">e.g. &nbsp;${c.model}</p>
+      <div class="up">
+        <p class="lbl">Level up</p>
+        <p>${c.up}</p>
+      </div>
+      <div class="watch">
+        <p class="lbl">Watch out</p>
+        <p>${c.watch}</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-reveal" id="revealBtn">${open?'Target chunk shown':'Reveal target chunk'}</button>
+      <div class="tally ${open?'show':''}" id="tally">
+        <button class="btn t-check" data-m="check">✓ Nailed it</button>
+        <button class="btn t-slow"  data-m="slow">△ Slow</button>
+        <button class="btn t-miss"  data-m="miss">✗ Missed</button>
+      </div>
+    </div>`;
+  barfill.style.width=((idx+1)/deck.length*100)+'%';
+  countEl.textContent=`${idx+1} / ${deck.length}`;
+  document.getElementById('prev').disabled=idx===0;
+  document.getElementById('next').textContent = idx===deck.length-1 ? 'Finish ›' : 'Skip ›';
+
+  document.getElementById('revealBtn').onclick=()=>{
+    revealed[c.id]=true;
+    queueSave();
+    document.getElementById('reveal').classList.add('show');
+    document.getElementById('tally').classList.add('show');
+    document.getElementById('revealBtn').textContent='Target chunk shown';
+  };
+  document.querySelectorAll('.tally .btn').forEach(b=>{
+    b.onclick=()=>{results[c.id]=b.dataset.m; queueSave(true); advance();};
+  });
+  document.getElementById('speak').onclick=()=>speak(c.sc+' '+c.q);
+  const ta=document.getElementById('ans');
+  ta.oninput=()=>{answers[c.id]=ta.value;grow(ta);queueSave();};
+  grow(ta);
+  paintRec(c.id);
+  if(recordings[c.id] && !recordings[c.id].url && !recordings[c.id].missing) pullAudio(c.id);
+  refreshSelect();
+}
+
+/* ---------------- answer box ---------------- */
+function grow(el){ if(!el)return; el.style.height='auto'; el.style.height=(el.scrollHeight+2)+'px'; }
+
+/* ---------------- voice recorder ---------------- */
+let mr=null, chunks=[], recId=null, recStart=0, recTick=null;
+const MAXREC=120000;
+const micOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+let micNote='';
+const mmss=ms=>{const t=Math.floor(ms/1000);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0');};
+
+function paintRec(id){
+  const box=document.getElementById('recbox');
+  if(!box)return;
+  if(!micOK){
+    box.innerHTML='<span class="recnote">Recording isn\u2019t available in this browser. Record on your phone instead, or open this file over https.</span>';
+    return;
+  }
+  if(mr && mr.state==='recording' && recId===id){
+    box.innerHTML='<button class="recbtn on" id="recBtn"><span class="dotrec"></span>Stop recording</button>'+
+                  '<span class="rectime" id="recTime">0:00</span>';
+  }else if(recordings[id]){
+    const r=recordings[id];
+    if(r.url){
+      box.innerHTML=`<audio controls src="${r.url}"></audio>`+
+        `<a class="reclink" href="${r.url}" download="Owlish_Marketing_${id}_answer.${r.ext||'webm'}">Download</a>`+
+        '<button class="recbtn" id="recBtn"><span class="dotrec"></span>Re-record</button>';
+    }else if(r.loading){
+      box.innerHTML='<span class="recnote">Loading your saved recording\u2026</span>';
+    }else if(r.missing){
+      box.innerHTML='<span class="recnote">That saved recording could not be loaded.</span>'+
+        '<button class="recbtn" id="recBtn"><span class="dotrec"></span>Record again</button>';
+    }else{
+      box.innerHTML='<span class="recnote">You recorded an answer here.</span>'+
+        '<button class="recbtn" id="recBtn"><span class="dotrec"></span>Record again</button>';
+    }
+    if(r.uploading) box.insertAdjacentHTML('beforeend','<span class="recnote">Saving\u2026</span>');
+    else if(r.uploadErr) box.insertAdjacentHTML('beforeend','<span class="recnote">Not saved online \u2014 '+r.uploadErr+'</span>');
+    else if(r.saved) box.insertAdjacentHTML('beforeend','<span class="recnote">Saved to your account.</span>');
+  }else{
+    box.innerHTML='<button class="recbtn" id="recBtn"><span class="dotrec"></span>Record answer</button>';
+  }
+  if(micNote) box.insertAdjacentHTML('beforeend','<span class="recnote">'+micNote+'</span>');
+  const b=document.getElementById('recBtn');
+  if(b) b.onclick=()=>toggleRecord(id);
+}
+
+function stopRecording(){
+  if(mr && mr.state==='recording'){ try{mr.stop();}catch(e){} }
+}
+
+async function toggleRecord(id){
+  if(mr && mr.state==='recording'){ mr.stop(); return; }
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    chunks=[]; recId=id; recStart=Date.now(); micNote='';
+    mr=new MediaRecorder(stream);
+    mr.ondataavailable=e=>{ if(e.data&&e.data.size) chunks.push(e.data); };
+    mr.onstop=()=>{
+      clearInterval(recTick); recTick=null;
+      const type=(mr&&mr.mimeType)||'audio/webm';
+      const blob=new Blob(chunks,{type});
+      stream.getTracks().forEach(t=>t.stop());
+      const prev=recordings[recId];
+      if(prev) URL.revokeObjectURL(prev.url);
+      if(blob.size>0){
+        recordings[recId]={url:URL.createObjectURL(blob),ms:Date.now()-recStart,mime:type,
+          ext:/mp4|m4a|aac/.test(type)?'m4a':/ogg/.test(type)?'ogg':'webm'};
+      }
+      const done=recId; mr=null; recId=null;
+      paintRec(done);
+      if(blob.size>0) pushAudio(done,blob,type);
+    };
+    mr.start();
+    paintRec(id);
+    recTick=setInterval(()=>{
+      const el=Date.now()-recStart;
+      const t=document.getElementById('recTime');
+      if(t) t.textContent=mmss(el)+(el>MAXREC-20000?' / 2:00':'');
+      if(el>=MAXREC) stopRecording();
+    },500);
+  }catch(e){
+    mr=null; recId=null;
+    micNote = e && e.name==='NotAllowedError'
+      ? 'Microphone permission was blocked \u2014 allow it in your browser settings, or record on your phone.'
+      : 'No microphone found \u2014 record on your phone instead.';
+    paintRec(id);
+  }
+}
+
+function speak(text){
+  if(!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=.95;u.lang='en-US';
+  const vs=speechSynthesis.getVoices();
+  u.voice=vs.find(v=>v.name==='Google US English')||vs.find(v=>/en-US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null;
+  speechSynthesis.speak(u);
+}
+if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=()=>{};
+
+/* ---------------- section dropdown ---------------- */
+const secEl=document.getElementById('sec');
+function refreshSelect(){
+  const cur=secEl.value||'ALL';
+  const done=cs=>cs.filter(c=>results[c.id]).length;
+  let html=`<option value="ALL">All sections · ${done(CARDS)}/${CARDS.length}</option>`;
+  Object.keys(TIERS).forEach(k=>{
+    const cs=CARDS.filter(c=>c.t===k);
+    html+=`<option value="${k}">${TIERS[k]} · ${done(cs)}/${cs.length}</option>`;
+  });
+  secEl.innerHTML=html;
+  secEl.value=cur;
+}
+secEl.onchange=()=>{
+  stopRecording();
+  queueSave();
+  const v=secEl.value;
+  deck = v==='ALL' ? CARDS : CARDS.filter(c=>c.t===v);
+  idx=0;
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+function advance(){
+  queueSave();
+  if(idx<deck.length-1){idx++;render();window.scrollTo({top:0,behavior:'smooth'});}
+  else showResults();
+}
+document.getElementById('next').onclick=advance;
+document.getElementById('seeRes').onclick=()=>showResults();
+document.getElementById('prev').onclick=()=>{if(idx>0){idx--;render();window.scrollTo({top:0,behavior:'smooth'});}};
+
+/* ---------------- results ---------------- */
+function plain(s){
+  return String(s)
+    .replace(/<[^>]+>/g,'')
+    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    .replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&nbsp;/g,' ')
+    .replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"')
+    .replace(/[\u2013\u2014]/g,'-').replace(/\u2026/g,'...').replace(/\u2212/g,'-')
+    .replace(/\s+/g,' ').trim();
+}
+function tierStats(){
+  return Object.keys(TIERS).map(k=>{
+    const cs=CARDS.filter(c=>c.t===k);
+    const o={k,name:TIERS[k],total:cs.length,check:0,slow:0,miss:0};
+    cs.forEach(c=>{const m=results[c.id];if(m)o[m]++;});
+    return o;
+  });
+}
+function showResults(){
+  stopRecording();
+  document.getElementById('card').style.display='none';
+  document.getElementById('nav').style.display='none';
+  document.getElementById('progress').style.display='none';
+  document.getElementById('sectionbar').style.display='none';
+  const counts={check:0,slow:0,miss:0};
+  CARDS.forEach(c=>{const m=results[c.id];if(m)counts[m]++;});
+  const redrill=CARDS.filter(c=>results[c.id]==='slow'||results[c.id]==='miss');
+  const typedN=CARDS.filter(c=>(answers[c.id]||'').trim()).length;
+  const recN=CARDS.filter(c=>recordings[c.id]).length;
+  const ts=tierStats();
+  const tierHtml='<div class="tiers">'+ts.map(t=>{
+    const p=n=>(n/t.total*100)+'%';
+    return `<div class="row"><span class="nm">${t.name}</span>
+      <span class="tb"><i style="width:${p(t.check)};background:var(--good)"></i><i style="width:${p(t.slow)};background:var(--slow)"></i><i style="width:${p(t.miss)};background:var(--miss)"></i></span>
+      <span class="ft">${t.check}/${t.total}</span></div>`;
+  }).join('')+'</div>';
+  const list = redrill.length
+    ? '<ul>'+redrill.map(c=>`<li class="${results[c.id]}"><span class="dot"></span><b>${c.id}</b> &nbsp;${c.chunk}</li>`).join('')+'</ul>'
+    : '<p class="allclear">✓ Nothing to re-drill — every chunk was solid.</p>';
+  const R=document.getElementById('results');
+  R.innerHTML=`
+    <h2>Session results</h2>
+    <p class="sub">Marketing Edition · ${counts.check+counts.slow+counts.miss} of ${N} marked · ${typedN} written · ${recN} recorded</p>
+    <div class="scoregrid">
+      <div class="score s-check"><div class="n">${counts.check}</div><div class="k">Nailed</div></div>
+      <div class="score s-slow"><div class="n">${counts.slow}</div><div class="k">Slow</div></div>
+      <div class="score s-miss"><div class="n">${counts.miss}</div><div class="k">Missed</div></div>
+    </div>
+    ${tierHtml}
+    <div class="redrill">
+      <h3>Re-drill list — say each twice next session</h3>
+      ${list}
+    </div>
+    <div class="btnrow">
+      <button class="btn btn-pdf" id="pdf">Download PDF results</button>
+      <button class="btn btn-restart" id="back">Back to drill</button>
+      <button class="btn btn-restart" id="signout" style="display:none">Sign out</button>
+      <button class="btn btn-restart" id="restart">Start over</button>
+    </div>`;
+  R.classList.add('show');
+  document.getElementById('back').onclick=()=>{
+    R.classList.remove('show');
+    ['card','nav','progress','sectionbar'].forEach(i=>document.getElementById(i).style.display='');
+    render();window.scrollTo({top:0,behavior:'smooth'});
+  };
+  document.getElementById('restart').onclick=()=>location.reload();
+  const so=document.getElementById('signout');
+  if(SY.on){ so.style.display=''; so.onclick=signOut; }
+  document.getElementById('pdf').onclick=()=>makePDF(counts,redrill,ts);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------------- PDF ---------------- */
+function makePDF(counts,redrill,ts){
+  const {jsPDF}=window.jspdf;const d=new jsPDF({unit:'pt',format:'a4'});
+  const M=54;let y=64;const pw=d.internal.pageSize.getWidth();
+  d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(42,111,151);
+  d.text('OWLISH ENGLISH',M,y);
+  d.setTextColor(20,33,61);d.setFontSize(9);d.setFont('helvetica','normal');
+  d.text('SPA Chunks · Marketing Edition',pw-M,y,{align:'right'});
+  y+=8;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=30;
+  d.setFont('helvetica','bold');d.setFontSize(17);
+  d.text('SPA Chart Chunks - Marketing Edition Results',M,y);y+=22;
+  d.setFont('helvetica','normal');d.setFontSize(11);d.setTextColor(91,107,123);
+  d.text('Marketing & Analytics ('+N+' chunks, 6 sections)',M,y);y+=30;
+  d.setTextColor(20,33,61);d.setFontSize(11);
+  d.text('Name: ______________________________',M,y);
+  d.text('Date: ___________________',pw-M-150,y);y+=34;
+  d.setFont('helvetica','bold');d.setFontSize(12);
+  d.setTextColor(47,133,90);d.text(`Nailed: ${counts.check}`,M,y);
+  d.setTextColor(183,121,31);d.text(`Slow: ${counts.slow}`,M+130,y);
+  d.setTextColor(197,48,48);d.text(`Missed: ${counts.miss}`,M+240,y);y+=30;
+  d.setTextColor(20,33,61);d.setFont('helvetica','bold');d.setFontSize(13);
+  d.text('By section',M,y);y+=6;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=20;
+  d.setFont('helvetica','normal');d.setFontSize(11);
+  ts.forEach(t=>{
+    d.setTextColor(20,33,61);d.text(plain(t.name),M,y);
+    d.setTextColor(91,107,123);d.text(`${t.check} nailed · ${t.slow} slow · ${t.miss} missed  (of ${t.total})`,M+175,y);
+    y+=20;
+  });
+  y+=12;
+  d.setTextColor(20,33,61);d.setFont('helvetica','bold');d.setFontSize(13);
+  d.text('Re-drill list',M,y);y+=6;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=20;
+  d.setFont('helvetica','normal');d.setFontSize(11);
+  if(redrill.length){
+    redrill.forEach(c=>{
+      if(y>760){d.addPage();y=64;}
+      const miss=results[c.id]==='miss';
+      d.setTextColor(miss?197:183, miss?48:121, miss?48:31);
+      d.setFont('helvetica','bold');d.text(miss?'[X]':'[/]',M,y);
+      d.setTextColor(20,33,61);d.text(c.id,M+28,y);
+      d.setFont('helvetica','normal');
+      d.text(d.splitTextToSize(plain(c.chunk),pw-M-M-70),M+64,y);
+      y+=22;
+    });
+  }else{
+    d.setTextColor(47,133,90);d.setFont('helvetica','bold');
+    d.text('Nothing to re-drill - every chunk was solid.',M,y);y+=22;
+  }
+  /* typed / recorded answers */
+  const wide=pw-M-M;
+  const ensure=h=>{ if(y+h>790){d.addPage();y=64;} };
+  const written=CARDS.filter(c=>(answers[c.id]||'').trim()||recordings[c.id]);
+  if(written.length){
+    d.addPage();y=64;
+    d.setTextColor(20,33,61);d.setFont('helvetica','bold');d.setFontSize(13);
+    d.text('Your answers',M,y);y+=6;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=22;
+    written.forEach(c=>{
+      const mine=d.splitTextToSize(plain(answers[c.id]||'(spoken answer only)'),wide-14);
+      const model=d.splitTextToSize('Target: '+plain(c.model),wide-14);
+      ensure(34+mine.length*14+model.length*13);
+      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(42,111,151);
+      d.text(c.id+'  '+plain(c.chunk),M,y);y+=15;
+      d.setFont('helvetica','normal');d.setFontSize(10.5);d.setTextColor(20,33,61);
+      d.text(mine,M+14,y);y+=mine.length*14+2;
+      if(recordings[c.id]){
+        d.setTextColor(91,107,123);d.setFontSize(9.5);
+        d.text('[ voice answer recorded - '+mmss(Math.max(1000,recordings[c.id].ms))+' ]',M+14,y);y+=13;
+      }
+      d.setFontSize(10);d.setTextColor(120,132,145);
+      d.text(model,M+14,y);y+=model.length*13+14;
+    });
+  }
+  ensure(40);
+  y+=6;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=18;
+  d.setTextColor(91,107,123);d.setFont('helvetica','normal');d.setFontSize(9);
+  d.text('Owlish English · SPA Chunks · Marketing Edition',M,y);
+  d.save('SPA_Chunks_Marketing_Results.pdf');
+}
+
+/* ================= saved progress (hosted mode) ================= */
+const EDITION='marketing';
+const LS_TOK='owlish.token', LS_MAIL='owlish.email';
+const SY={on:false,token:null,email:null,timer:null,saving:false,pending:false,lastSaved:0};
+const HOSTED = location.protocol==='http:' || location.protocol==='https:';
+
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function lsDel(k){try{localStorage.removeItem(k);}catch(e){}}
+
+async function apiCall(path,opts){
+  opts=opts||{};
+  const headers=Object.assign({'content-type':'application/json'},opts.headers||{});
+  if(SY.token) headers.authorization='Bearer '+SY.token;
+  const r=await fetch(path,Object.assign({},opts,{headers}));
+  let d={}; try{ d=await r.json(); }catch(e){}
+  if(!r.ok){ const e=new Error(d.error||('Request failed ('+r.status+')')); e.status=r.status; throw e; }
+  return d;
+}
+
+function setSync(kind,msg){
+  const el=document.getElementById('sync');
+  if(!el) return;
+  const map={saved:['ok','Saved'],saving:['busy','Saving\u2026'],error:['bad',msg||'Not saved'],
+             local:['','Not saving'],off:['','']};
+  const [cls,txt]=map[kind]||['',''];
+  el.className='syncpill'+(cls?' '+cls:'');
+  el.innerHTML=txt?'<i></i>'+txt:'';
+  el.title=msg||'';
+}
+
+function snapshot(){
+  const recs={};
+  Object.keys(recordings).forEach(id=>{
+    const r=recordings[id];
+    if(r) recs[id]={ms:r.ms||0,mime:r.mime||'audio/webm'};
+  });
+  return {idx:idx,section:(secEl&&secEl.value)||'ALL',answers:answers,results:results,
+          revealed:revealed,recs:recs,updated:Date.now()};
+}
+
+function queueSave(now){
+  if(!SY.on) return;
+  clearTimeout(SY.timer);
+  if(now){ doSave(); return; }
+  setSync('saving');
+  SY.timer=setTimeout(()=>{SY.timer=null;doSave();},1500);
+}
+
+async function doSave(opts){
+  if(!SY.on) return;
+  if(SY.saving){ SY.pending=true; return; }
+  SY.saving=true; setSync('saving');
+  try{
+    await apiCall('/api/progress',{method:'PUT',keepalive:!!(opts&&opts.keepalive),
+      body:JSON.stringify({edition:EDITION,email:SY.email,state:snapshot()})});
+    SY.lastSaved=Date.now(); setSync('saved');
+  }catch(e){
+    setSync('error',e.message);
+    if(e.status===401){ SY.on=false; lsDel(LS_TOK); openGate('Your sign-in expired. Please sign in again.'); }
+  }finally{
+    SY.saving=false;
+    if(SY.pending){ SY.pending=false; queueSave(true); }
+  }
+}
+
+function applyProgress(p){
+  const e=p&&p.editions&&p.editions[EDITION];
+  if(!e) return false;
+  Object.assign(answers,e.answers||{});
+  Object.assign(results,e.results||{});
+  Object.assign(revealed,e.revealed||{});
+  Object.keys(e.recs||{}).forEach(id=>{
+    recordings[id]={ms:(e.recs[id]||{}).ms||0,mime:(e.recs[id]||{}).mime||'audio/webm',
+      ext:/mp4|m4a/.test((e.recs[id]||{}).mime||'')?'m4a':'webm',url:null,saved:true};
+  });
+  const sec=e.section&&(e.section==='ALL'||TIERS[e.section])?e.section:'ALL';
+  deck = sec==='ALL' ? CARDS : CARDS.filter(c=>c.t===sec);
+  if(secEl) secEl.value=sec;
+  idx=Math.max(0,Math.min(e.idx||0,deck.length-1));
+  return true;
+}
+
+async function pullAudio(id){
+  const r=recordings[id];
+  if(!SY.on||!r||r.url||r.loading) return;
+  r.loading=true;
+  if(deck[idx]&&deck[idx].id===id) paintRec(id);
+  try{
+    const d=await apiCall('/api/audio?edition='+EDITION+'&card='+encodeURIComponent(id));
+    const bin=atob(d.audio||''); const arr=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+    r.url=URL.createObjectURL(new Blob([arr],{type:r.mime||'audio/webm'}));
+  }catch(e){ r.missing=true; }
+  finally{ r.loading=false; if(deck[idx]&&deck[idx].id===id) paintRec(id); }
+}
+
+function blobToB64(b){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onload=()=>res(String(fr.result).split(',')[1]||'');
+    fr.onerror=()=>rej(new Error('Could not read the recording.'));
+    fr.readAsDataURL(b);
+  });
+}
+
+async function pushAudio(id,blob,mime){
+  const r=recordings[id];
+  if(!r) return;
+  if(!SY.on){ r.saved=false; return; }
+  r.uploading=true; r.uploadErr=null;
+  if(deck[idx]&&deck[idx].id===id) paintRec(id);
+  try{
+    const b64=await blobToB64(blob);
+    await apiCall('/api/audio?edition='+EDITION+'&card='+encodeURIComponent(id),
+      {method:'POST',body:JSON.stringify({audio:b64,mime:mime})});
+    r.saved=true; queueSave(true);
+  }catch(e){ r.uploadErr=e.message; }
+  finally{ r.uploading=false; if(deck[idx]&&deck[idx].id===id) paintRec(id); }
+}
+
+/* ---------------- sign-in gate ---------------- */
+const gate=document.getElementById('gate');
+function openGate(msg){
+  if(!gate) return;
+  gate.hidden=false;
+  const e=document.getElementById('gerr');
+  if(msg){ e.textContent=msg; e.hidden=false; } else { e.hidden=true; }
+  const mail=document.getElementById('gmail');
+  mail.value=lsGet(LS_MAIL)||'';
+  setTimeout(()=>{ (mail.value?document.getElementById('gcode'):mail).focus(); },60);
+}
+function closeGate(){ if(gate) gate.hidden=true; }
+
+async function trySignIn(){
+  const btn=document.getElementById('gbtn');
+  const err=document.getElementById('gerr');
+  const email=document.getElementById('gmail').value.trim();
+  const code=document.getElementById('gcode').value.trim();
+  const fail=m=>{ err.textContent=m; err.hidden=false; };
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please enter a valid email address.');
+  if(!/^\d{4}$/.test(code)) return fail('Your code must be exactly 4 digits.');
+  btn.disabled=true; btn.textContent='Signing in\u2026'; err.hidden=true;
+  try{
+    const d=await apiCall('/api/signin',{method:'POST',body:JSON.stringify({email:email,code:code})});
+    SY.token=d.token; SY.email=d.email||email; SY.on=true;
+    lsSet(LS_TOK,d.token); lsSet(LS_MAIL,SY.email);
+    const had=applyProgress(d.progress);
+    closeGate(); render(); setSync('saved');
+    showResume(had,d.isNew);
+  }catch(e){
+    fail(e.message||'Could not sign in.');
+  }finally{
+    btn.disabled=false; btn.textContent='Start';
+  }
+}
+
+function showResume(had,isNew){
+  const el=document.getElementById('resume');
+  if(!el) return;
+  const marked=CARDS.filter(c=>results[c.id]).length;
+  if(isNew){
+    el.textContent='Signed in. Your notes, recordings and place will be saved as you go.';
+  }else if(had&&marked){
+    el.textContent='Welcome back \u2014 picking up at card '+(idx+1)+' of '+deck.length+'. You have marked '+marked+' of '+CARDS.length+' so far.';
+  }else if(had){
+    el.textContent='Welcome back \u2014 picking up where you left off.';
+  }else{
+    el.textContent='Signed in. Your progress will be saved as you go.';
+  }
+  el.hidden=false;
+  setTimeout(()=>{el.hidden=true;},9000);
+}
+
+function signOut(){
+  if(!confirm('Sign out? Your saved work stays on the server — sign in with the same email and code to get it back.')) return;
+  SY.on=false; SY.token=null;
+  lsDel(LS_TOK);
+  location.reload();
+}
+
+/* ---------------- boot ---------------- */
+async function boot(){
+  render();
+  if(!HOSTED){ setSync('local','This copy is running from a file, so nothing is saved online.'); return; }
+  const tok=lsGet(LS_TOK);
+  if(tok){
+    SY.token=tok; SY.email=lsGet(LS_MAIL);
+    try{
+      const d=await apiCall('/api/progress');
+      SY.on=true;
+      const had=applyProgress(d.progress);
+      render(); setSync('saved'); showResume(had,false);
+      return;
+    }catch(e){
+      SY.token=null; lsDel(LS_TOK);
+      if(e.status!==401){ setSync('error',e.message); }
+    }
+  }
+  openGate();
+}
+
+if(gate){
+  document.getElementById('gbtn').onclick=trySignIn;
+  document.getElementById('gskip').onclick=()=>{ closeGate(); setSync('local','You chose not to save. Download the PDF before you close the page.'); };
+  document.getElementById('gcode').addEventListener('keydown',ev=>{ if(ev.key==='Enter') trySignIn(); });
+  document.getElementById('gmail').addEventListener('keydown',ev=>{ if(ev.key==='Enter') document.getElementById('gcode').focus(); });
+  document.getElementById('gcode').addEventListener('input',ev=>{ ev.target.value=ev.target.value.replace(/\D/g,'').slice(0,4); });
+}
+function flushSave(){
+  if(!SY.on||!SY.timer) return;
+  clearTimeout(SY.timer); SY.timer=null;
+  doSave({keepalive:true});
+}
+window.addEventListener('pagehide',flushSave);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') flushSave(); });
+
+boot();
+</script>
+</body>
+</html>
