@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="owlish-title" content="SPA Chart Chunks — Engineering Edition (Self-Drill)">
+<meta name="owlish-department" content="Engineering">
+<title>SPA Chart Chunks — Engineering Edition · Owlish English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#14213d; --data:#2a6f97; --data2:#bc4749; --amber:#e09f3e;
+    --paper:#ffffff; --panel:#f4f6f9; --line:#dde3ea; --muted:#5b6b7b;
+    --good:#2f855a; --slow:#b7791f; --miss:#c53030;
+    --shadow:0 1px 2px rgba(20,33,61,.06),0 8px 24px rgba(20,33,61,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);
+    background:var(--panel);line-height:1.55;-webkit-font-smoothing:antialiased;padding:24px 16px 64px}
+  .wrap{max-width:760px;margin:0 auto}
+  header.top{margin-bottom:18px}
+  .eyebrow{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--data);margin:0 0 6px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.55rem;line-height:1.15;margin:0 0 8px;letter-spacing:-.01em}
+  .lede{color:var(--muted);font-size:.95rem;margin:0}
+  .how{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:16px 0 0;
+    font-size:.9rem;color:var(--muted);box-shadow:var(--shadow)}
+  .how b{color:var(--ink)}
+  .how ol{margin:8px 0 0;padding-left:20px}
+  .how li{margin:3px 0}
+  details.bank{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  details.bank summary{cursor:pointer;font-family:"Space Grotesk",sans-serif;font-weight:600;color:var(--data);font-size:.9rem}
+  details.bank dl{margin:10px 0 0;display:grid;grid-template-columns:132px 1fr;gap:6px 12px;font-size:.86rem}
+  details.bank dt{font-weight:700;color:var(--ink)}
+  details.bank dd{margin:0}
+
+  .sectionbar{display:flex;align-items:center;gap:10px;margin:22px 0 0}
+  .sectionbar label{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted)}
+  .sectionbar select{flex:1;min-width:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.95rem;color:var(--ink);
+    background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235b6b7b' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;
+    border:1px solid var(--line);border-radius:11px;padding:11px 38px 11px 14px;box-shadow:var(--shadow);
+    appearance:none;-webkit-appearance:none;cursor:pointer}
+  .sectionbar select:focus-visible{outline:2px solid var(--data);outline-offset:2px}
+
+  .progress{display:flex;align-items:center;gap:12px;margin:16px 0 14px}
+  .bar{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar span{display:block;height:100%;width:0;background:var(--data);border-radius:99px;transition:width .35s ease}
+  .count{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.85rem;color:var(--muted);white-space:nowrap}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+  .card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:16px 20px 0}
+  .tag{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.95rem;color:var(--data);letter-spacing:.02em}
+  .tag small{display:block;font-weight:500;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .tier{font-family:"Space Grotesk",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:99px;padding:4px 10px;white-space:nowrap}
+  .scene{margin:12px 20px 0;padding:9px 12px;background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    font-size:.84rem;color:var(--muted)}
+  .scene b{font-family:"Space Grotesk",sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--data);display:block;margin-bottom:1px}
+  .chartbox{padding:8px 16px 4px}
+  svg.chart{width:100%;height:auto;display:block}
+  .caption{text-align:center;color:var(--muted);font-size:.78rem;margin:2px 0 6px}
+  .qrow{display:flex;align-items:flex-start;gap:12px;padding:4px 20px}
+  .q{font-size:1.06rem;font-weight:500;margin:0;flex:1}
+  .q .lead{color:var(--muted);font-weight:600;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .speak{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--data);width:40px;height:40px;border-radius:10px;
+    font-size:1.1rem;cursor:pointer;display:grid;place-items:center;transition:background .15s,border-color .15s}
+  .speak:hover{background:#eaf1f6;border-color:var(--data)}
+  .speak:focus-visible{outline:2px solid var(--data);outline-offset:2px}
+
+  .answer{margin:14px 20px 0}
+  .answer .alab{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+  .answer textarea{width:100%;min-height:74px;font-family:"Inter",system-ui,sans-serif;font-size:.97rem;line-height:1.5;
+    color:var(--ink);background:#fcfdfe;border:1px solid var(--line);border-radius:10px;padding:11px 13px;
+    resize:none;overflow:hidden;transition:border-color .15s,background .15s}
+  .answer textarea::placeholder{color:#9aa7b4}
+  .answer textarea:focus{outline:none;border-color:var(--data);background:#fff}
+  .recrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:9px;min-height:36px}
+  .recbtn{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.86rem;border-radius:9px;padding:8px 14px;
+    cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);display:inline-flex;align-items:center;gap:7px}
+  .recbtn:hover{background:#eaf1f6;border-color:var(--data)}
+  .recbtn.on{background:#fbe9e9;border-color:#f0c4c4;color:var(--miss)}
+  .recbtn .dotrec{width:9px;height:9px;border-radius:99px;background:var(--miss);flex:none}
+  .recbtn.on .dotrec{animation:blink 1s steps(2,start) infinite}
+  @keyframes blink{to{visibility:hidden}}
+  @media (prefers-reduced-motion:reduce){.recbtn.on .dotrec{animation:none}}
+  .rectime{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.86rem;color:var(--miss)}
+  .recrow audio{height:34px;max-width:230px;flex:1 1 180px;min-width:150px}
+  .reclink{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.82rem;color:var(--data);text-decoration:none;
+    border-bottom:1px solid var(--line);padding-bottom:1px}
+  .reclink:hover{border-color:var(--data)}
+  .recnote{font-size:.82rem;color:var(--muted)}
+  @media print{
+    .answer textarea{overflow:visible;height:auto;border-color:#bbb}
+    .recrow{display:none}
+  }
+  .reveal{margin:12px 20px 18px;border-left:4px solid var(--amber);background:linear-gradient(180deg,#fdf6ea,#fbf3e3);
+    border-radius:0 12px 12px 0;padding:14px 16px;display:none}
+  .reveal.show{display:block;animation:pop .28s ease}
+  @media (prefers-reduced-motion:reduce){.reveal.show{animation:none}}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .reveal .lbl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slow);font-weight:700;margin:0 0 4px}
+  .reveal .chunk{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.18rem;color:var(--ink);margin:0 0 8px}
+  .reveal .model{margin:0;font-size:.94rem;color:#6b5327}
+  .reveal .model em{font-style:normal;color:var(--ink);font-weight:600}
+  .reveal .up{margin:12px 0 0;padding-top:10px;border-top:1px dashed #e3cf9f}
+  .reveal .up .lbl{color:var(--data)}
+  .reveal .up p{margin:0;font-size:.94rem;color:#4a5a6a}
+  .reveal .up em{font-style:normal;color:var(--ink);font-weight:600}
+  .reveal .watch{margin:12px 0 0;padding-top:10px;border-top:1px dashed #e3cf9f}
+  .reveal .watch .lbl{color:var(--miss)}
+  .reveal .watch p{margin:0;font-size:.9rem;color:#6b4a4a}
+  .reveal .watch em{font-style:normal;font-weight:600;color:var(--ink)}
+
+  .actions{padding:0 20px 20px;display:flex;flex-direction:column;gap:12px}
+  .btn{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1rem;border:none;border-radius:11px;padding:13px 18px;
+    cursor:pointer;transition:transform .08s ease,filter .15s ease}
+  .btn:active{transform:translateY(1px)}
+  .btn-reveal{background:var(--ink);color:#fff;width:100%}
+  .btn-reveal:hover{filter:brightness(1.12)}
+  .tally{display:none;gap:10px}
+  .tally.show{display:flex}
+  .tally .btn{flex:1}
+  .t-check{background:#e7f4ec;color:var(--good);border:1px solid #bfe3cc}
+  .t-slow{background:#fbf1dd;color:var(--slow);border:1px solid #ecd8ac}
+  .t-miss{background:#fbe9e9;color:var(--miss);border:1px solid #f0c4c4}
+  .t-check:hover,.t-slow:hover,.t-miss:hover{filter:brightness(.97)}
+
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+  .nav button{background:none;border:none;color:var(--muted);font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:.9rem;cursor:pointer;padding:8px 6px;border-radius:8px}
+  .nav button:hover{color:var(--ink)}
+  .nav button:disabled{opacity:.3;cursor:default}
+  .nav button:focus-visible{outline:2px solid var(--data);outline-offset:2px}
+
+  .results{display:none;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:26px 24px}
+  .results.show{display:block}
+  .results h2{font-family:"Space Grotesk",sans-serif;font-size:1.4rem;margin:0 0 4px}
+  .results .sub{color:var(--muted);margin:0 0 20px;font-size:.92rem}
+  .scoregrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+  .score{border-radius:12px;padding:16px 12px;text-align:center}
+  .score .n{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:2rem;line-height:1}
+  .score .k{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+  .s-check{background:#e7f4ec}.s-check .n,.s-check .k{color:var(--good)}
+  .s-slow{background:#fbf1dd}.s-slow .n,.s-slow .k{color:var(--slow)}
+  .s-miss{background:#fbe9e9}.s-miss .n,.s-miss .k{color:var(--miss)}
+  .tiers{margin:0 0 22px;display:grid;gap:8px}
+  .tiers .row{display:flex;align-items:center;gap:12px;font-size:.9rem}
+  .tiers .row .nm{width:185px;font-weight:600}
+  .tiers .row .tb{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden;display:flex}
+  .tiers .row .tb i{display:block;height:100%}
+  .tiers .row .ft{width:48px;text-align:right;color:var(--muted);font-family:"Space Grotesk",sans-serif;font-weight:600}
+  .redrill h3{font-family:"Space Grotesk",sans-serif;font-size:1rem;margin:0 0 8px}
+  .redrill ul{margin:0;padding:0;list-style:none}
+  .redrill li{padding:9px 12px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px;font-size:.92rem;display:flex;gap:10px;align-items:center}
+  .redrill li .dot{width:9px;height:9px;border-radius:99px;flex:none}
+  .redrill li.slow .dot{background:var(--slow)}
+  .redrill li.miss .dot{background:var(--miss)}
+  .redrill .allclear{color:var(--good);font-weight:600}
+  .results .btnrow{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+  .results .btn{flex:1;min-width:150px}
+  .btn-pdf{background:var(--data);color:#fff}
+  .btn-pdf:hover{filter:brightness(1.08)}
+  .btn-restart{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+
+  /* sign-in gate */
+  .gate{position:fixed;inset:0;background:rgba(20,33,61,.55);backdrop-filter:blur(3px);z-index:50;
+    display:grid;place-items:center;padding:20px;overflow:auto}
+  .gate[hidden]{display:none}
+  .gatebox{background:var(--paper);border-radius:16px;box-shadow:0 20px 60px rgba(20,33,61,.3);
+    padding:26px 24px;max-width:400px;width:100%}
+  .gatebox h2{font-family:"Space Grotesk",sans-serif;font-size:1.3rem;margin:0 0 6px}
+  .gatebox .gsub{color:var(--muted);font-size:.9rem;margin:0 0 18px}
+  .gatebox label{display:block;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.7rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
+  .gatebox input{width:100%;font-family:"Inter",sans-serif;font-size:1rem;color:var(--ink);background:#fcfdfe;
+    border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:14px}
+  .gatebox input:focus{outline:none;border-color:var(--data);background:#fff}
+  .gatebox #gcode{letter-spacing:.5em;font-family:"Space Grotesk",sans-serif;font-weight:700;max-width:140px}
+  .gatebox .ghint{font-size:.82rem;color:var(--muted);margin:0 0 16px}
+  .gatebox .gerr{font-size:.88rem;color:var(--miss);background:#fbe9e9;border:1px solid #f0c4c4;
+    border-radius:9px;padding:9px 11px;margin:0 0 14px}
+  .gatebox .gerr[hidden]{display:none}
+  .gatebox .btn-reveal{width:100%}
+  .glink{display:block;width:100%;background:none;border:none;color:var(--muted);font-family:"Inter",sans-serif;
+    font-size:.86rem;cursor:pointer;margin-top:12px;text-decoration:underline}
+  .glink:hover{color:var(--ink)}
+
+  /* sync status */
+  .syncpill{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.74rem;letter-spacing:.02em;
+    color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+  .syncpill i{width:7px;height:7px;border-radius:99px;background:var(--line);flex:none}
+  .syncpill.ok i{background:var(--good)}
+  .syncpill.busy i{background:var(--amber)}
+  .syncpill.bad i{background:var(--miss)}
+  .resume{background:#e7f4ec;border:1px solid #bfe3cc;color:#24694a;border-radius:10px;padding:10px 13px;
+    font-size:.88rem;margin:14px 0 0}
+  .resume[hidden]{display:none}
+
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:28px}
+  footer .brand{font-family:"Space Grotesk",sans-serif;font-weight:600;color:var(--ink)}
+  @media (max-width:480px){
+    h1{font-size:1.35rem}.q{font-size:1rem}.scoregrid{gap:8px}.score .n{font-size:1.6rem}
+    details.bank dl{grid-template-columns:1fr}.tiers .row .nm{width:120px}
+  }
+</style>
+</head>
+<body>
+<div class="gate" id="gate" hidden>
+  <div class="gatebox">
+    <p class="eyebrow">Owlish English</p>
+    <h2>Save your progress</h2>
+    <p class="gsub">Your notes, recordings and your place are saved, so you can stop part-way and pick up later on any device.</p>
+    <label for="gmail">Email</label>
+    <input id="gmail" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com">
+    <label for="gcode">4-digit code</label>
+    <input id="gcode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="0000">
+    <p class="ghint">First time? Pick any 4 digits — that becomes your code. Use the same email and code every time.</p>
+    <p class="gerr" id="gerr" hidden></p>
+    <button class="btn btn-reveal" id="gbtn">Start</button>
+    <button class="glink" id="gskip">Continue without saving</button>
+  </div>
+</div>
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Owlish Workplace English · Engineering</p>
+    <h1>SPA Chart Chunks — Engineering Edition</h1>
+    <p class="lede">30 chunks for the meetings engineers actually sit in — stand-ups, performance reviews, incident post-mortems, bug triage, delivery dates and technical trade-offs. Each card sets the scene first: read the chart, answer aloud, then check the target chunk.</p>
+    <div class="how">
+      <b>How to run it solo:</b>
+      <ol>
+        <li>Read the <b>meeting</b> line, then the chart and the prompt. <b>Say your answer aloud</b> in a full sentence — record it on your phone.</li>
+        <li><b>Write it or record it</b> in the answer box, so you can compare your real wording with the model — speaking it aloud first is still the point.</li>
+        <li>Tap <b>Reveal</b>. Compare with the target chunk, then try the <b>Level-up</b> line. Read the <b>Watch out</b> note — it covers the mistakes that change the meaning of a number.</li>
+        <li>Mark yourself: <b>✓</b> nailed it · <b>△</b> got it but slow/clunky · <b>✗</b> missed it. Re-say every △ and ✗ twice before moving on.</li>
+        <li>Use the <b>Section</b> dropdown to drill one meeting type at a time.</li>
+        <li><b>Download the PDF at the end</b> — it includes everything you typed. Nothing is saved once you close the page.</li>
+      </ol>
+      <details class="bank">
+        <summary>Engineering word bank (tap to open)</summary>
+        <dl>
+          <dt>Status</dt><dd>on track · blocked on · in review · merged · shipped · rolled back · flag · escalate</dd>
+          <dt>Performance</dt><dd>latency · p50 / p95 / p99 · throughput · bottleneck · error budget · SLO · uptime · cache hit rate</dd>
+          <dt>Incidents</dt><dd>degraded · outage · root cause · mitigated · resolved · time to detect · time to recover · post-mortem · blameless</dd>
+          <dt>Quality</dt><dd>regression · severity · triage · flaky test · crash rate · coverage · backlog</dd>
+          <dt>Delivery</dt><dd>estimate · velocity · burndown · scope creep · stopgap · technical debt · deprecate · build versus buy</dd>
+          <dt>Say it right</dt><dd>“p95” = “p ninety-five” · “SLO” = “S-L-O” · “CI” = “C-I” · “v4.2” = “version four point two” · “MTTR” = “M-T-T-R”</dd>
+        </dl>
+      </details>
+    </div>
+  </header>
+
+  <div class="sectionbar" id="sectionbar">
+    <label for="sec">Section</label>
+    <select id="sec" aria-label="Choose a section"></select>
+    <span class="syncpill" id="sync" aria-live="polite"></span>
+  </div>
+  <p class="resume" id="resume" hidden></p>
+
+  <div class="progress" id="progress">
+    <span class="count" id="count">1 / 30</span>
+    <div class="bar"><span id="barfill"></span></div>
+  </div>
+
+  <section class="card" id="card" aria-live="polite"></section>
+
+  <div class="nav" id="nav">
+    <button id="prev">‹ Back</button>
+    <button id="seeRes">Results</button>
+    <button id="next">Skip ›</button>
+  </div>
+
+  <section class="results" id="results" aria-live="polite"></section>
+
+  <footer><span class="brand">Owlish English</span> · SPA Chunks · Engineering Edition</footer>
+</div>
+
+<script>
+/* ---------------- palette ---------------- */
+const C={ink:'#14213d',data:'#2a6f97',data2:'#bc4749',amber:'#e09f3e',
+  grid:'#dde3ea',axis:'#9aa7b4',muted:'#5b6b7b',pie2:'#dde3ea',soft:'#9dc0d6'};
+
+/* ---------------- chart geometry ---------------- */
+const W=480,H=250,padL=50,padR=18,padT=24,padB=40;
+const x0=padL, xR=W-padR, y0=H-padB, yT=padT;
+const plotW=xR-x0, plotH=y0-yT;
+const xAt=(i,n)=> n<=1 ? (x0+xR)/2 : x0 + plotW*(i/(n-1));
+const yAt=(v,max)=> y0 - (v/max)*plotH;
+const fmt=n=>(Math.round(n*10)/10).toLocaleString('en-US');
+
+function axisBase(max,xlabels){
+  let s=`<line x1="${x0}" y1="${yT}" x2="${x0}" y2="${y0}" stroke="${C.axis}" stroke-width="1"/>`;
+  s+=`<line x1="${x0}" y1="${y0}" x2="${xR}" y2="${y0}" stroke="${C.axis}" stroke-width="1"/>`;
+  [0,.5,1].forEach(f=>{
+    const y=y0-f*plotH, v=Math.round(max*f*10)/10;
+    if(f>0) s+=`<line x1="${x0}" y1="${y}" x2="${xR}" y2="${y}" stroke="${C.grid}" stroke-width="1"/>`;
+    s+=`<text x="${x0-8}" y="${y+4}" text-anchor="end" font-size="11" fill="${C.muted}">${v}</text>`;
+  });
+  if(xlabels) xlabels.forEach((l,i)=>{
+    s+=`<text x="${xAt(i,xlabels.length)}" y="${y0+18}" text-anchor="middle" font-size="11" fill="${C.muted}">${l}</text>`;
+  });
+  return s;
+}
+function svgWrap(inner){return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;}
+function legend(items){
+  let s='<g font-size="11" font-weight="600">',cx=x0+6;
+  items.forEach(it=>{
+    s+=`<rect x="${cx}" y="${yT-6}" width="12" height="3" rx="1.5" fill="${it.c}"/>`+
+       `<text x="${cx+17}" y="${yT-1}" fill="${C.muted}">${it.n}</text>`;
+    cx+=22+it.n.length*6.1;
+  });
+  return s+'</g>';
+}
+function threshLine(max,t){
+  const y=yAt(t.v,max);
+  return `<line x1="${x0}" y1="${y}" x2="${xR}" y2="${y}" stroke="${C.data2}" stroke-width="1.8" stroke-dasharray="6 4"/>`+
+         `<text x="${xR}" y="${y-6}" text-anchor="end" font-size="11" font-weight="700" fill="${C.data2}">${t.label}</text>`;
+}
+
+/* ---- vertical bars ---- */
+function bars(data,{labels,max,highlight=-1,values=false,thresh=null}){
+  let s=axisBase(max,null);
+  const n=data.length, band=plotW/n, bw=Math.min(band*0.56,54);
+  data.forEach((v,i)=>{
+    const cx=x0+band*(i+0.5), x=cx-bw/2, y=yAt(v,max), h=y0-y;
+    const fill=i===highlight?C.amber:C.data;
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="3" fill="${fill}"/>`;
+    if(labels) s+=`<text x="${cx}" y="${y0+18}" text-anchor="middle" font-size="11" fill="${C.muted}">${labels[i]}</text>`;
+    if(values||i===highlight)
+      s+=`<text x="${cx}" y="${y-6}" text-anchor="middle" font-size="12" font-weight="700" fill="${i===highlight?'#a86a1e':C.ink}">${fmt(v)}</text>`;
+  });
+  if(thresh) s+=threshLine(max,thresh);
+  return svgWrap(s);
+}
+
+/* ---- grouped bars (actual vs plan) ---- */
+function gbars(a,b,{labels,max,names,values=true}){
+  let s=axisBase(max,null);
+  const n=a.length, band=plotW/n, bw=Math.min(band*0.3,30), gap=3;
+  for(let i=0;i<n;i++){
+    const cx=x0+band*(i+0.5);
+    [[a[i],C.data,-1],[b[i],C.soft,1]].forEach(([v,col,side])=>{
+      const x=cx+side*(gap/2)+(side<0?-bw:0), y=yAt(v,max);
+      s+=`<rect x="${x}" y="${y}" width="${bw}" height="${y0-y}" rx="3" fill="${col}"/>`;
+      if(values) s+=`<text x="${x+bw/2}" y="${y-5}" text-anchor="middle" font-size="10.5" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;
+    });
+    s+=`<text x="${cx}" y="${y0+18}" text-anchor="middle" font-size="11" fill="${C.muted}">${labels[i]}</text>`;
+  }
+  s+=legend([{n:names[0],c:C.data},{n:names[1],c:C.soft}]);
+  return svgWrap(s);
+}
+
+/* ---- stacked bars ---- */
+function sbars(series,{labels,max,names}){
+  let s=axisBase(max,null);
+  const cols=[C.data,C.amber,C.soft];
+  const n=labels.length, band=plotW/n, bw=Math.min(band*0.5,48);
+  for(let i=0;i<n;i++){
+    const cx=x0+band*(i+0.5), x=cx-bw/2;
+    let run=0, tot=0;
+    series.forEach(sr=>tot+=sr[i]);
+    series.forEach((sr,k)=>{
+      const yTop=yAt(run+sr[i],max), yBot=yAt(run,max);
+      s+=`<rect x="${x}" y="${yTop}" width="${bw}" height="${Math.max(yBot-yTop,0)}" fill="${cols[k%3]}"/>`;
+      run+=sr[i];
+    });
+    s+=`<text x="${cx}" y="${yAt(tot,max)-6}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${C.ink}">${fmt(tot)}</text>`;
+    s+=`<text x="${cx}" y="${y0+18}" text-anchor="middle" font-size="11" fill="${C.muted}">${labels[i]}</text>`;
+  }
+  s+=legend(names.map((nm,k)=>({n:nm,c:cols[k%3]})));
+  return svgWrap(s);
+}
+
+/* ---- horizontal bars ---- */
+function hbars(data,{labels,max,highlight=-1,unit=''}){
+  const n=data.length, top=16, rowH=(H-top-14)/n, lx=86, bx=94, maxW=W-bx-70;
+  let s='';
+  data.forEach((v,i)=>{
+    const y=top+rowH*i+rowH*0.18, h=rowH*0.62, w=maxW*(v/max);
+    const fill=i===highlight?C.amber:C.data;
+    s+=`<text x="${lx}" y="${y+h/2+4}" text-anchor="end" font-size="12" fill="${C.muted}">${labels[i]}</text>`;
+    s+=`<rect x="${bx}" y="${y}" width="${w}" height="${h}" rx="3" fill="${fill}"/>`;
+    s+=`<text x="${bx+w+8}" y="${y+h/2+4}" font-size="12" font-weight="700" fill="${i===highlight?'#a86a1e':C.ink}">${fmt(v)}${unit}</text>`;
+  });
+  s+=`<line x1="${bx}" y1="${top-6}" x2="${bx}" y2="${H-8}" stroke="${C.axis}" stroke-width="1"/>`;
+  return svgWrap(s);
+}
+
+/* ---- waterfall / bridge ---- */
+function waterfall(items,{max}){
+  let s=axisBase(max,null);
+  const n=items.length, band=plotW/n, bw=Math.min(band*0.58,44);
+  let run=0;
+  items.forEach((it,i)=>{
+    const cx=x0+band*(i+0.5), x=cx-bw/2;
+    let top,bot,fill;
+    if(it.total){bot=0;top=it.v;run=it.v;fill=C.ink;}
+    else{bot=run;top=run+it.v;run=top;fill=it.v>=0?C.data:C.data2;}
+    const yA=yAt(Math.max(top,bot),max), yB=yAt(Math.min(top,bot),max);
+    s+=`<rect x="${x}" y="${yA}" width="${bw}" height="${Math.max(yB-yA,3)}" rx="2" fill="${fill}"/>`;
+    const lab=it.total?fmt(it.v):(it.v>=0?'+':'−')+fmt(Math.abs(it.v));
+    s+=`<text x="${cx}" y="${yA-6}" text-anchor="middle" font-size="11" font-weight="700" fill="${it.total?C.ink:(it.v>=0?C.data:C.data2)}">${lab}</text>`;
+    (it.label.split('|')).forEach((ln,k)=>{
+      s+=`<text x="${cx}" y="${y0+16+k*12}" text-anchor="middle" font-size="10" fill="${C.muted}">${ln}</text>`;
+    });
+    if(i<n-1 && !items[i+1].total){
+      const yr=yAt(run,max);
+      s+=`<line x1="${x+bw}" y1="${yr}" x2="${x0+band*(i+1.5)-bw/2}" y2="${yr}" stroke="${C.axis}" stroke-width="1" stroke-dasharray="3 3"/>`;
+    }
+  });
+  return svgWrap(s);
+}
+
+/* ---- single line ---- */
+function line(data,{labels,max,mark={},startEnd=false,thresh=null,event=null,zoom=null,values=false}){
+  let s=axisBase(max,labels);
+  const n=data.length;
+  const pts=data.map((v,i)=>[xAt(i,n),yAt(v,max)]);
+  if(zoom){
+    const a=xAt(zoom[0],n)-10,b=xAt(zoom[1],n)+10;
+    s+=`<rect x="${a}" y="${yT}" width="${b-a}" height="${plotH}" fill="${C.amber}" opacity=".16" rx="4"/>`;
+  }
+  if(thresh) s+=threshLine(max,thresh);
+  if(event){
+    const ex=xAt(event.i,n);
+    s+=`<line x1="${ex}" y1="${yT}" x2="${ex}" y2="${y0}" stroke="${C.ink}" stroke-width="1.5" stroke-dasharray="4 4"/>`+
+       `<text x="${ex-6}" y="${yT+12}" text-anchor="end" font-size="11" font-weight="700" fill="${C.ink}">${event.label}</text>`;
+  }
+  s+=`<polyline fill="none" stroke="${C.data}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="${pts.map(p=>p.join(',')).join(' ')}"/>`;
+  pts.forEach(p=> s+=`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#fff" stroke="${C.data}" stroke-width="2"/>`);
+  if(values) data.forEach((v,i)=> s+=`<text x="${pts[i][0]}" y="${pts[i][1]-9}" text-anchor="middle" font-size="11" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`);
+  if(startEnd){
+    [[0,data[0]],[n-1,data[n-1]]].forEach(([i,v])=>{
+      const p=pts[i];
+      s+=`<text x="${p[0]}" y="${p[1]-9}" text-anchor="middle" font-size="12" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;
+    });
+  }
+  if(mark.peak!=null){const i=data.indexOf(Math.max(...data));const p=pts[i];
+    s+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="${C.amber}"/>`+
+       `<text x="${p[0]+10}" y="${p[1]+4}" text-anchor="start" font-size="12.5" font-weight="700" fill="#a86a1e">${mark.peak}</text>`;}
+  if(mark.low!=null){const i=data.indexOf(Math.min(...data));const p=pts[i];
+    s+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="${C.amber}"/>`+
+       `<text x="${p[0]}" y="${p[1]+18}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a86a1e">${mark.low}</text>`;}
+  return svgWrap(s);
+}
+
+/* ---- two-series line ---- */
+function twoLine(a,b,{labels,max,names}){
+  let s=axisBase(max,labels);const n=a.length;
+  const mk=(d,col)=>{const pts=d.map((v,i)=>[xAt(i,n),yAt(v,max)]);
+    let g=`<polyline fill="none" stroke="${col}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="${pts.map(p=>p.join(',')).join(' ')}"/>`;
+    pts.forEach(p=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#fff" stroke="${col}" stroke-width="2"/>`);return g;};
+  s+=mk(a,C.data2)+mk(b,C.data);
+  s+=legend([{n:names[0],c:C.data2},{n:names[1],c:C.data}]);
+  return svgWrap(s);
+}
+
+/* ---- pie ---- */
+function pie(pct,{labelA,labelB}){
+  const cx=150,cy=128,r=84;
+  const pol=(deg)=>{const a=(deg-90)*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];};
+  const end=pct/100*360;
+  const [x1,y1]=pol(0),[x2,y2]=pol(end);
+  let s=`<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${end>180?1:0} 1 ${x2} ${y2} Z" fill="${C.data}"/>`;
+  const [x3,y3]=pol(end),[x4,y4]=pol(360);
+  s+=`<path d="M ${cx} ${cy} L ${x3} ${y3} A ${r} ${r} 0 ${end<180?1:0} 1 ${x4} ${y4} Z" fill="${C.pie2}"/>`;
+  const [lx,ly]=pol(end/2);
+  s+=`<text x="${(cx+lx)/2}" y="${(cy+ly)/2+4}" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">${pct}%</text>`;
+  s+=`<g font-size="12.5" font-weight="600">
+      <rect x="290" y="98" width="14" height="14" rx="3" fill="${C.data}"/>
+      <text x="312" y="110" fill="${C.ink}">${labelA} · ${pct}%</text>
+      <rect x="290" y="128" width="14" height="14" rx="3" fill="${C.pie2}"/>
+      <text x="312" y="140" fill="${C.muted}">${labelB} · ${100-pct}%</text></g>`;
+  return svgWrap(s);
+}
+
+/* ---------------- sections + cards ---------------- */
+const TIERS={
+  S:'Stand-up &amp; status',
+  P:'Performance &amp; latency',
+  I:'Incidents &amp; post-mortems',
+  Q:'Quality &amp; bugs',
+  D:'Delivery &amp; estimates',
+  T:'Trade-offs &amp; decisions'
+};
+const W6=['W1','W2','W3','W4','W5','W6'];
+const M6=['May','Jun','Jul','Aug','Sep','Oct'];
+const SPR=['S1','S2','S3','S4','S5','S6'];
+const SRV=['Auth','Search','Match','Chat','Payments'];
+
+const CARDS=[
+/* ===== S · Stand-up & status ===== */
+ {id:'S1',t:'S',chunk:'on track for',
+  sc:'Daily stand-up. Your manager wants one line on whether the sprint goal still holds.',
+  chart:twoLine([40,32,24,16,8,0],[40,34,27,19,11,3],{labels:['D1','D3','D5','D7','D9','D10'],max:48,names:['Ideal','Actual']}),
+  cap:"Sprint burndown · story points remaining",
+  q:"You are slightly behind the ideal line but will finish. Give your status in one sentence.",
+  model:"We're <em>on track for</em> the sprint goal.",
+  up:"We're <em>on track for</em> the sprint goal — slightly behind the ideal line, but the remaining work is small.",
+  watch:"“On track for” a goal or a date. “On track to finish” also works. “On track with the sprint” is not idiomatic."},
+ {id:'S2',t:'S',chunk:'blocked on',
+  sc:'Stand-up. One of your tasks has not moved in six days and it is not your fault.',
+  chart:hbars([0.5,6,1],{labels:['Search index','Payments SDK','Chat migration'],max:8,highlight:1,unit:'d'}),
+  cap:"Days waiting on another team",
+  q:"Report the blocker without blaming anyone, and make clear you need help.",
+  model:"I'm <em>blocked on</em> the payments SDK — it's been six days.",
+  up:"I'm <em>blocked on</em> the payments SDK and have been for six days; could someone help me escalate it?",
+  watch:"“Blocked on” a thing, “blocked by” a person or team. “Blocked on the SDK” is safer in a stand-up — it points at the dependency, not a colleague."},
+ {id:'S3',t:'S',chunk:'about halfway through',
+  sc:'Stand-up. You are mid-way through a multi-day piece of work and need to say where you are.',
+  chart:bars([90,52,30],{labels:['API','Client','Tests'],max:100,values:true,highlight:1}),
+  cap:"Percent complete by workstream",
+  q:"Give your progress on the client work without inventing a false precision.",
+  model:"I'm <em>about halfway through</em> the client work.",
+  up:"The API is essentially done and I'm <em>about halfway through</em> the client side; tests come last.",
+  watch:"“About halfway through” is the natural phrase. Avoid “I did 52 percent” — made-up precision invites questions you can't answer."},
+ {id:'S4',t:'S',chunk:'in review / waiting on',
+  sc:'Sprint check-in. Several pull requests are sitting unreviewed and the sprint ends Friday.',
+  chart:hbars([12,5,3,2],{labels:['Merged','In review','Changes requested','Draft'],max:14,highlight:1}),
+  cap:"Open pull requests by state",
+  q:"Report what is stuck in the review queue and what you need.",
+  model:"Five pull requests are <em>in review</em> — we're <em>waiting on</em> reviewers.",
+  up:"Five are <em>in review</em> and three need changes; we're <em>waiting on</em> reviewers, which is the main risk to Friday.",
+  watch:"“In review” (no article) is the state. “Waiting on” a person or a review; “waiting for” is also fine. “Waiting a review” is not."},
+ {id:'S5',t:'S',chunk:"I'd rather flag it now",
+  sc:'Mid-sprint. One task is clearly going to overrun and nobody has noticed yet.',
+  chart:gbars([3,2,5],[3,2,7],{labels:['Task A','Task B','Task C'],max:9,names:['Estimated','Actual so far']}),
+  cap:"Days per task",
+  q:"Raise the overrun early, before anyone has to ask about it.",
+  model:"Task C is running over — <em>I'd rather flag it now</em> than at the end of the sprint.",
+  up:"Task C is already two days over estimate and isn't finished. <em>I'd rather flag it now</em> so we can decide what moves.",
+  watch:"“Flag it now” means raise it early. In English-speaking engineering teams, early bad news reads as professionalism, not failure."},
+
+/* ===== P · Performance & latency ===== */
+ {id:'P1',t:'P',chunk:'p95 latency sits at',
+  sc:'Performance review. Someone is quoting the average response time and calling it healthy.',
+  chart:twoLine([60,62,61,65,63,64],[180,195,210,240,260,280],{labels:W6,max:320,names:['Average','p95']}),
+  cap:"Response time · ms",
+  q:"The average looks fine but the slowest 5 percent does not. Report the figure that matters.",
+  model:"<em>p95 latency sits at</em> 280 milliseconds, even though the average is 64.",
+  up:"The average hides it — <em>p95 latency sits at</em> 280 milliseconds and has risen every week, so one user in twenty has a bad experience.",
+  watch:"Say “p ninety-five”, not “p nine five”. And p95 means 95 percent are faster than this — it is not the slowest request."},
+ {id:'P2',t:'P',chunk:'within our error budget',
+  sc:'Reliability review. The question is whether the team is allowed to keep shipping features.',
+  chart:line([10,22,35,51,68,82],{labels:M6,max:120,thresh:{v:100,label:'Budget exhausted'}}),
+  cap:"Error budget consumed this quarter · %",
+  q:"You have used 82 percent but not all of it. Say where you stand.",
+  model:"We're still <em>within our error budget</em>, at 82 percent consumed.",
+  up:"We're <em>within our error budget</em> at 82 percent, but at this rate we'll exhaust it before the quarter ends.",
+  watch:"An error budget is consumed or burned, not “used up” unless it really is gone. Being within budget means you may keep shipping — that is the point of saying it."},
+ {id:'P3',t:'P',chunk:'a throughput of',
+  sc:'Capacity planning. Someone asks what the service can actually handle now.',
+  chart:line([1200,1450,1600,1850,2100,2300],{labels:W6,max:3000,startEnd:true}),
+  cap:"Requests served per second",
+  q:"State the current capacity figure with its unit.",
+  model:"We're handling <em>a throughput of</em> 2,300 requests per second.",
+  up:"We're at <em>a throughput of</em> 2,300 requests per second, nearly double six weeks ago, and we haven't hit the ceiling yet.",
+  watch:"Throughput is uncountable — “a throughput of 2,300”, never “throughputs”. Always attach the unit: per second, per minute."},
+ {id:'P4',t:'P',chunk:'the bottleneck is',
+  sc:'Debugging session. One stage of the request is eating almost all the time.',
+  chart:hbars([12,180,25,30],{labels:['Auth check','DB query','Serialization','Network'],max:200,highlight:1,unit:'ms'}),
+  cap:"Time per request stage · ms",
+  q:"Name where the time actually goes.",
+  model:"<em>The bottleneck is</em> the database query.",
+  up:"<em>The bottleneck is</em> the database query — 180 of the 247 milliseconds, so everything else is noise by comparison.",
+  watch:"“The bottleneck is X”, singular. If you say “the bottlenecks are” you are claiming several, and you will be asked to rank them."},
+ {id:'P5',t:'P',chunk:'shaved … off',
+  sc:'Demo of an optimization you shipped this week.',
+  chart:bars([420,260],{labels:['Before','After'],max:500,values:true,highlight:1}),
+  cap:"p95 latency · ms",
+  q:"Report the improvement in the informal way engineers usually say it.",
+  model:"We <em>shaved</em> 160 milliseconds <em>off</em> p95.",
+  up:"We <em>shaved</em> 160 milliseconds <em>off</em> p95, about 38 percent, by caching the profile lookup.",
+  watch:"“Shave time off something.” It is casual and fine in a stand-up; in a written report prefer “reduced p95 by 160 ms”."},
+
+/* ===== I · Incidents & post-mortems ===== */
+ {id:'I1',t:'I',chunk:'we were degraded for',
+  sc:'Post-mortem, first slide. The room wants the shape and size of the incident before the detail.',
+  chart:line([0.2,0.3,14,18,16,2,0.3],{labels:['09:00','10:00','11:00','12:00','13:00','14:00','15:00'],max:20,event:{i:2,label:'bad deploy'}}),
+  cap:"Error rate · %",
+  q:"Open the post-mortem: say how long and how badly the service was affected.",
+  model:"<em>We were degraded for</em> about four hours.",
+  up:"<em>We were degraded for</em> roughly four hours, peaking at an 18 percent error rate, with no full outage.",
+  watch:"“Degraded” means working but badly; “down” means not working. Using “down” for a partial failure overstates it and the correction will come from the room."},
+ {id:'I2',t:'I',chunk:'the root cause was',
+  sc:'Post-mortem. People are circling theories and you have the answer.',
+  chart:line([40,45,48,50,50,50,50],{labels:['09:00','10:00','11:00','12:00','13:00','14:00','15:00'],max:60,thresh:{v:50,label:'Pool limit 50'}}),
+  cap:"Database connections in use",
+  q:"State the cause plainly, from the chart.",
+  model:"<em>The root cause was</em> connection pool exhaustion.",
+  up:"<em>The root cause was</em> connection pool exhaustion — we hit the 50-connection limit at 11:00 and every later request queued.",
+  watch:"Root cause, singular and without an article in the phrase: “the root cause was X”. Say “a contributing factor” for the lesser ones."},
+ {id:'I3',t:'I',chunk:'mitigated, not fixed',
+  sc:'Incident channel. Error rate dropped after your patch, but it is not back to normal.',
+  chart:line([0.2,14,3,2.8,2.6,2.5],{labels:['Before','Patch','+1h','+2h','+3h','+4h'],max:16,thresh:{v:0.3,label:'Normal 0.3%'}}),
+  cap:"Error rate · %",
+  q:"Stop anyone declaring victory. Describe the true state.",
+  model:"It's <em>mitigated, not fixed</em> — errors are down but still above normal.",
+  up:"We've <em>mitigated</em> it, but not <em>fixed</em> it: errors fell from 14 percent to 2.5, against a normal of 0.3.",
+  watch:"Mitigated means the bleeding stopped. Resolved means it is actually over. Closing an incident as resolved too early is how it reopens at 3am."},
+ {id:'I4',t:'I',chunk:'time to detect … time to recover',
+  sc:'Post-mortem review. Leadership wants to know whether the problem was noticing or fixing.',
+  chart:hbars([38,52,146],{labels:['Time to detect','Time to mitigate','Time to resolve'],max:160,highlight:0,unit:'m'}),
+  cap:"Incident timeline · minutes",
+  q:"Separate how long it took to notice from how long it took to recover.",
+  model:"<em>Time to detect</em> was 38 minutes and <em>time to recover</em> was just under two and a half hours.",
+  up:"<em>Time to detect</em> was 38 minutes — that's our real problem; once we knew, <em>time to recover</em> was under two hours.",
+  watch:"These are measured from the start of the incident, not from each other. If you mean the gap between two of them, say “a further 14 minutes”."},
+ {id:'I5',t:'I',chunk:'to stop it happening again',
+  sc:'End of the post-mortem. The same cause has now produced three incidents.',
+  chart:bars([1,2,4],{labels:['Q1','Q2','Q3'],max:6,values:true,highlight:2}),
+  cap:"Incidents traced to the same root cause",
+  q:"Close the post-mortem with the preventive action, not an apology.",
+  model:"<em>To stop it happening again,</em> we're adding an alert on pool usage.",
+  up:"<em>To stop it happening again,</em> we're alerting on pool usage at 80 percent and raising the limit — this is the fourth time this quarter.",
+  watch:"British usage: “stop it happening”; American: “stop it from happening”. Both are understood. A post-mortem ends with actions and owners, not with sorry."},
+
+/* ===== Q · Quality & bugs ===== */
+ {id:'Q1',t:'Q',chunk:'the backlog has grown to',
+  sc:'Quality review. Bug count has risen every month and nobody has said it out loud.',
+  chart:line([120,135,150,168,182,205],{labels:M6,max:250,startEnd:true}),
+  cap:"Open bugs",
+  q:"State the size of the problem and its direction.",
+  model:"<em>The backlog has grown to</em> 205 open bugs.",
+  up:"<em>The backlog has grown to</em> 205 open bugs, up about 70 percent since May — we're closing fewer than we open.",
+  watch:"“Grown to” a size, “grown by” an amount. “Grown to 70 percent” says something quite different from “grown by 70 percent”."},
+ {id:'Q2',t:'Q',chunk:'a regression introduced in',
+  sc:'Bug triage. Crashes jumped right after a release and you know which one.',
+  chart:line([0.4,0.4,0.5,2.8,2.6,2.4],{labels:W6,max:4,event:{i:3,label:'v4.2'}}),
+  cap:"Crash rate · % of sessions",
+  q:"Attribute the problem to a specific release, carefully.",
+  model:"This is <em>a regression introduced in</em> v4.2.",
+  up:"The crash rate jumped from 0.5 to 2.8 percent at v4.2, so it looks like <em>a regression introduced in</em> that release.",
+  watch:"A regression is something that used to work and now doesn't — not any bug. Calling a brand-new broken feature a regression confuses the triage."},
+ {id:'Q3',t:'Q',chunk:'triaging by severity',
+  sc:'Someone asks how you can possibly deal with 205 open bugs.',
+  chart:hbars([3,18,64,120],{labels:['S1 critical','S2 major','S3 minor','S4 cosmetic'],max:130,highlight:0}),
+  cap:"Open bugs by severity",
+  q:"Explain how you are working through the backlog, not just its size.",
+  model:"We're <em>triaging by severity</em> — only three are critical.",
+  up:"We're <em>triaging by severity</em>: three critical, 18 major, and the rest are minor or cosmetic. The headline number is scarier than the reality.",
+  watch:"Triage is sorting by urgency, not fixing. “We triaged the bug” means you classified it. Say “we fixed it” when you mean fixed."},
+ {id:'Q4',t:'Q',chunk:'flaky tests',
+  sc:'The build has been red all week and half the failures are not real.',
+  chart:bars([78,22],{labels:['Real failures','Flaky'],max:100,values:true,highlight:1}),
+  cap:"CI failures this month · %",
+  q:"Name the problem with the test suite, using the standard term.",
+  model:"About a fifth of our failures are <em>flaky tests</em>.",
+  up:"Twenty-two percent of CI failures are <em>flaky tests</em>, so people have started ignoring red builds — that's the real risk.",
+  watch:"“Flaky” means passes and fails without the code changing. Don't call a consistently failing test flaky; that is just a failing test."},
+ {id:'Q5',t:'Q',chunk:'coverage sits at',
+  sc:'A reviewer asks how well tested the payments path is, which is your weakest area.',
+  chart:bars([84,72,61,45,38],{labels:SRV,max:100,values:true,highlight:4,thresh:{v:70,label:'Target 70%'}}),
+  cap:"Test coverage · %",
+  q:"Report the weakest module against the target, without being defensive.",
+  model:"Payments <em>coverage sits at</em> 38 percent, well below our 70 percent target.",
+  up:"Payments <em>coverage sits at</em> 38 percent against a 70 target — and it's the module where a bug costs us most.",
+  watch:"“Coverage sits at” or “coverage is”. High coverage does not prove the tests are good, so avoid implying 84 percent means Auth is safe."},
+
+/* ===== D · Delivery & estimates ===== */
+ {id:'D1',t:'D',chunk:'tracking … behind',
+  sc:'Programme review. You are behind and the slide makes it obvious.',
+  chart:twoLine([5,10,15,20,25,30],[5,9,13,17,21,24],{labels:SPR,max:35,names:['Planned','Actual']}),
+  cap:"Cumulative features delivered",
+  q:"State how far behind plan you are, before anyone measures the gap themselves.",
+  model:"We're <em>tracking</em> about two sprints <em>behind</em> plan.",
+  up:"We're <em>tracking</em> roughly two sprints <em>behind</em> — six features short of plan, and the gap has widened each sprint.",
+  watch:"“Tracking behind” or “running behind”. “Tracking late” is not idiomatic. Give the gap in a unit people plan in: sprints, weeks, features."},
+ {id:'D2',t:'D',chunk:'the estimate assumes',
+  sc:'You are giving a date, and you want the conditions on it to survive the meeting.',
+  chart:bars([5,3,2,4],{labels:['Build','Review','Testing','Buffer'],max:8,values:true}),
+  cap:"Estimate · working days per phase",
+  q:"Give the date with the conditions attached, so nobody hears a promise.",
+  model:"<em>The estimate assumes</em> the API is ready and nobody is pulled onto support.",
+  up:"Fourteen days, but <em>the estimate assumes</em> the payments API lands on time and that we keep two engineers on it throughout.",
+  watch:"“Assumes” plus a clause. State assumptions when you give the number, not after it slips — afterwards they sound like excuses."},
+ {id:'D3',t:'D',chunk:'scope creep',
+  sc:'The release has quietly grown from 12 tickets to 28 and the date has not moved.',
+  chart:line([12,14,19,24,28],{labels:['S1','S2','S3','S4','S5'],max:32,startEnd:true}),
+  cap:"Tickets in the release scope",
+  q:"Name what has happened to this release.",
+  model:"We've had significant <em>scope creep</em> — from 12 tickets to 28.",
+  up:"The scope has more than doubled since we set the date; that's <em>scope creep</em>, and it's why the date is now at risk.",
+  watch:"“Scope creep” is uncountable: some scope creep, significant scope creep, never “a scope creep”."},
+ {id:'D4',t:'D',chunk:'we can ship … but not …',
+  sc:'Two weeks to the deadline and 25 days of work left. Someone has to choose.',
+  chart:hbars([10,4,8,3],{labels:['Core matching','Push notifications','Profile video','Analytics'],max:12,highlight:0,unit:'d'}),
+  cap:"Remaining work · days · 14 days left",
+  q:"Offer a realistic cut rather than promising everything.",
+  model:"<em>We can ship</em> core matching and push notifications <em>but not</em> profile video.",
+  up:"<em>We can ship</em> core matching and push by the date, <em>but not</em> profile video — I'd rather cut scope than quality.",
+  watch:"Offer the cut yourself. “We'll try our best” gets heard as yes, and the date arrives anyway."},
+ {id:'D5',t:'D',chunk:'a rough order of magnitude',
+  sc:'Someone wants a number for a project nobody has scoped yet.',
+  chart:bars([6,10,14],{labels:['Best case','Likely','Worst case'],max:18,values:true,highlight:1}),
+  cap:"Estimate · weeks",
+  q:"Give a number while making its uncertainty explicit.",
+  model:"As <em>a rough order of magnitude</em>, around ten weeks.",
+  up:"As <em>a rough order of magnitude</em>, ten weeks — could be six, could be fourteen. I can firm it up after a week of design.",
+  watch:"This phrase buys you room, so use it only when you mean it. Offering a date to firm up the estimate keeps it from sounding evasive."},
+
+/* ===== T · Trade-offs & decisions ===== */
+ {id:'T1',t:'T',chunk:'accruing technical debt',
+  sc:'Planning meeting. Maintenance is eating the team and you want it on the record.',
+  chart:twoLine([20,26,33,40,46,52],[80,74,67,60,54,48],{labels:M6,max:100,names:['Maintenance','New features']}),
+  cap:"Engineering time · %",
+  q:"Describe the trend and name it in the term the business will recognise.",
+  model:"We're <em>accruing technical debt</em> — maintenance has gone from 20 to 52 percent of our time.",
+  up:"Maintenance now takes over half our capacity. We're <em>accruing technical debt</em> faster than we're paying it down, and feature work is what pays for it.",
+  watch:"Debt is accrued, incurred or paid down. The metaphor is doing the work for you — “interest” on it is time, so say what it costs per month."},
+ {id:'T2',t:'T',chunk:'build versus buy',
+  sc:'Deciding whether to write the notification service yourselves or pay a vendor.',
+  chart:gbars([120,40,40],[60,60,60],{labels:['Yr 1','Yr 2','Yr 3'],max:140,names:['Build','Buy']}),
+  cap:"Cost · $K per year",
+  q:"Frame the decision and say where the lines cross.",
+  model:"This is a <em>build versus buy</em> decision — building costs more up front, less after year two.",
+  up:"On <em>build versus buy</em>, building is 120 thousand in year one against 60 to buy, but it's cheaper from year two — it pays back midway through year three.",
+  watch:"Fixed phrase, in that order: build versus buy. And “up front” as an adverb is two words; “an upfront cost” as an adjective is one."},
+ {id:'T3',t:'T',chunk:'that would require us to',
+  sc:'A stakeholder asks for one more feature in the same six weeks.',
+  chart:hbars([15,12,6,8],{labels:['Requested feature','Search rewrite','Payments fix','Tech debt'],max:18,highlight:0,unit:'d'}),
+  cap:"Work competing for the next 6 weeks · days",
+  q:"Say yes to the request only by naming what it displaces.",
+  model:"We can do it, but <em>that would require us to</em> drop the search rewrite.",
+  up:"<em>That would require us to</em> push the search rewrite to next quarter — happy to make that trade if you are.",
+  watch:"“Require us to” plus a base verb: require us to drop. Never say a flat no in these meetings; name the cost and let them choose."},
+ {id:'T4',t:'T',chunk:'a stopgap until',
+  sc:'You shipped a quick patch and you do not want it to become permanent.',
+  chart:line([14,3,3,3,3,0.3],{labels:['Before','Patch','W1','W2','W3','Real fix'],max:16}),
+  cap:"Error rate · %",
+  q:"Describe the patch honestly, so nobody mistakes it for the solution.",
+  model:"The patch is <em>a stopgap until</em> we rewrite the connection handling.",
+  up:"What's live now is <em>a stopgap until</em> the rewrite lands next sprint — it holds errors at 3 percent, not the 0.3 we want.",
+  watch:"“A stopgap until X” or “a stopgap measure”. If you don't name the until, the stopgap becomes the architecture."},
+ {id:'T5',t:'T',chunk:"I'd recommend deprecating",
+  sc:'Almost nobody uses the v1 API any more, but it still costs you time every sprint.',
+  chart:line([100,78,52,31,14,6],{labels:M6,max:120,startEnd:true}),
+  cap:"Calls to the v1 API · % of launch volume",
+  q:"Make the case for retiring it, with the number that justifies it.",
+  model:"<em>I'd recommend deprecating</em> the v1 API — it's down to 6 percent of its launch traffic.",
+  up:"<em>I'd recommend deprecating</em> v1: usage is at 6 percent and falling, and it still costs us roughly a day a sprint to maintain.",
+  watch:"Deprecate means announce it is going and discourage use; remove or sunset means actually switching it off. Say which step you mean, with a date."}
+];
+const N=CARDS.length;
+
+/* ---------------- app state ---------------- */
+let deck=CARDS;
+let idx=0;
+const results={};
+const answers={};      /* id -> typed text */
+const recordings={};   /* id -> {url, ms, ext} */
+const revealed={};     /* id -> true */
+const cardEl=document.getElementById('card');
+const barfill=document.getElementById('barfill');
+const countEl=document.getElementById('count');
+
+function render(){
+  const c=deck[idx];
+  const prev=results[c.id];
+  const open=prev||revealed[c.id];
+  stopRecording();
+  cardEl.innerHTML=`
+    <div class="card-head">
+      <span class="tag">${c.id}<small>Chunk ${idx+1} of ${deck.length}</small></span>
+      <span class="tier">${TIERS[c.t]}</span>
+    </div>
+    <div class="scene"><b>The meeting</b>${c.sc}</div>
+    <div class="chartbox">${c.chart}<div class="caption">${c.cap}</div></div>
+    <div class="qrow">
+      <p class="q"><span class="lead">Answer aloud</span>${c.q}</p>
+      <button class="speak" id="speak" title="Hear the prompt" aria-label="Hear the prompt">🔊</button>
+    </div>
+    <div class="answer">
+      <p class="alab">Your answer — type it, or record it</p>
+      <textarea id="ans" rows="2" spellcheck="true"
+        placeholder="Say it aloud first, then type what you said here.">${(answers[c.id]||'').replace(/</g,'&lt;')}</textarea>
+      <div class="recrow" id="recbox"></div>
+    </div>
+    <div class="reveal ${open?'show':''}" id="reveal">
+      <p class="lbl">Target chunk</p>
+      <p class="chunk">${c.chunk}</p>
+      <p class="model">e.g. &nbsp;${c.model}</p>
+      <div class="up">
+        <p class="lbl">Level up</p>
+        <p>${c.up}</p>
+      </div>
+      <div class="watch">
+        <p class="lbl">Watch out</p>
+        <p>${c.watch}</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-reveal" id="revealBtn">${open?'Target chunk shown':'Reveal target chunk'}</button>
+      <div class="tally ${open?'show':''}" id="tally">
+        <button class="btn t-check" data-m="check">✓ Nailed it</button>
+        <button class="btn t-slow"  data-m="slow">△ Slow</button>
+        <button class="btn t-miss"  data-m="miss">✗ Missed</button>
+      </div>
+    </div>`;
+  barfill.style.width=((idx+1)/deck.length*100)+'%';
+  countEl.textContent=`${idx+1} / ${deck.length}`;
+  document.getElementById('prev').disabled=idx===0;
+  document.getElementById('next').textContent = idx===deck.length-1 ? 'Finish ›' : 'Skip ›';
+
+  document.getElementById('revealBtn').onclick=()=>{
+    revealed[c.id]=true;
+    queueSave();
+    document.getElementById('reveal').classList.add('show');
+    document.getElementById('tally').classList.add('show');
+    document.getElementById('revealBtn').textContent='Target chunk shown';
+  };
+  document.querySelectorAll('.tally .btn').forEach(b=>{
+    b.onclick=()=>{results[c.id]=b.dataset.m; queueSave(true); advance();};
+  });
+  document.getElementById('speak').onclick=()=>speak(c.sc+' '+c.q);
+  const ta=document.getElementById('ans');
+  ta.oninput=()=>{answers[c.id]=ta.value;grow(ta);queueSave();};
+  grow(ta);
+  paintRec(c.id);
+  if(recordings[c.id] && !recordings[c.id].url && !recordings[c.id].missing) pullAudio(c.id);
+  refreshSelect();
+}
+
+/* ---------------- answer box ---------------- */
+function grow(el){ if(!el)return; el.style.height='auto'; el.style.height=(el.scrollHeight+2)+'px'; }
+
+/* ---------------- voice recorder ---------------- */
+let mr=null, chunks=[], recId=null, recStart=0, recTick=null;
+const MAXREC=120000;
+const micOK = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+let micNote='';
+const mmss=ms=>{const t=Math.floor(ms/1000);return Math.floor(t/60)+':'+String(t%60).padStart(2,'0');};
+
+function paintRec(id){
+  const box=document.getElementById('recbox');
+  if(!box)return;
+  if(!micOK){
+    box.innerHTML='<span class="recnote">Recording isn\u2019t available in this browser. Record on your phone instead, or open this file over https.</span>';
+    return;
+  }
+  if(mr && mr.state==='recording' && recId===id){
+    box.innerHTML='<button class="recbtn on" id="recBtn"><span class="dotrec"></span>Stop recording</button>'+
+                  '<span class="rectime" id="recTime">0:00</span>';
+  }else if(recordings[id]){
+    const r=recordings[id];
+    if(r.url){
+      box.innerHTML=`<audio controls src="${r.url}"></audio>`+
+        `<a class="reclink" href="${r.url}" download="Owlish_Engineering_${id}_answer.${r.ext||'webm'}">Download</a>`+
+        '<button class="recbtn" id="recBtn"><span class="dotrec"></span>Re-record</button>';
+    }else if(r.loading){
+      box.innerHTML='<span class="recnote">Loading your saved recording\u2026</span>';
+    }else if(r.missing){
+      box.innerHTML='<span class="recnote">That saved recording could not be loaded.</span>'+
+        '<button class="recbtn" id="recBtn"><span class="dotrec"></span>Record again</button>';
+    }else{
+      box.innerHTML='<span class="recnote">You recorded an answer here.</span>'+
+        '<button class="recbtn" id="recBtn"><span class="dotrec"></span>Record again</button>';
+    }
+    if(r.uploading) box.insertAdjacentHTML('beforeend','<span class="recnote">Saving\u2026</span>');
+    else if(r.uploadErr) box.insertAdjacentHTML('beforeend','<span class="recnote">Not saved online \u2014 '+r.uploadErr+'</span>');
+    else if(r.saved) box.insertAdjacentHTML('beforeend','<span class="recnote">Saved to your account.</span>');
+  }else{
+    box.innerHTML='<button class="recbtn" id="recBtn"><span class="dotrec"></span>Record answer</button>';
+  }
+  if(micNote) box.insertAdjacentHTML('beforeend','<span class="recnote">'+micNote+'</span>');
+  const b=document.getElementById('recBtn');
+  if(b) b.onclick=()=>toggleRecord(id);
+}
+
+function stopRecording(){
+  if(mr && mr.state==='recording'){ try{mr.stop();}catch(e){} }
+}
+
+async function toggleRecord(id){
+  if(mr && mr.state==='recording'){ mr.stop(); return; }
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    chunks=[]; recId=id; recStart=Date.now(); micNote='';
+    mr=new MediaRecorder(stream);
+    mr.ondataavailable=e=>{ if(e.data&&e.data.size) chunks.push(e.data); };
+    mr.onstop=()=>{
+      clearInterval(recTick); recTick=null;
+      const type=(mr&&mr.mimeType)||'audio/webm';
+      const blob=new Blob(chunks,{type});
+      stream.getTracks().forEach(t=>t.stop());
+      const prev=recordings[recId];
+      if(prev) URL.revokeObjectURL(prev.url);
+      if(blob.size>0){
+        recordings[recId]={url:URL.createObjectURL(blob),ms:Date.now()-recStart,mime:type,
+          ext:/mp4|m4a|aac/.test(type)?'m4a':/ogg/.test(type)?'ogg':'webm'};
+      }
+      const done=recId; mr=null; recId=null;
+      paintRec(done);
+      if(blob.size>0) pushAudio(done,blob,type);
+    };
+    mr.start();
+    paintRec(id);
+    recTick=setInterval(()=>{
+      const el=Date.now()-recStart;
+      const t=document.getElementById('recTime');
+      if(t) t.textContent=mmss(el)+(el>MAXREC-20000?' / 2:00':'');
+      if(el>=MAXREC) stopRecording();
+    },500);
+  }catch(e){
+    mr=null; recId=null;
+    micNote = e && e.name==='NotAllowedError'
+      ? 'Microphone permission was blocked \u2014 allow it in your browser settings, or record on your phone.'
+      : 'No microphone found \u2014 record on your phone instead.';
+    paintRec(id);
+  }
+}
+
+function speak(text){
+  if(!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=.95;u.lang='en-US';
+  const vs=speechSynthesis.getVoices();
+  u.voice=vs.find(v=>v.name==='Google US English')||vs.find(v=>/en-US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null;
+  speechSynthesis.speak(u);
+}
+if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=()=>{};
+
+/* ---------------- section dropdown ---------------- */
+const secEl=document.getElementById('sec');
+function refreshSelect(){
+  const cur=secEl.value||'ALL';
+  const done=cs=>cs.filter(c=>results[c.id]).length;
+  let html=`<option value="ALL">All sections · ${done(CARDS)}/${CARDS.length}</option>`;
+  Object.keys(TIERS).forEach(k=>{
+    const cs=CARDS.filter(c=>c.t===k);
+    html+=`<option value="${k}">${TIERS[k]} · ${done(cs)}/${cs.length}</option>`;
+  });
+  secEl.innerHTML=html;
+  secEl.value=cur;
+}
+secEl.onchange=()=>{
+  stopRecording();
+  queueSave();
+  const v=secEl.value;
+  deck = v==='ALL' ? CARDS : CARDS.filter(c=>c.t===v);
+  idx=0;
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+function advance(){
+  queueSave();
+  if(idx<deck.length-1){idx++;render();window.scrollTo({top:0,behavior:'smooth'});}
+  else showResults();
+}
+document.getElementById('next').onclick=advance;
+document.getElementById('seeRes').onclick=()=>showResults();
+document.getElementById('prev').onclick=()=>{if(idx>0){idx--;render();window.scrollTo({top:0,behavior:'smooth'});}};
+
+/* ---------------- results ---------------- */
+function plain(s){
+  return String(s)
+    .replace(/<[^>]+>/g,'')
+    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    .replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&nbsp;/g,' ')
+    .replace(/[\u2018\u2019]/g,"'").replace(/[\u201c\u201d]/g,'"')
+    .replace(/[\u2013\u2014]/g,'-').replace(/\u2026/g,'...').replace(/\u2212/g,'-')
+    .replace(/\s+/g,' ').trim();
+}
+function tierStats(){
+  return Object.keys(TIERS).map(k=>{
+    const cs=CARDS.filter(c=>c.t===k);
+    const o={k,name:TIERS[k],total:cs.length,check:0,slow:0,miss:0};
+    cs.forEach(c=>{const m=results[c.id];if(m)o[m]++;});
+    return o;
+  });
+}
+function showResults(){
+  stopRecording();
+  document.getElementById('card').style.display='none';
+  document.getElementById('nav').style.display='none';
+  document.getElementById('progress').style.display='none';
+  document.getElementById('sectionbar').style.display='none';
+  const counts={check:0,slow:0,miss:0};
+  CARDS.forEach(c=>{const m=results[c.id];if(m)counts[m]++;});
+  const redrill=CARDS.filter(c=>results[c.id]==='slow'||results[c.id]==='miss');
+  const typedN=CARDS.filter(c=>(answers[c.id]||'').trim()).length;
+  const recN=CARDS.filter(c=>recordings[c.id]).length;
+  const ts=tierStats();
+  const tierHtml='<div class="tiers">'+ts.map(t=>{
+    const p=n=>(n/t.total*100)+'%';
+    return `<div class="row"><span class="nm">${t.name}</span>
+      <span class="tb"><i style="width:${p(t.check)};background:var(--good)"></i><i style="width:${p(t.slow)};background:var(--slow)"></i><i style="width:${p(t.miss)};background:var(--miss)"></i></span>
+      <span class="ft">${t.check}/${t.total}</span></div>`;
+  }).join('')+'</div>';
+  const list = redrill.length
+    ? '<ul>'+redrill.map(c=>`<li class="${results[c.id]}"><span class="dot"></span><b>${c.id}</b> &nbsp;${c.chunk}</li>`).join('')+'</ul>'
+    : '<p class="allclear">✓ Nothing to re-drill — every chunk was solid.</p>';
+  const R=document.getElementById('results');
+  R.innerHTML=`
+    <h2>Session results</h2>
+    <p class="sub">Engineering Edition · ${counts.check+counts.slow+counts.miss} of ${N} marked · ${typedN} written · ${recN} recorded</p>
+    <div class="scoregrid">
+      <div class="score s-check"><div class="n">${counts.check}</div><div class="k">Nailed</div></div>
+      <div class="score s-slow"><div class="n">${counts.slow}</div><div class="k">Slow</div></div>
+      <div class="score s-miss"><div class="n">${counts.miss}</div><div class="k">Missed</div></div>
+    </div>
+    ${tierHtml}
+    <div class="redrill">
+      <h3>Re-drill list — say each twice next session</h3>
+      ${list}
+    </div>
+    <div class="btnrow">
+      <button class="btn btn-pdf" id="pdf">Download PDF results</button>
+      <button class="btn btn-restart" id="back">Back to drill</button>
+      <button class="btn btn-restart" id="signout" style="display:none">Sign out</button>
+      <button class="btn btn-restart" id="restart">Start over</button>
+    </div>`;
+  R.classList.add('show');
+  document.getElementById('back').onclick=()=>{
+    R.classList.remove('show');
+    ['card','nav','progress','sectionbar'].forEach(i=>document.getElementById(i).style.display='');
+    render();window.scrollTo({top:0,behavior:'smooth'});
+  };
+  document.getElementById('restart').onclick=()=>location.reload();
+  const so=document.getElementById('signout');
+  if(SY.on){ so.style.display=''; so.onclick=signOut; }
+  document.getElementById('pdf').onclick=()=>makePDF(counts,redrill,ts);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------------- PDF ---------------- */
+function makePDF(counts,redrill,ts){
+  const {jsPDF}=window.jspdf;const d=new jsPDF({unit:'pt',format:'a4'});
+  const M=54;let y=64;const pw=d.internal.pageSize.getWidth();
+  d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(42,111,151);
+  d.text('OWLISH ENGLISH',M,y);
+  d.setTextColor(20,33,61);d.setFontSize(9);d.setFont('helvetica','normal');
+  d.text('SPA Chunks · Engineering Edition',pw-M,y,{align:'right'});
+  y+=8;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=30;
+  d.setFont('helvetica','bold');d.setFontSize(17);
+  d.text('SPA Chart Chunks - Engineering Edition Results',M,y);y+=22;
+  d.setFont('helvetica','normal');d.setFontSize(11);d.setTextColor(91,107,123);
+  d.text('Engineering ('+N+' chunks, 6 sections)',M,y);y+=30;
+  d.setTextColor(20,33,61);d.setFontSize(11);
+  d.text('Name: ______________________________',M,y);
+  d.text('Date: ___________________',pw-M-150,y);y+=34;
+  d.setFont('helvetica','bold');d.setFontSize(12);
+  d.setTextColor(47,133,90);d.text(`Nailed: ${counts.check}`,M,y);
+  d.setTextColor(183,121,31);d.text(`Slow: ${counts.slow}`,M+130,y);
+  d.setTextColor(197,48,48);d.text(`Missed: ${counts.miss}`,M+240,y);y+=30;
+  d.setTextColor(20,33,61);d.setFont('helvetica','bold');d.setFontSize(13);
+  d.text('By section',M,y);y+=6;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=20;
+  d.setFont('helvetica','normal');d.setFontSize(11);
+  ts.forEach(t=>{
+    d.setTextColor(20,33,61);d.text(plain(t.name),M,y);
+    d.setTextColor(91,107,123);d.text(`${t.check} nailed · ${t.slow} slow · ${t.miss} missed  (of ${t.total})`,M+175,y);
+    y+=20;
+  });
+  y+=12;
+  d.setTextColor(20,33,61);d.setFont('helvetica','bold');d.setFontSize(13);
+  d.text('Re-drill list',M,y);y+=6;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=20;
+  d.setFont('helvetica','normal');d.setFontSize(11);
+  if(redrill.length){
+    redrill.forEach(c=>{
+      if(y>760){d.addPage();y=64;}
+      const miss=results[c.id]==='miss';
+      d.setTextColor(miss?197:183, miss?48:121, miss?48:31);
+      d.setFont('helvetica','bold');d.text(miss?'[X]':'[/]',M,y);
+      d.setTextColor(20,33,61);d.text(c.id,M+28,y);
+      d.setFont('helvetica','normal');
+      d.text(d.splitTextToSize(plain(c.chunk),pw-M-M-70),M+64,y);
+      y+=22;
+    });
+  }else{
+    d.setTextColor(47,133,90);d.setFont('helvetica','bold');
+    d.text('Nothing to re-drill - every chunk was solid.',M,y);y+=22;
+  }
+  /* typed / recorded answers */
+  const wide=pw-M-M;
+  const ensure=h=>{ if(y+h>790){d.addPage();y=64;} };
+  const written=CARDS.filter(c=>(answers[c.id]||'').trim()||recordings[c.id]);
+  if(written.length){
+    d.addPage();y=64;
+    d.setTextColor(20,33,61);d.setFont('helvetica','bold');d.setFontSize(13);
+    d.text('Your answers',M,y);y+=6;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=22;
+    written.forEach(c=>{
+      const mine=d.splitTextToSize(plain(answers[c.id]||'(spoken answer only)'),wide-14);
+      const model=d.splitTextToSize('Target: '+plain(c.model),wide-14);
+      ensure(34+mine.length*14+model.length*13);
+      d.setFont('helvetica','bold');d.setFontSize(11);d.setTextColor(42,111,151);
+      d.text(c.id+'  '+plain(c.chunk),M,y);y+=15;
+      d.setFont('helvetica','normal');d.setFontSize(10.5);d.setTextColor(20,33,61);
+      d.text(mine,M+14,y);y+=mine.length*14+2;
+      if(recordings[c.id]){
+        d.setTextColor(91,107,123);d.setFontSize(9.5);
+        d.text('[ voice answer recorded - '+mmss(Math.max(1000,recordings[c.id].ms))+' ]',M+14,y);y+=13;
+      }
+      d.setFontSize(10);d.setTextColor(120,132,145);
+      d.text(model,M+14,y);y+=model.length*13+14;
+    });
+  }
+  ensure(40);
+  y+=6;d.setDrawColor(221,227,234);d.line(M,y,pw-M,y);y+=18;
+  d.setTextColor(91,107,123);d.setFont('helvetica','normal');d.setFontSize(9);
+  d.text('Owlish English · SPA Chunks · Engineering Edition',M,y);
+  d.save('SPA_Chunks_Engineering_Results.pdf');
+}
+
+/* ================= saved progress (hosted mode) ================= */
+const EDITION='engineering';
+const LS_TOK='owlish.token', LS_MAIL='owlish.email';
+const SY={on:false,token:null,email:null,timer:null,saving:false,pending:false,lastSaved:0};
+const HOSTED = location.protocol==='http:' || location.protocol==='https:';
+
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function lsDel(k){try{localStorage.removeItem(k);}catch(e){}}
+
+async function apiCall(path,opts){
+  opts=opts||{};
+  const headers=Object.assign({'content-type':'application/json'},opts.headers||{});
+  if(SY.token) headers.authorization='Bearer '+SY.token;
+  const r=await fetch(path,Object.assign({},opts,{headers}));
+  let d={}; try{ d=await r.json(); }catch(e){}
+  if(!r.ok){ const e=new Error(d.error||('Request failed ('+r.status+')')); e.status=r.status; throw e; }
+  return d;
+}
+
+function setSync(kind,msg){
+  const el=document.getElementById('sync');
+  if(!el) return;
+  const map={saved:['ok','Saved'],saving:['busy','Saving\u2026'],error:['bad',msg||'Not saved'],
+             local:['','Not saving'],off:['','']};
+  const [cls,txt]=map[kind]||['',''];
+  el.className='syncpill'+(cls?' '+cls:'');
+  el.innerHTML=txt?'<i></i>'+txt:'';
+  el.title=msg||'';
+}
+
+function snapshot(){
+  const recs={};
+  Object.keys(recordings).forEach(id=>{
+    const r=recordings[id];
+    if(r) recs[id]={ms:r.ms||0,mime:r.mime||'audio/webm'};
+  });
+  return {idx:idx,section:(secEl&&secEl.value)||'ALL',answers:answers,results:results,
+          revealed:revealed,recs:recs,updated:Date.now()};
+}
+
+function queueSave(now){
+  if(!SY.on) return;
+  clearTimeout(SY.timer);
+  if(now){ doSave(); return; }
+  setSync('saving');
+  SY.timer=setTimeout(()=>{SY.timer=null;doSave();},1500);
+}
+
+async function doSave(opts){
+  if(!SY.on) return;
+  if(SY.saving){ SY.pending=true; return; }
+  SY.saving=true; setSync('saving');
+  try{
+    await apiCall('/api/progress',{method:'PUT',keepalive:!!(opts&&opts.keepalive),
+      body:JSON.stringify({edition:EDITION,email:SY.email,state:snapshot()})});
+    SY.lastSaved=Date.now(); setSync('saved');
+  }catch(e){
+    setSync('error',e.message);
+    if(e.status===401){ SY.on=false; lsDel(LS_TOK); openGate('Your sign-in expired. Please sign in again.'); }
+  }finally{
+    SY.saving=false;
+    if(SY.pending){ SY.pending=false; queueSave(true); }
+  }
+}
+
+function applyProgress(p){
+  const e=p&&p.editions&&p.editions[EDITION];
+  if(!e) return false;
+  Object.assign(answers,e.answers||{});
+  Object.assign(results,e.results||{});
+  Object.assign(revealed,e.revealed||{});
+  Object.keys(e.recs||{}).forEach(id=>{
+    recordings[id]={ms:(e.recs[id]||{}).ms||0,mime:(e.recs[id]||{}).mime||'audio/webm',
+      ext:/mp4|m4a/.test((e.recs[id]||{}).mime||'')?'m4a':'webm',url:null,saved:true};
+  });
+  const sec=e.section&&(e.section==='ALL'||TIERS[e.section])?e.section:'ALL';
+  deck = sec==='ALL' ? CARDS : CARDS.filter(c=>c.t===sec);
+  if(secEl) secEl.value=sec;
+  idx=Math.max(0,Math.min(e.idx||0,deck.length-1));
+  return true;
+}
+
+async function pullAudio(id){
+  const r=recordings[id];
+  if(!SY.on||!r||r.url||r.loading) return;
+  r.loading=true;
+  if(deck[idx]&&deck[idx].id===id) paintRec(id);
+  try{
+    const d=await apiCall('/api/audio?edition='+EDITION+'&card='+encodeURIComponent(id));
+    const bin=atob(d.audio||''); const arr=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+    r.url=URL.createObjectURL(new Blob([arr],{type:r.mime||'audio/webm'}));
+  }catch(e){ r.missing=true; }
+  finally{ r.loading=false; if(deck[idx]&&deck[idx].id===id) paintRec(id); }
+}
+
+function blobToB64(b){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onload=()=>res(String(fr.result).split(',')[1]||'');
+    fr.onerror=()=>rej(new Error('Could not read the recording.'));
+    fr.readAsDataURL(b);
+  });
+}
+
+async function pushAudio(id,blob,mime){
+  const r=recordings[id];
+  if(!r) return;
+  if(!SY.on){ r.saved=false; return; }
+  r.uploading=true; r.uploadErr=null;
+  if(deck[idx]&&deck[idx].id===id) paintRec(id);
+  try{
+    const b64=await blobToB64(blob);
+    await apiCall('/api/audio?edition='+EDITION+'&card='+encodeURIComponent(id),
+      {method:'POST',body:JSON.stringify({audio:b64,mime:mime})});
+    r.saved=true; queueSave(true);
+  }catch(e){ r.uploadErr=e.message; }
+  finally{ r.uploading=false; if(deck[idx]&&deck[idx].id===id) paintRec(id); }
+}
+
+/* ---------------- sign-in gate ---------------- */
+const gate=document.getElementById('gate');
+function openGate(msg){
+  if(!gate) return;
+  gate.hidden=false;
+  const e=document.getElementById('gerr');
+  if(msg){ e.textContent=msg; e.hidden=false; } else { e.hidden=true; }
+  const mail=document.getElementById('gmail');
+  mail.value=lsGet(LS_MAIL)||'';
+  setTimeout(()=>{ (mail.value?document.getElementById('gcode'):mail).focus(); },60);
+}
+function closeGate(){ if(gate) gate.hidden=true; }
+
+async function trySignIn(){
+  const btn=document.getElementById('gbtn');
+  const err=document.getElementById('gerr');
+  const email=document.getElementById('gmail').value.trim();
+  const code=document.getElementById('gcode').value.trim();
+  const fail=m=>{ err.textContent=m; err.hidden=false; };
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please enter a valid email address.');
+  if(!/^\d{4}$/.test(code)) return fail('Your code must be exactly 4 digits.');
+  btn.disabled=true; btn.textContent='Signing in\u2026'; err.hidden=true;
+  try{
+    const d=await apiCall('/api/signin',{method:'POST',body:JSON.stringify({email:email,code:code})});
+    SY.token=d.token; SY.email=d.email||email; SY.on=true;
+    lsSet(LS_TOK,d.token); lsSet(LS_MAIL,SY.email);
+    const had=applyProgress(d.progress);
+    closeGate(); render(); setSync('saved');
+    showResume(had,d.isNew);
+  }catch(e){
+    fail(e.message||'Could not sign in.');
+  }finally{
+    btn.disabled=false; btn.textContent='Start';
+  }
+}
+
+function showResume(had,isNew){
+  const el=document.getElementById('resume');
+  if(!el) return;
+  const marked=CARDS.filter(c=>results[c.id]).length;
+  if(isNew){
+    el.textContent='Signed in. Your notes, recordings and place will be saved as you go.';
+  }else if(had&&marked){
+    el.textContent='Welcome back \u2014 picking up at card '+(idx+1)+' of '+deck.length+'. You have marked '+marked+' of '+CARDS.length+' so far.';
+  }else if(had){
+    el.textContent='Welcome back \u2014 picking up where you left off.';
+  }else{
+    el.textContent='Signed in. Your progress will be saved as you go.';
+  }
+  el.hidden=false;
+  setTimeout(()=>{el.hidden=true;},9000);
+}
+
+function signOut(){
+  if(!confirm('Sign out? Your saved work stays on the server — sign in with the same email and code to get it back.')) return;
+  SY.on=false; SY.token=null;
+  lsDel(LS_TOK);
+  location.reload();
+}
+
+/* ---------------- boot ---------------- */
+async function boot(){
+  render();
+  if(!HOSTED){ setSync('local','This copy is running from a file, so nothing is saved online.'); return; }
+  const tok=lsGet(LS_TOK);
+  if(tok){
+    SY.token=tok; SY.email=lsGet(LS_MAIL);
+    try{
+      const d=await apiCall('/api/progress');
+      SY.on=true;
+      const had=applyProgress(d.progress);
+      render(); setSync('saved'); showResume(had,false);
+      return;
+    }catch(e){
+      SY.token=null; lsDel(LS_TOK);
+      if(e.status!==401){ setSync('error',e.message); }
+    }
+  }
+  openGate();
+}
+
+if(gate){
+  document.getElementById('gbtn').onclick=trySignIn;
+  document.getElementById('gskip').onclick=()=>{ closeGate(); setSync('local','You chose not to save. Download the PDF before you close the page.'); };
+  document.getElementById('gcode').addEventListener('keydown',ev=>{ if(ev.key==='Enter') trySignIn(); });
+  document.getElementById('gmail').addEventListener('keydown',ev=>{ if(ev.key==='Enter') document.getElementById('gcode').focus(); });
+  document.getElementById('gcode').addEventListener('input',ev=>{ ev.target.value=ev.target.value.replace(/\D/g,'').slice(0,4); });
+}
+function flushSave(){
+  if(!SY.on||!SY.timer) return;
+  clearTimeout(SY.timer); SY.timer=null;
+  doSave({keepalive:true});
+}
+window.addEventListener('pagehide',flushSave);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') flushSave(); });
+
+boot();
+</script>
+</body>
+</html>
