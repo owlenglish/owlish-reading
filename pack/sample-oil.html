@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>무료 샘플 · Why Is Oil So Expensive? — Owlish English Economics Pack</title>
+<!-- Owlish Economics Pack · Module 1 of 5 (paid) -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#1c2b2d;--teal:#176b6e;--teal-deep:#0e4c4f;--amber:#e08a2b;--amber-soft:#f6e7cf;
+    --paper:#fbf7ee;--card:#ffffff;--line:#e2ddd0;--ok:#1f8a4c;--bad:#c23b3b;--muted:#6b6a62;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;}
+  .wrap{max-width:780px;margin:0 auto;padding:28px 20px 80px;}
+
+  header.masthead{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+  .owl{font-size:30px;line-height:1;}
+  .brand{font-weight:700;letter-spacing:.3px;color:var(--teal-deep);}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+  h1.title{font-family:Georgia,"Times New Roman",serif;font-size:30px;line-height:1.2;margin:18px 0 6px;color:var(--ink);}
+  p.dek{margin:0 0 16px;color:var(--muted);font-size:15px;}
+
+  .label-row{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:18px 0 7px;}
+
+  /* Source selector */
+  .sources{display:flex;flex-wrap:wrap;gap:8px;}
+  .sources button{
+    border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+    padding:10px 16px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;
+    display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.2;
+  }
+  .sources button small{font-weight:600;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .sources button:hover{border-color:var(--amber);}
+  .sources button.active{background:var(--amber);border-color:var(--amber);color:#3a2407;}
+  .sources button.active small{color:#7a4d12;}
+
+  /* Level toggle */
+  .levels{display:flex;flex-wrap:wrap;gap:8px;}
+  .levels button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;}
+  .levels button .lv{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;display:block;text-transform:uppercase;}
+  .levels button:hover{border-color:var(--teal);}
+  .levels button.active{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff;}
+  .levels button.active .lv{color:var(--amber-soft);}
+
+  /* Source citation */
+  .source-line{margin:16px 0 0;font-size:14px;color:var(--muted);}
+  .source-line a{color:var(--teal-deep);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--amber-soft);}
+  .source-line a:hover{border-color:var(--teal);}
+
+  /* Audio bar */
+  .audiobar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:12px 0 22px;}
+  .audiobar .play{background:var(--amber);color:#3a2407;border:none;font-weight:700;padding:9px 16px;border-radius:10px;cursor:pointer;font-size:14px;}
+  .audiobar .play.playing{background:var(--teal);color:#fff;}
+  .speeds{display:flex;gap:6px;align-items:center;}
+  .speeds span{font-size:12px;color:var(--muted);margin-right:2px;}
+  .speeds button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:5px 9px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;}
+  .speeds button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .pdf-group{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+  .pdf-btn{border:1.5px solid var(--teal);background:#fff;color:var(--teal-deep);padding:8px 13px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;}
+  .pdf-btn:hover{background:var(--teal);color:#fff;}
+  .pdf-btn.all{border-color:var(--amber);color:#7a4d12;}
+  .pdf-btn.all:hover{background:var(--amber);color:#3a2407;}
+  /* Transport + timeline */
+  .tcontrols{display:flex;gap:6px;}
+  .tbtn{border:1px solid var(--line);background:#fff;color:var(--ink);width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1;}
+  .tbtn:hover{border-color:var(--teal);color:var(--teal-deep);}
+  .tbtn:active{transform:translateY(1px);}
+  .audiover{font-size:11px;opacity:.55;white-space:nowrap;align-self:center;}
+  .timeline{flex:1 1 100%;display:flex;align-items:center;gap:10px;margin-top:2px;}
+  .ttime{font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);min-width:36px;text-align:center;}
+  .track{position:relative;flex:1;height:24px;display:flex;align-items:center;cursor:pointer;touch-action:none;}
+  .track:focus{outline:none;}
+  .track:focus-visible .handle{box-shadow:0 0 0 3px var(--amber-soft),0 1px 3px rgba(0,0,0,.3);}
+  .track .rail{position:absolute;left:0;right:0;height:6px;background:var(--amber-soft);border-radius:999px;}
+  .track .fill{position:absolute;left:0;height:6px;width:0;background:var(--teal);border-radius:999px;pointer-events:none;}
+  .track .ticks{position:absolute;left:0;right:0;height:6px;pointer-events:none;}
+  .track .ticks i{position:absolute;top:0;width:2px;height:6px;background:rgba(14,76,79,.18);transform:translateX(-1px);border-radius:1px;}
+  .track .handle{position:absolute;left:0;width:15px;height:15px;border-radius:50%;background:var(--teal-deep);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transform:translateX(-7.5px);pointer-events:none;transition:background .12s;}
+  .track:hover .handle{background:var(--amber);}
+
+  article.reading{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:26px;}
+  article.reading h2{font-family:Georgia,serif;font-size:23px;margin:0 0 14px;color:var(--teal-deep);border-bottom:3px solid var(--amber-soft);padding-bottom:10px;}
+  article.reading p{font-family:Georgia,serif;font-size:18px;margin:0 0 16px;}
+  article.reading p:last-child{margin-bottom:0;}
+  article.reading span.w{cursor:pointer;border-radius:4px;padding:2px 0;margin:-2px 0;-webkit-tap-highlight-color:transparent;transition:background .15s;}
+  @media (hover:hover){ article.reading span.w:hover{background:var(--amber-soft);} }
+  article.reading span.w.tapped{background:var(--amber);color:#fff;}
+  .checked{white-space:nowrap;}
+  .packnav{margin-left:auto;font-size:14px;font-weight:700;color:var(--teal-deep);text-decoration:none;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;white-space:nowrap;}
+  .packnav:hover{border-color:var(--teal);}
+  .nextmod{display:block;margin:34px 0 0;padding:16px 18px;border-radius:14px;background:var(--teal-deep);color:#fff;font-weight:700;text-decoration:none;text-align:center;}
+  .nextmod:hover{background:var(--teal);}
+  .samplebar{background:var(--amber-soft);border-radius:12px;padding:12px 14px;margin:14px 0 4px;font-size:15px;line-height:1.55;word-break:keep-all;}
+  .buybox{margin:34px 0 0;padding:22px 20px;border-radius:16px;background:var(--card);border:2px solid var(--teal-deep);word-break:keep-all;}
+  .buybox h3{margin:0 0 8px;font-size:20px;color:var(--teal-deep);}
+  .buybox p{margin:0 0 12px;font-size:15px;line-height:1.6;}
+  .buybox .price{font-size:26px;font-weight:800;color:var(--teal-deep);margin:4px 0 14px;}
+  .buybox .price span{font-size:14px;font-weight:700;color:var(--amber);margin-left:6px;}
+  .buybtn{display:block;text-align:center;background:var(--amber);color:#fff;font-weight:800;font-size:17px;text-decoration:none;padding:15px;border-radius:12px;}
+  .buybtn:hover{filter:brightness(.95);}
+  .openpack{display:block;text-align:center;margin-top:10px;font-size:14px;font-weight:700;color:var(--teal-deep);}
+  .taphint{font-size:13px;color:var(--muted);margin:-14px 0 18px;}
+
+  .sec-h{display:flex;align-items:center;gap:10px;margin:34px 0 14px;}
+  .sec-h .tag{background:var(--teal-deep);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px;}
+  .sec-h h3{margin:0;font-size:19px;color:var(--ink);}
+
+  table.vocab{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  table.vocab th{background:var(--amber-soft);text-align:left;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--teal-deep);padding:10px 12px;}
+  table.vocab td{padding:11px 12px;border-top:1px solid var(--line);font-size:15px;vertical-align:top;}
+  table.vocab td.word{font-weight:700;white-space:nowrap;}
+  table.vocab td.pos{color:var(--muted);font-style:italic;white-space:nowrap;}
+
+  .quiz{margin-top:4px;}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+  .q .stem{font-weight:600;margin-bottom:10px;}
+  .q .stem .num{color:var(--teal);font-weight:800;margin-right:6px;}
+  .opt{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px;cursor:pointer;transition:all .12s;font-size:15px;}
+  .opt:hover{border-color:var(--teal);background:#f3faf9;}
+  .opt input{margin-top:3px;accent-color:var(--teal);}
+  .opt .ltr{font-weight:700;color:var(--muted);}
+  .opt.correct{border-color:var(--ok);background:#eef9f1;}
+  .opt.wrong{border-color:var(--bad);background:#fbeeee;}
+  .opt.locked{cursor:default;}
+  .check-row{display:flex;align-items:center;gap:14px;margin-top:4px;}
+  .check-btn{background:var(--teal-deep);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .check-btn:hover{background:var(--teal);}
+  .score{font-weight:700;font-size:15px;}
+  .score.good{color:var(--ok);}
+  .score.mid{color:var(--amber);}
+
+  footer.foot{text-align:center;color:var(--muted);font-size:13px;margin-top:48px;border-top:1px solid var(--line);padding-top:18px;}
+  footer.foot .ob{color:var(--teal-deep);font-weight:700;}
+  @media (max-width:520px){
+    h1.title{font-size:25px;}
+    article.reading{padding:20px 18px;}
+    article.reading p{font-size:17px;}
+    .pdf-group{margin-left:0;width:100%;}
+    /* phones: stack each vocab row (word + type on top, meaning below) so the
+       table never pushes the page wider than the screen */
+    table.vocab thead{display:none;}
+    table.vocab, table.vocab tbody{display:block;width:100%;}
+    table.vocab tr{display:grid;grid-template-columns:auto 1fr;column-gap:8px;padding:11px 14px;border-top:1px solid var(--line);}
+    table.vocab tr:first-child{border-top:0;}
+    table.vocab td{padding:0;border-top:0;}
+    table.vocab td.word{white-space:normal;}
+    table.vocab td.pos{white-space:normal;align-self:center;font-size:13px;}
+    table.vocab td:not(.word):not(.pos){grid-column:1 / -1;margin-top:3px;color:var(--ink);}
+    /* thumb-sized controls */
+    .speeds button{min-height:40px;min-width:48px;}
+    #playBtn,#prevBtn,#nextBtn{min-height:44px;}
+  }
+  html,body{overflow-x:hidden;}
+  [hidden]{display:none !important;}
+  .appnotice{background:#fff6e8;border:1.5px solid var(--amber);border-radius:12px;padding:14px 16px;margin:0 0 14px;font-size:15px;line-height:1.55;}
+  .appnotice p{margin:0 0 10px;color:var(--ink);word-break:keep-all;}
+  .appnotice-btn{display:inline-block;background:var(--teal-deep);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:11px 18px;border-radius:10px;min-height:44px;box-sizing:border-box;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="owl">🦉</div>
+    <div class="brand">Owlish English<small>Economics Pack</small></div>
+    <a class="packnav" href="../#pack">← 경제 영어 팩</a>
+  </header>
+
+  <div class="samplebar">🎁 무료 샘플 · 경제 영어 팩 <b>Module 1 (A2)</b>을 그대로 체험해보세요. 전체 팩은 5개 모듈 × 3개 레벨이에요.</div>
+  <h1 class="title">Module 1 · Oil: Why One Narrow Sea Moves the World</h1>
+  <p class="dek">Pick your level. Read and listen, learn the key words, then check what you understood. Next module: inflation.</p>
+
+  <div class="sources" id="sourceToggle" hidden></div>
+
+  <div class="label-row">Level</div>
+  <div class="levels" id="levelToggle"></div>
+
+  <p class="source-line" id="sourceCite"></p>
+
+  <div class="appnotice" id="appNotice" hidden>
+    <p id="appNoticeMsg">이 앱 안에서는 오디오가 나오지 않을 수 있어요. 크롬이나 사파리에서 열면 들을 수 있어요.</p>
+    <a class="appnotice-btn" id="appNoticeBtn" href="#">브라우저에서 열기</a>
+  </div>
+
+  <div class="audiobar">
+    <button class="play" id="playBtn">▶ Listen</button>
+    <div class="tcontrols">
+      <button class="tbtn" id="prevBtn" title="Previous sentence" aria-label="Previous sentence">⏮</button>
+      <button class="tbtn" id="nextBtn" title="Next sentence" aria-label="Next sentence">⏭</button>
+    </div>
+    <div class="speeds">
+      <span>Speed</span>
+      <button data-rate="0.7">0.7×</button>
+      <button data-rate="0.85" class="active">0.85×</button>
+      <button data-rate="1">1×</button>
+      <button data-rate="1.1">1.1×</button>
+    </div>
+    <div class="pdf-group">
+      <button class="pdf-btn" id="pdfBtn">⤓ This reading</button>
+      <button class="pdf-btn all" id="pdfAllBtn" hidden>⤓ All levels</button>
+    </div>
+    <span class="audiover" id="audioVer">audio v7</span>
+    <div class="timeline">
+      <span class="ttime" id="tCur">0:00</span>
+      <div class="track" id="track" tabindex="0" role="slider" aria-label="Audio position" aria-valuemin="0" aria-valuenow="0">
+        <div class="rail"></div>
+        <div class="ticks" id="ticks"></div>
+        <div class="fill" id="tFill"></div>
+        <div class="handle" id="tHandle"></div>
+      </div>
+      <span class="ttime" id="tTot">0:00</span>
+    </div>
+  </div>
+
+  <article class="reading" id="reading"></article>
+  <p class="taphint">💡 문장 속 단어를 누르면 그 단어부터 들을 수 있어요. 길게 누르면 휴대폰 사전·번역을 쓸 수 있어요.</p>
+
+  <div class="sec-h"><span class="tag">Vocabulary</span><h3 id="vocabLevelLabel"></h3></div>
+  <table class="vocab" id="vocabTable">
+    <thead><tr><th>Word</th><th>Part of speech</th><th>Meaning</th></tr></thead>
+    <tbody id="vocabBody"></tbody>
+  </table>
+
+  <div class="sec-h"><span class="tag">Vocab Quiz</span><h3>Choose the best meaning</h3></div>
+  <div class="quiz" id="vocabQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('vocab')">Check answers</button><span class="score" id="vocabScore"></span></div>
+
+  <div class="sec-h"><span class="tag">Comprehension</span><h3>Multiple choice</h3></div>
+  <div class="quiz" id="compQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('comp')">Check answers</button><span class="score" id="compScore"></span></div>
+
+  <div class="buybox">
+    <h3>마음에 드셨나요? 전체 팩으로 이어서 읽어보세요</h3>
+    <p>유가 → 물가 → 금리 → 환율 → 경기 침체. 다섯 개 모듈이 하나의 이야기로 이어져요. 모든 모듈에 A2 · B1 · B2 레벨, Ava 오디오, 단어 누르기 재생, 한국어 단어장, 퀴즈, PDF 워크시트가 있어요.</p>
+    <p class="price">₩9,900 <span>얼리버드 가격</span></p>
+    <a class="buybtn" id="buyBtn" href="../#pack">구매하기</a>
+    <a class="openpack" href="https://pack.owlishenglishnews.com">이미 구매했어요 → 팩 열기</a>
+  </div>
+
+  <footer class="foot">
+    <div>🦉 <span class="ob">Owlish English</span></div>
+    <div>Economics Pack · Module 1 of 5 · A2 / B1 / B2</div>
+  </footer>
+</div>
+
+<script>
+/* ===================== CONTENT ===================== */
+const SOURCES = {
+ "oil": {
+  "outlet": "IMF · U.S. EIA · U.S. Bureau of Labor Statistics · U.S. Federal Reserve · Trading Economics",
+  "short": "Oil",
+  "url": null,
+  "byline": "",
+  "checked": "October 31, 2026",
+  "levels": {
+   "a2": {
+    "name": "A2",
+    "label": "A2 (elementary)",
+    "title": "Why Is Oil So Expensive?",
+    "paragraphs": [
+     "Oil is very important. Cars, planes, and ships use it. Factories use it to make plastic and many other things.",
+     "A lot of the world's oil travels on ships through a narrow sea called the Strait of Hormuz. In normal times, about one fifth of the world's oil goes through it. This year there is a war in the region. Ships cannot move easily, and an important oil pipeline was attacked.",
+     "When less oil can travel, oil becomes more expensive. In October, one barrel of oil cost more than $100. That is the highest price in about four years.",
+     "Korea buys almost all of its oil from other countries. So when oil prices go up, Koreans pay more for gas, plane tickets, and even food, because trucks need fuel to carry it."
+    ],
+    "vocab": [
+     [
+      "oil",
+      "noun",
+      "석유 · a thick liquid used to make fuel"
+     ],
+     [
+      "narrow",
+      "adj",
+      "좁은 · not wide"
+     ],
+     [
+      "war",
+      "noun",
+      "전쟁 · fighting between countries or groups"
+     ],
+     [
+      "pipeline",
+      "noun",
+      "송유관 · a long pipe that carries oil"
+     ],
+     [
+      "expensive",
+      "adj",
+      "비싼 · costing a lot of money"
+     ],
+     [
+      "barrel",
+      "noun",
+      "배럴 · a unit for measuring oil"
+     ],
+     [
+      "fuel",
+      "noun",
+      "연료 · something burned to make power, like gas"
+     ]
+    ],
+    "vocabQuiz": [
+     [
+      "\"Narrow\" means…",
+      [
+       "very long",
+       "very deep",
+       "not wide"
+      ],
+      2
+     ],
+     [
+      "A \"pipeline\" carries…",
+      [
+       "oil",
+       "people",
+       "letters"
+      ],
+      0
+     ],
+     [
+      "If something is \"expensive,\" it…",
+      [
+       "is free",
+       "costs a lot",
+       "is broken"
+      ],
+      1
+     ],
+     [
+      "\"Fuel\" is…",
+      [
+       "a kind of food",
+       "a type of ship",
+       "something burned to make power"
+      ],
+      2
+     ]
+    ],
+    "comp": [
+     [
+      "What passes through the Strait of Hormuz?",
+      [
+       "Cars",
+       "A lot of the world's oil",
+       "Trains"
+      ],
+      1
+     ],
+     [
+      "How much did one barrel of oil cost in October?",
+      [
+       "More than $100",
+       "About $10",
+       "About $50"
+      ],
+      0
+     ],
+     [
+      "Where does Korea get most of its oil?",
+      [
+       "From Seoul",
+       "From the sea near Busan",
+       "From other countries"
+      ],
+      2
+     ],
+     [
+      "Why can food get more expensive?",
+      [
+       "People eat more",
+       "Trucks need fuel to carry it",
+       "Farms are closed"
+      ],
+      1
+     ]
+    ]
+   }
+  }
+ }
+};
+
+const SRC_ORDER = ["oil"];
+const LVL_ORDER = ["a2"];
+let currentSource = "oil";
+let currentLevel = "a2";
+let rate = 0.85;
+
+function cur(){ return SOURCES[currentSource].levels[currentLevel]; }
+
+/* ===================== RENDER ===================== */
+function buildSourceToggle(){
+  const wrap=document.getElementById("sourceToggle"); wrap.innerHTML="";
+  SRC_ORDER.forEach(k=>{
+    const s=SOURCES[k];
+    const b=document.createElement("button");
+    b.innerHTML=`${s.short}<small>${s.outlet.replace("The ","")}</small>`;
+    b.dataset.key=k;
+    if(k===currentSource) b.classList.add("active");
+    b.onclick=()=>setSource(k);
+    wrap.appendChild(b);
+  });
+}
+function buildLevelToggle(){
+  const wrap=document.getElementById("levelToggle"); wrap.innerHTML="";
+  LVL_ORDER.forEach(k=>{
+    const d=SOURCES[currentSource].levels[k];
+    const b=document.createElement("button");
+    const desc=(d.label.split(" (")[1]||"").replace(")","");
+    b.innerHTML=`<span class="lv">${d.name}</span>${desc}`;
+    b.dataset.key=k;
+    if(k===currentLevel) b.classList.add("active");
+    b.onclick=()=>setLevel(k);
+    wrap.appendChild(b);
+  });
+}
+function renderCite(){
+  const s=SOURCES[currentSource];
+  document.getElementById("sourceCite").innerHTML=`Written by Owlish English from data and reporting by: <strong>${s.outlet}</strong>${s.checked?` <span class="checked">· Facts checked: ${s.checked}</span>`:""}`;
+}
+function renderLevel(){
+  const d=cur();
+  document.getElementById("reading").innerHTML=`<h2>${d.title}</h2>`+d.paragraphs.map((p,pi)=>`<p>${wrapWords(p,pi)}</p>`).join("");
+  buildWordMap();
+  document.getElementById("vocabLevelLabel").textContent=`${SOURCES[currentSource].short} · ${d.label}`;
+  document.getElementById("vocabBody").innerHTML=d.vocab.map(v=>`<tr><td class="word">${v[0]}</td><td class="pos">${v[1]}</td><td>${v[2]}</td></tr>`).join("");
+  renderQuiz("vocab",d.vocabQuiz,"vocabQuiz");
+  renderQuiz("comp",d.comp,"compQuiz");
+  document.getElementById("vocabScore").textContent="";
+  document.getElementById("compScore").textContent="";
+  renderCite();
+  resetAudio();
+}
+function renderQuiz(kind,items,mountId){
+  const L=["A","B","C","D"];
+  document.getElementById(mountId).innerHTML=items.map((it,qi)=>{
+    const opts=it[1].map((o,oi)=>`<label class="opt" data-q="${qi}" data-o="${oi}"><input type="radio" name="${kind}_${qi}" value="${oi}"><span class="ltr">${L[oi]}.</span><span>${o}</span></label>`).join("");
+    return `<div class="q" data-q="${qi}"><div class="stem"><span class="num">${qi+1}.</span>${it[0]}</div>${opts}</div>`;
+  }).join("");
+}
+function checkQuiz(kind){
+  const items=kind==="vocab"?cur().vocabQuiz:cur().comp;
+  const mount=document.getElementById(kind==="vocab"?"vocabQuiz":"compQuiz");
+  let correct=0;
+  items.forEach((it,qi)=>{
+    const ans=it[2];
+    const chosen=mount.querySelector(`input[name="${kind}_${qi}"]:checked`);
+    const opts=mount.querySelectorAll(`label.opt[data-q="${qi}"]`);
+    opts.forEach(o=>{o.classList.remove("correct","wrong");o.classList.add("locked");});
+    opts[ans].classList.add("correct");
+    if(chosen){const ci=parseInt(chosen.value); if(ci===ans) correct++; else opts[ci].classList.add("wrong");}
+  });
+  const total=items.length;
+  const el=document.getElementById(kind==="vocab"?"vocabScore":"compScore");
+  el.textContent=`Score: ${correct} / ${total}`;
+  el.className="score "+(correct===total?"good":correct>=Math.ceil(total/2)?"mid":"");
+}
+function setSource(k){
+  currentSource=k;
+  document.querySelectorAll("#sourceToggle button").forEach(b=>b.classList.toggle("active",b.dataset.key===k));
+  buildLevelToggle();
+  renderLevel();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function setLevel(k){
+  currentLevel=k;
+  document.querySelectorAll("#levelToggle button").forEach(b=>b.classList.toggle("active",b.dataset.key===k));
+  renderLevel();
+}
+
+/* ===================== TTS ===================== */
+let queue=[],qi=0;
+let audioState="idle";              // idle | playing | paused
+let selectedVoice=null;
+let speakToken=0;                   // invalidates stale utterance callbacks
+let durations=[],starts=[],totalDur=0;
+let lastSyncElapsed=0,lastSyncWall=0,playElapsed=0,scrubbing=false;
+const playBtn=document.getElementById("playBtn");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+const track=document.getElementById("track");
+const tFill=document.getElementById("tFill");
+const tHandle=document.getElementById("tHandle");
+const tCur=document.getElementById("tCur");
+const tTot=document.getElementById("tTot");
+const ticksEl=document.getElementById("ticks");
+
+function loadVoice(){
+  if(!(!!window.speechSynthesis)) return;
+  const all=speechSynthesis.getVoices();
+  if(!all.length) return; // fires again via onvoiceschanged
+  // macOS/iOS list joke voices (Albert, Bubbles, Bad News…) as en-US, and they
+  // sort first alphabetically — never pick those.
+  const NOVELTY=/^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/i;
+  const en=all.filter(v=>/^en/i.test(v.lang)&&!NOVELTY.test(v.name));
+  const us=en.filter(v=>/en[-_]?US/i.test(v.lang));
+  const PREFERRED=[/^Google US English$/,/Microsoft (Aria|Jenny|Ava|Andrew|Emma|Guy).*Natural/i,/^Samantha/,/^Ava/,/^Allison/,/^Alex$/,/Microsoft (Zira|David)/i];
+  selectedVoice=null;
+  for(const re of PREFERRED){ selectedVoice=us.find(v=>re.test(v.name)); if(selectedVoice)break; }
+  selectedVoice = selectedVoice ||
+    us.find(v=>v.default) || us.find(v=>v.localService) || us[0] ||   // any normal US English
+    en[0] || null;                                                   // any English (else browser default)
+}
+if(!!window.speechSynthesis){
+  loadVoice();
+  speechSynthesis.onvoiceschanged=loadVoice;
+}
+
+// --- Spoken-only number normalization -------------------------------------
+// Converts figures to written words for the TTS engine ONLY. The displayed
+// reading text is never touched. e.g. "$1.1 trillion" is spoken as
+// "one point one trillion dollars" instead of "one dollar one trillion".
+const _ones=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+const _tens=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+function _threeDigits(n){
+  let s="";
+  if(n>=100){ s+=_ones[Math.floor(n/100)]+" hundred"; n%=100; if(n)s+=" "; }
+  if(n>=20){ s+=_tens[Math.floor(n/10)]; const r=n%10; if(r)s+="-"+_ones[r]; }
+  else if(n>0){ s+=_ones[n]; }
+  return s;
+}
+function _intToWords(n){
+  if(n===0)return "zero";
+  const groups=["","thousand","million","billion","trillion","quadrillion"];
+  let parts=[],g=0;
+  while(n>0){ const c=n%1000; if(c)parts.unshift(_threeDigits(c)+(groups[g]?" "+groups[g]:"")); n=Math.floor(n/1000); g++; }
+  return parts.join(" ");
+}
+function numToWords(numStr){
+  numStr=numStr.replace(/,/g,"");
+  if(numStr.includes(".")){
+    const p=numStr.split(".");
+    return _intToWords(parseInt(p[0]||"0",10))+" point "+p[1].split("").map(d=>_ones[+d]).join(" ");
+  }
+  return _intToWords(parseInt(numStr,10));
+}
+function speechText(t){
+  return t
+    // "U.S." -> "US" so the voice reads it as letters ("you ess") and the
+    // sentence splitter doesn't break at the dots. Keep one period only when
+    // it genuinely ends a sentence (next word is capitalized).
+    .replace(/\bU\.S\.A\./g,"USA")
+    .replace(/\bU\.S\.(?=\s+[A-Z])/g,"US.")
+    .replace(/\bU\.S\./g,"US")
+    // $X[.Y] trillion/billion/million  ->  words + magnitude + "dollars"
+    .replace(/\$(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s+(trillion|billion|million)/gi,(m,n,mag)=>numToWords(n)+" "+mag.toLowerCase()+" dollars")
+    // remaining $X  ->  words + "dollar(s)"
+    .replace(/\$(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)/g,(m,n)=>numToWords(n)+(n==="1"?" dollar":" dollars"))
+    // X%  ->  words + "percent"
+    .replace(/(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)%/g,(m,n)=>numToWords(n)+" percent")
+    // standalone figures (skips ordinals like "20th" — digits followed by a letter)
+    .replace(/\b(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\b(?![%A-Za-z]|[.,]\d)/g,(m,n,off,str)=>{ if(/^(19|20)\d\d$/.test(n)) return n; if(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+$/.test(str.slice(Math.max(0,off-12),off))) return n; return numToWords(n); });
+}
+function buildChunks(){
+  const d=cur();
+  const chunks=[{text:speechText(d.title.replace(/[.?!]+$/,""))+".",pauseAfter:2000}];
+  d.paragraphs.forEach(p=>paraPieces(p).forEach(x=>chunks.push({text:x,pauseAfter:0})));
+  return chunks;
+}
+function paraPieces(p){
+  const sp=speechText(p),out=[];
+  (sp.match(/[^.!?]+[.!?]+/g)||[sp]).forEach(s=>{const t=s.trim();if(t)splitLong(t).forEach(x=>out.push(x));});
+  return out;
+}
+// Chrome's Google voices cut off any single utterance after ~15 s and then never
+// fire onend, which freezes playback. Split long sentences at commas/dashes so
+// each piece stays well under that, even at the slowest speed.
+const MAX_WORDS=20;
+function splitLong(t){
+  const n=s=>s.trim().split(/\s+/).length;
+  if(n(t)<=MAX_WORDS) return [t];
+  const parts=t.split(/(?<=[,;:—–])\s+/);
+  const out=[];let buf="";
+  parts.forEach(pt=>{
+    if(buf && n(buf+" "+pt)>MAX_WORDS){out.push(buf);buf=pt;}
+    else buf=buf?buf+" "+pt:pt;
+  });
+  if(buf)out.push(buf);
+  // a single comma-free run that is still too long: cut it at word boundaries
+  return out.flatMap(s=>{
+    if(n(s)<=MAX_WORDS+6) return [s];
+    const w=s.split(/\s+/),r=[];for(let i=0;i<w.length;i+=MAX_WORDS)r.push(w.slice(i,i+MAX_WORDS).join(" "));return r;
+  });
+}
+/* ----- audio script for the MP3 generator -------------------------------------
+   GitHub (tools/make_audio.py) calls this to get exactly what the page would say
+   for every version, and records it as MP3. Keys look like "wsj-a2". */
+window.owlishAudioScript=function(){
+  const keep=[currentSource,currentLevel],out={};
+  SRC_ORDER.forEach(s=>LVL_ORDER.forEach(l=>{
+    currentSource=s;currentLevel=l;
+    out[s+"-"+l]=buildChunks().map(c=>({text:c.text,pauseAfter:c.pauseAfter||0}));
+  }));
+  [currentSource,currentLevel]=keep;
+  return out;
+};
+
+/* ----- recorded audio (MP3) ------------------------------------------------------
+   If GitHub has made an MP3 for this version and its text still matches the page,
+   play that: it works inside the Naver/KakaoTalk app browsers, speed is exact, and
+   pause/seek are real. Otherwise fall back to the browser's own voice below. */
+const AUDIO_BASE=(location.pathname.split("/").pop()||"").replace(/\.html$/i,"")||"sample-oil";
+let MANIFEST=null, mode="tts";
+const audioEl=new Audio();
+audioEl.preload="auto";
+try{audioEl.preservesPitch=true;audioEl.webkitPreservesPitch=true;}catch(_){}
+function versionKey(){return currentSource+"-"+currentLevel;}
+function mp3For(){
+  if(!MANIFEST||!MANIFEST.versions)return null;
+  const v=MANIFEST.versions[versionKey()];
+  if(!v)return null;
+  const now=buildChunks().map(c=>c.text).join("\n");
+  return v.text===now?v:null;           // text edited since the MP3 was made -> don't use it
+}
+function useMp3IfReady(){
+  const v=mp3For();
+  if(!v){mode="tts";return false;}
+  mode="mp3";
+  const url="audio/"+AUDIO_BASE+"/"+v.file+(MANIFEST.build?"?v="+MANIFEST.build:"");
+  if(audioEl.dataset.src!==url){audioEl.src=url;audioEl.dataset.src=url;}
+  audioEl.playbackRate=rate;
+  starts=v.starts.slice();totalDur=v.duration;
+  if(tTot)tTot.textContent=fmt(totalDur);
+  renderTicks();
+  const box=document.getElementById("appNotice");if(box)box.hidden=true;  // audio will work here
+  return true;
+}
+fetch("audio/"+AUDIO_BASE+"/manifest.json",{cache:"no-cache"})
+  .then(r=>r.ok?r.json():null)
+  .then(m=>{ if(!m)return; MANIFEST=m; if(audioState==="idle"){resetAudio();} })
+  .catch(()=>{});
+audioEl.addEventListener("ended",()=>{ if(mode==="mp3")finishAudio(); });
+audioEl.addEventListener("error",()=>{            // file missing/broken -> browser voice
+  if(mode!=="mp3")return;
+  MANIFEST=null;mode="tts";audioEl.removeAttribute("src");delete audioEl.dataset.src;
+  const wasPlaying=audioState==="playing";resetAudio();
+  showAppNotice(false);
+  if(wasPlaying)togglePlay();
+});
+
+/* ----- tap a word to play from it ------------------------------------------------
+   Every word in the reading is a span. A quick tap plays from that word. Press-and-
+   hold is left alone, so the phone's own look-up / translate still works. Each shown
+   word is matched to the spoken words (numbers are spoken as words, so "$100" ->
+   "one hundred dollars"), giving the sentence and the word inside it to start from. */
+function wrapWords(p,pi){
+  let wi=0;
+  return p.split(/(\s+)/).map(tok=>/^\s+$/.test(tok)||tok===""?tok:`<span class="w" data-p="${pi}" data-w="${wi++}">${tok}</span>`).join("");
+}
+let WORDMAP={};      // "pi:wi" -> [chunkIndex, wordIndexInChunk]
+const norm=w=>w.toLowerCase().replace(/[^a-z]/g,"");
+function buildWordMap(){
+  WORDMAP={};
+  const d=cur(); let ci=1;                                   // chunk 0 is the title
+  d.paragraphs.forEach((p,pi)=>{
+    const spoken=[];                                          // [chunk, wordInChunk, normalized]
+    paraPieces(p).forEach(piece=>{ piece.split(/\s+/).forEach((w,k)=>spoken.push([ci,k,norm(w)])); ci++; });
+    const shown=p.split(/\s+/).filter(Boolean);
+    let j=0;
+    shown.forEach((w,wi)=>{
+      const n=norm(w);
+      if(n){ for(let k=j;k<Math.min(spoken.length,j+8);k++){ if(spoken[k][2]===n){ j=k; break; } } }
+      const hit=spoken[Math.min(j,spoken.length-1)];
+      WORDMAP[pi+":"+wi]=[hit[0],hit[1]];
+      if(n&&spoken[j]&&spoken[j][2]===n) j++;
+    });
+  });
+}
+let startWordInChunk=0;                                       // used once by the next speak
+function playFromWord(ci,wi){
+  ensureQueue(); if(ci>=queue.length) return;
+  if(mode==="mp3"){
+    const v=mp3For(); let t=starts[ci]||0;
+    const wt=v&&v.words&&v.words[ci];
+    if(wt&&wt.length) t=(starts[ci]||0)+(wt[Math.min(wi,wt.length-1)]||0);
+    else{ const next=(starts[ci+1]||totalDur), n=queue[ci].text.split(/\s+/).length; t+=Math.max(0,(next-t-0.2))*(wi/n); }
+    qi=ci; audioState="playing";
+    try{audioEl.currentTime=Math.max(0,t-0.05);}catch(_){}
+    audioEl.playbackRate=rate; const pr=audioEl.play(); if(pr&&pr.catch)pr.catch(()=>{audioState="paused";setUI();});
+    setUI(); return;
+  }
+  if(!window.speechSynthesis){showAppNotice(true);return;}
+  speakToken++; speechSynthesis.cancel();
+  qi=ci; startWordInChunk=wi; audioState="playing"; setUI();
+  setTimeout(()=>{ if(audioState==="playing") speakCurrent(); },60);
+}
+(function(){
+  const box=document.getElementById("reading"); let down=null;
+  box.addEventListener("pointerdown",e=>{ down={x:e.clientX,y:e.clientY,t:performance.now()}; });
+  box.addEventListener("click",e=>{
+    const w=e.target.closest&&e.target.closest("span.w"); if(!w) return;
+    const sel=window.getSelection&&String(window.getSelection()); if(sel&&sel.trim()) return;   // selecting text, not tapping
+    if(down&&(Math.abs(e.clientX-down.x)>8||Math.abs(e.clientY-down.y)>8||performance.now()-down.t>500)) return; // swipe or long-press
+    const m=WORDMAP[w.dataset.p+":"+w.dataset.w]; if(!m) return;
+    box.querySelectorAll("span.w.tapped").forEach(x=>x.classList.remove("tapped"));
+    w.classList.add("tapped"); setTimeout(()=>w.classList.remove("tapped"),900);
+    playFromWord(m[0],m[1]);
+  });
+})();
+
+/* ----- timeline model ----------------------------------------------------- */
+const BASE_WPS=2.8;                 // approx words/sec at rate 1 (estimate only)
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+function estimate(){
+  if(mode==="mp3"){audioEl.playbackRate=rate;return;}
+  durations=queue.map(c=>{
+    const words=(c.text.trim().split(/\s+/).length)||1;
+    const speak=Math.max(0.45, words/(BASE_WPS*rate));
+    return speak + (c.pauseAfter||0)/1000 + 0.18;   // + inter-sentence gap
+  });
+  starts=[];let acc=0;durations.forEach(d=>{starts.push(acc);acc+=d;});
+  totalDur=acc;
+  if(tTot)tTot.textContent=fmt(totalDur);
+}
+function renderTicks(){
+  if(!ticksEl)return;ticksEl.innerHTML="";
+  if(totalDur<=0)return;
+  for(let i=1;i<starts.length;i++){
+    const t=document.createElement("i");
+    t.style.left=(starts[i]/totalDur*100)+"%";
+    ticksEl.appendChild(t);
+  }
+}
+function ensureQueue(){
+  if(!queue.length){queue=buildChunks();qi=0;if(!useMp3IfReady()){estimate();renderTicks();}}
+}
+function setUI(){
+  const pct=totalDur>0?Math.min(100,(playElapsed/totalDur)*100):0;
+  if(tFill)tFill.style.width=pct+"%";
+  if(tHandle)tHandle.style.left=pct+"%";
+  if(tCur)tCur.textContent=fmt(playElapsed);
+  if(track)track.setAttribute("aria-valuenow",Math.round(playElapsed));
+  playBtn.textContent = audioState==="playing" ? "⏸ Pause" : (audioState==="paused" ? "▶ Resume" : "▶ Listen");
+  playBtn.classList.toggle("playing", audioState!=="idle");
+}
+function syncTo(i){lastSyncElapsed=starts[i]||0;lastSyncWall=performance.now();playElapsed=lastSyncElapsed;}
+(function raf(){
+  if(audioState==="playing" && !scrubbing){
+    if(mode==="mp3"){playElapsed=Math.min(totalDur,audioEl.currentTime||0);qi=timeToChunk(playElapsed);}
+    else playElapsed=Math.min(totalDur, lastSyncElapsed+(performance.now()-lastSyncWall)/1000);
+    setUI();
+  }
+  requestAnimationFrame(raf);
+})();
+
+/* ----- speaking ----------------------------------------------------------- */
+function playMp3From(i){
+  try{audioEl.currentTime=starts[i]||0;}catch(_){}
+  audioEl.playbackRate=rate;
+  const p=audioEl.play();
+  if(p&&p.catch)p.catch(()=>{audioState="paused";setUI();});   // e.g. autoplay blocked: wait for a tap
+}
+function speakCurrent(){
+  if(mode==="mp3"){ if(audioState!=="playing")return; playMp3From(qi); return; }
+  if(!window.speechSynthesis){audioState="idle";setUI();showAppNotice(true);return;}
+  if(audioState!=="playing")return;
+  if(qi>=queue.length){finishAudio();return;}
+  const myToken=++speakToken;
+  const c=queue[qi];
+  syncTo(qi);
+  let say=c.text;
+  if(startWordInChunk>0){ say=c.text.split(/\s+/).slice(startWordInChunk).join(" ")||c.text; startWordInChunk=0; }
+  const u=new SpeechSynthesisUtterance(say);
+  u.rate=rate;
+  if(selectedVoice){u.voice=selectedVoice;u.lang=selectedVoice.lang;}
+  else u.lang="en-US";
+  let done=false;
+  const advance=()=>{
+    if(done)return;done=true;clearTimeout(watchdog);
+    if(myToken!==speakToken||audioState!=="playing")return;  // stale or stopped
+    qi++;
+    if(qi>=queue.length){finishAudio();return;}
+    const gap=c.pauseAfter||0;
+    if(gap) setTimeout(()=>{if(myToken===speakToken&&audioState==="playing")speakCurrent();},gap);
+    else speakCurrent();
+  };
+  u.onend=advance;
+  // a voice that errors out would otherwise leave playback stuck forever
+  u.onerror=e=>{ if(e&&(e.error==="interrupted"||e.error==="canceled"))return; advance(); };
+  // last resort: if the engine never reports the end, move on anyway
+  const words=c.text.split(/\s+/).length;
+  // (generous: twice the slowest plausible speaking time, plus 4 s)
+  const watchdog=setTimeout(()=>{ if(myToken===speakToken&&audioState==="playing"&&!done){(window.speechSynthesis&&speechSynthesis.cancel());advance();} },
+                            (words/(BASE_WPS*0.5*rate))*1000+4000);
+  speechSynthesis.speak(u);
+}
+function finishAudio(){
+  if(mode==="mp3")audioEl.pause();
+  speakToken++;audioState="idle";(window.speechSynthesis&&speechSynthesis.cancel());
+  playElapsed=totalDur;qi=queue.length;setUI();
+}
+function timeToChunk(t){
+  let i=0;for(let k=0;k<starts.length;k++){if(t>=starts[k])i=k;else break;}return i;
+}
+function seekToTime(t,play){
+  ensureQueue();if(totalDur<=0)return;
+  t=Math.max(0,Math.min(totalDur,t));
+  qi=timeToChunk(t);
+  if(mode==="mp3"){
+    playElapsed=starts[qi];
+    if(play){audioState="playing";playMp3From(qi);}
+    else{try{audioEl.currentTime=starts[qi];}catch(_){}}
+    setUI();return;
+  }
+  playElapsed=starts[qi];           // snap handle to the sentence we'll speak
+  syncTo(qi);
+  if(play){audioState="playing";speakToken++;(window.speechSynthesis&&speechSynthesis.cancel());speakCurrent();}
+  setUI();
+}
+
+/* ----- transport controls ------------------------------------------------- */
+/* ----- in-app browsers (KakaoTalk, Naver, Instagram…) ------------------------
+   Links tapped inside these apps open in a built-in browser that often has no
+   speech voice (always on Android). Tell the reader and offer the real browser. */
+const UA=navigator.userAgent||"";
+const IN_APP=/KAKAOTALK|NAVER\(inapp|; ?wv\)|Instagram|FBAN|FBAV|Line\//i.test(UA);
+const IS_ANDROID=/Android/i.test(UA), IS_IOS=/iPhone|iPad|iPod/i.test(UA);
+function externalUrl(){
+  const here=location.href;
+  if(/KAKAOTALK/i.test(UA)) return "kakaotalk://web/openExternal?url="+encodeURIComponent(here);
+  if(IS_ANDROID) return "intent://"+here.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end";
+  return here;
+}
+function showAppNotice(force){
+  const box=document.getElementById("appNotice");if(!box)return;
+  if(mode==="mp3"){box.hidden=true;return;}
+  const noVoice=!(!!window.speechSynthesis);
+  if(!(force||noVoice||IN_APP))return;
+  const msg=document.getElementById("appNoticeMsg"),btn=document.getElementById("appNoticeBtn");
+  if(IS_IOS && !/KAKAOTALK/i.test(UA)){
+    msg.textContent = noVoice
+      ? "이 앱 안에서는 오디오가 나오지 않아요. 앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요."
+      : "소리가 안 나면 앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요.";
+    btn.hidden=true;
+  } else {
+    msg.textContent = noVoice
+      ? "이 앱 안에서는 오디오가 나오지 않아요. 아래 버튼을 눌러 브라우저에서 열어주세요."
+      : "이 앱 안에서는 오디오가 나오지 않을 수 있어요. 소리가 안 나면 브라우저에서 열어주세요.";
+    btn.href=externalUrl();
+  }
+  box.hidden=false;
+}
+showAppNotice(false);
+
+function togglePlay(){
+  ensureQueue();
+  if(mode==="mp3"){
+    if(audioState==="playing"){audioState="paused";audioEl.pause();playElapsed=audioEl.currentTime||0;setUI();}
+    else if(audioState==="paused"){audioState="playing";audioEl.playbackRate=rate;const p=audioEl.play();if(p&&p.catch)p.catch(()=>{audioState="paused";setUI();});setUI();}
+    else{let t=playElapsed;if(t>=totalDur)t=0;seekToTime(t,true);}
+    return;
+  }
+  if(!(!!window.speechSynthesis)){showAppNotice(true);document.getElementById("appNotice").scrollIntoView({behavior:"smooth",block:"center"});return;}
+  ensureQueue();
+  // Pause = stop the voice and remember the sentence; Resume = say that sentence
+  // again. speechSynthesis.pause()/resume() is broken on Chrome's Google voices
+  // and on Android, and it keeps the OLD speed if the speed is changed while paused.
+  if(audioState==="playing"){                       // -> pause
+    audioState="paused";speakToken++;(window.speechSynthesis&&speechSynthesis.cancel());
+    playElapsed=starts[qi]||0;lastSyncElapsed=playElapsed;setUI();
+  } else if(audioState==="paused"){                  // -> resume (current sentence, current speed)
+    audioState="playing";speakCurrent();setUI();
+  } else {                                           // idle -> play
+    let t=playElapsed;if(t>=totalDur)t=0;
+    seekToTime(t,true);
+  }
+}
+function stopTTS(){speakToken++;audioState="idle";(window.speechSynthesis&&speechSynthesis.cancel());try{audioEl.pause();}catch(_){}}
+function resetAudio(){
+  stopTTS();queue=[];qi=0;playElapsed=0;
+  ensureQueue();playElapsed=0;setUI();
+}
+playBtn.onclick=togglePlay;
+prevBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.max(0,qi-1)]||0,true);};
+nextBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.min(queue.length-1,qi+1)]||0,true);};
+
+/* ----- scrubbing ---------------------------------------------------------- */
+function clientXToTime(clientX){
+  const r=track.getBoundingClientRect();
+  const frac=Math.max(0,Math.min(1,(clientX-r.left)/r.width));
+  return frac*totalDur;
+}
+track.addEventListener("pointerdown",e=>{
+  ensureQueue();if(totalDur<=0)return;
+  scrubbing=true;try{track.setPointerCapture(e.pointerId);}catch(_){}
+  playElapsed=clientXToTime(e.clientX);setUI();
+});
+track.addEventListener("pointermove",e=>{
+  if(!scrubbing)return;playElapsed=clientXToTime(e.clientX);setUI();
+});
+function endScrub(e){
+  if(!scrubbing)return;scrubbing=false;
+  try{track.releasePointerCapture(e.pointerId);}catch(_){}
+  seekToTime(clientXToTime(e.clientX),true);
+}
+track.addEventListener("pointerup",endScrub);
+track.addEventListener("pointercancel",endScrub);
+track.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"){e.preventDefault();nextBtn.onclick();}
+  else if(e.key==="ArrowLeft"){e.preventDefault();prevBtn.onclick();}
+  else if(e.key===" "||e.key==="Enter"){e.preventDefault();togglePlay();}
+});
+
+/* ----- speed -------------------------------------------------------------- */
+document.querySelectorAll(".speeds button").forEach(b=>{
+  b.onclick=()=>{
+    const wasPlaying=audioState==="playing",at=qi;
+    rate=parseFloat(b.dataset.rate);
+    document.querySelectorAll(".speeds button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    if(mode==="mp3"){audioEl.playbackRate=rate;return;}
+    if(queue.length){estimate();renderTicks();}
+    if(wasPlaying){seekToTime(starts[at]||0,true);}
+    else{if(queue.length)playElapsed=starts[Math.min(qi,starts.length-1)]||0;setUI();}
+  };
+});
+
+/* ===================== PDF ===================== */
+function buildDoc(items, combined){
+  const { jsPDF }=window.jspdf;
+  const doc=new jsPDF({unit:"pt",format:"a4"});prepDoc(doc);
+  const M=48,W=595,RW=W-M*2,BOTTOM=792,L=["A","B","C","D"];
+  let y=54;
+  const H=()=>{doc.setFont("helvetica","bold");doc.setFontSize(15);doc.setTextColor(14,76,79);doc.text("Owlish English",M,y);
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(9);doc.setTextColor(120);doc.text("Graded Reading Worksheet",W-M,y,{align:"right"});
+    y+=10;doc.setDrawColor(224,138,43);doc.setLineWidth(1.5);doc.line(M,y,W-M,y);y+=22;doc.setTextColor(20);};
+  const newPage=(withHead)=>{doc.addPage();y=54;if(withHead)H();};
+  const need=(hh)=>{if(y+hh>BOTTOM)newPage(true);};
+  const h3=(t)=>{need(34);doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(14,76,79);doc.text(t,M,y);y+=6;doc.setDrawColor(230);doc.setLineWidth(.6);doc.line(M,y,W-M,y);y+=16;doc.setTextColor(20);};
+  const para=(t,size,gap)=>{doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(size);doc.splitTextToSize(t,RW).forEach(ln=>{need(size*1.4);doc.text(ln,M,y);y+=size*1.4;});y+=(gap||6);};
+  const mc=(it,i)=>{need(24);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.splitTextToSize(`${i+1}. ${it[0]}`,RW).forEach(ln=>{need(14);doc.text(ln,M,y);y+=14;});
+    doc.setFont(PDF_TEXT_FONT,"normal");it[1].forEach((o,oi)=>{doc.splitTextToSize(`${L[oi]}. ${o}`,RW-24).forEach(ln=>{need(13);doc.text(ln,M+18,y);y+=13;});});y+=8;};
+
+  if(combined){
+    H();
+    doc.setFont("helvetica","bold");doc.setFontSize(20);doc.text("Oil: Why One Narrow Sea Moves the World",M,y+8);y+=38;
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(12);doc.setTextColor(90);
+    doc.text("Owlish Economics Pack · Module 1 — A2 / B1 / B2",M,y);y+=22;doc.setTextColor(20);
+    doc.setFontSize(11);
+    items.forEach((it,i)=>{const s=SOURCES[it.src],lv=s.levels[it.lvl];need(15);doc.text(`${i+1}.  ${s.outlet} — ${lv.name}`,M+10,y);y+=15;});
+  }
+
+  let firstDone=false;
+  items.forEach(it=>{
+    const s=SOURCES[it.src], d=s.levels[it.lvl];
+    if(combined||firstDone) newPage(false);
+    H();
+    doc.setFont("helvetica","bold");doc.setFontSize(16);doc.splitTextToSize(d.title,RW).forEach(ln=>{doc.text(ln,M,y);y+=18;});
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(10);doc.setTextColor(110);
+    doc.text(`Owlish Economics Pack  ·  Level: ${d.label}`,M,y);y+=13;
+    doc.splitTextToSize(`Sources: ${s.outlet}${s.checked?"  ·  Facts checked: "+s.checked:""}`,RW).forEach(ln=>{doc.text(ln,M,y);y+=12;});
+    doc.setTextColor(20);y+=8;
+    if(!combined){doc.setFontSize(11);doc.text("Name: ______________________________",M,y);doc.text("Date: ________________",W-M-150,y);y+=22;}
+    h3("Reading");
+    doc.setFont("helvetica","bold");doc.setFontSize(12);need(18);doc.splitTextToSize(d.title,RW).forEach(ln=>{doc.text(ln,M,y);y+=16;});
+    d.paragraphs.forEach(p=>para(p,11,8));y+=4;
+    h3("Vocabulary");
+    d.vocab.forEach(v=>{need(20);doc.setFont("helvetica","bold");doc.setFontSize(11);const wl=doc.splitTextToSize(`${v[0]} (${v[1]})`,150);doc.text(wl,M,y);doc.setFont(PDF_TEXT_FONT,"normal");const dl=doc.splitTextToSize(pdfSafe(v[2]),RW-160);doc.text(dl,M+160,y);y+=Math.max(wl.length,dl.length)*13+5;});y+=4;
+    h3("Vocab Quiz  (circle the best answer)");
+    d.vocabQuiz.forEach((q,i)=>mc(q,i));
+    h3("Comprehension  (circle the best answer)");
+    d.comp.forEach((q,i)=>mc(q,i));
+    if(!combined){
+      newPage(false);H();h3("Answer Key");
+      doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(11);
+      const vk=d.vocabQuiz.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ");
+      const ck=d.comp.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ");
+      doc.setFont("helvetica","bold");doc.text("Vocab Quiz:",M,y);doc.setFont(PDF_TEXT_FONT,"normal");doc.text(vk,M+78,y);y+=18;
+      doc.setFont("helvetica","bold");doc.text("Comprehension:",M,y);doc.setFont(PDF_TEXT_FONT,"normal");doc.text(ck,M+98,y);y+=18;
+    }
+    firstDone=true;
+  });
+
+  if(combined){
+    newPage(false);H();h3("Answer Keys — all readings");
+    items.forEach(it=>{
+      const s=SOURCES[it.src],d=s.levels[it.lvl];
+      need(42);
+      doc.setFont("helvetica","bold");doc.setFontSize(11);doc.setTextColor(14,76,79);doc.text(`${s.outlet} — ${d.name}`,M,y);y+=14;doc.setTextColor(20);
+      doc.setFont(PDF_TEXT_FONT,"normal");
+      doc.text(`Vocab: ${d.vocabQuiz.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ")}`,M+10,y);y+=13;
+      doc.text(`Comprehension: ${d.comp.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ")}`,M+10,y);y+=16;
+    });
+  }
+
+  const pages=doc.getNumberOfPages();
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(9);doc.setTextColor(140);doc.text("Owlish English",M,812);doc.text(`Page ${p} of ${pages}`,W-M,812,{align:"right"});}
+  return doc;
+}
+/* Korean in the vocab list needs a Korean font: the PDF tool's built-in fonts have
+   no Hangul. Nanum Gothic (free, OFL) is loaded from fonts/ only when someone
+   downloads, then reused. If it can't load, the PDF is still made, and the Korean
+   meanings are left out instead of coming out garbled. */
+let PDF_TEXT_FONT="helvetica", koreanFontB64=null, koreanFontTried=false;
+function ab2b64(buf){let s="",b=new Uint8Array(buf);for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s);}
+async function ensureKoreanFont(){
+  if(koreanFontB64||koreanFontTried)return;
+  koreanFontTried=true;
+  try{const r=await fetch("fonts/NanumGothic-Regular.ttf");if(r.ok)koreanFontB64=ab2b64(await r.arrayBuffer());}catch(_){}
+}
+function prepDoc(doc){
+  if(koreanFontB64){doc.addFileToVFS("NanumGothic.ttf",koreanFontB64);doc.addFont("NanumGothic.ttf","NanumGothic","normal");PDF_TEXT_FONT="NanumGothic";}
+  else PDF_TEXT_FONT="helvetica";
+}
+function pdfSafe(t){ return koreanFontB64 ? t : String(t).replace(/[\u3131-\u318E\uAC00-\uD7A3][^·]*·\s*/g,"").replace(/[^\x00-\xFF]/g,""); }
+async function withPdf(btn,fn){
+  const label=btn.innerHTML;btn.disabled=true;btn.innerHTML="⏳ Making PDF…";
+  try{await ensureKoreanFont();fn();}finally{btn.disabled=false;btn.innerHTML=label;}
+}
+document.getElementById("pdfBtn").onclick=function(){
+  withPdf(this,()=>buildDoc([{src:currentSource,lvl:currentLevel}],false).save(`Owlish-Economics-01-Oil-${cur().name}.pdf`));
+};
+document.getElementById("pdfAllBtn").onclick=function(){
+  const items=[];
+  SRC_ORDER.forEach(s=>LVL_ORDER.forEach(l=>items.push({src:s,lvl:l})));
+  withPdf(this,()=>buildDoc(items,true).save("Owlish-Economics-01-Oil-ALL-levels.pdf"));
+};
+
+/* ===================== INIT ===================== */
+buildSourceToggle();
+buildLevelToggle();
+renderLevel();
+window.addEventListener("beforeunload",stopTTS);
+// phones stop the voice when the screen locks or the app is switched; pause
+// cleanly so Resume picks up at the same sentence instead of skipping ahead
+// Switching tabs keeps playing. Only on phones, where the browser voice is cut off in
+// the background, pause cleanly so Resume picks up the same sentence. (Recorded audio
+// keeps going even with the screen locked.)
+document.addEventListener("visibilitychange",()=>{ if(document.hidden&&audioState==="playing"&&mode!=="mp3"&&(IS_ANDROID||IS_IOS))togglePlay(); });
+</script>
+<script>
+  /* Smart Store link — set here when the listing is live. Until then "구매하기" goes to the pack section on the homepage. */
+  const STORE_URL = "";
+  if (STORE_URL) { const b = document.getElementById("buyBtn"); b.href = STORE_URL; b.target = "_blank"; b.rel = "noopener"; }
+</script>
+</body>
+</html>

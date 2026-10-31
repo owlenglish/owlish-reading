@@ -40,6 +40,9 @@
     border:2px solid var(--ink);color:var(--ink);background:transparent;
     transition:background .15s ease,color .15s ease}
   .pill:hover{background:var(--ink);color:var(--white)}
+  .navlinks{display:inline-flex;gap:8px}
+  .nav .pill,.wordmark{white-space:nowrap}
+  @media (max-width:420px){ .nav .pill{padding:10px 13px;font-size:14px} .wordmark{font-size:17px} .navlinks{gap:6px} }
   .pill.solid{background:var(--coral-deep);border-color:var(--coral-deep);color:var(--white)}
   .pill.solid:hover{background:var(--ink);border-color:var(--ink)}
 
@@ -92,6 +95,36 @@
   .msg{padding:34px 28px;color:var(--muted);text-align:center}
   .note{color:var(--muted);font-size:15px;margin:14px 4px 0}
 
+  /* ── Economics Pack ── */
+  .pack{padding-top:56px}
+  .packcard{background:var(--white);border:2px solid var(--ink);border-radius:28px;padding:30px 26px 26px}
+  .kicker{margin:0 0 6px;font-size:14px;font-weight:800;color:var(--coral-deep)}
+  .packcard h2{margin:0 0 10px}
+  .packlede{margin:0 0 22px;font-size:17px;max-width:36em}
+  .chain{list-style:none;margin:0 0 22px;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;counter-reset:c}
+  .chain li{counter-increment:c;background:var(--mint-100);border-radius:14px;padding:12px 8px;text-align:center;position:relative;line-height:1.3}
+  .chain li::before{content:counter(c);display:block;font-size:12px;font-weight:800;color:var(--coral-deep);margin-bottom:2px}
+  .chain li:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);font-weight:800;color:var(--muted);font-size:13px}
+  .chain b{display:block;font-size:15px}
+  .chain span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+  .inside{margin:0 0 20px;padding-left:20px;font-size:16px}
+  .inside li{margin-bottom:6px}
+  .pprice{font-family:var(--display);font-weight:800;font-size:32px;margin:0 0 14px;letter-spacing:-.02em}
+  .pprice span{font-family:var(--text);font-size:14px;font-weight:800;color:var(--coral-deep);margin-left:8px;letter-spacing:0}
+  .packbtns{display:flex;gap:12px;flex-wrap:wrap}
+  .packbtns .pill{padding:15px 22px;font-size:16px}
+  .pill[aria-disabled="true"]{opacity:.55;pointer-events:none}
+  .owned{display:inline-block;margin-top:16px;font-size:15px;font-weight:700;color:var(--ink)}
+  @media (max-width:640px){
+    .chain{grid-template-columns:1fr;gap:6px}
+    .chain li{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 14px}
+    .chain li::before{margin:0}
+    .chain li::after{display:none}
+    .chain b{display:inline;font-size:15px}
+    .chain span{display:inline;margin:0}
+    .packbtns .pill{width:100%}
+  }
+
   @media (min-width:700px){
     .row{grid-template-columns:1fr auto;align-items:center;gap:32px}
     .side{flex-direction:column;align-items:flex-end;gap:14px}
@@ -134,7 +167,7 @@
   <div class="wrap">
     <nav class="nav">
       <a class="wordmark" href="#top">Owlish English</a>
-      <a class="pill" href="#contact">문의하기</a>
+      <span class="navlinks"><a class="pill" href="#pack">경제 팩</a> <a class="pill" href="#contact">문의하기</a></span>
     </nav>
     <div class="herogrid" id="top">
       <div class="owl" aria-hidden="true">
@@ -162,6 +195,33 @@
     </div>
     <div class="list" id="grid"></div>
     <p class="note">모든 리딩에 자연스러운 AI 음성 오디오가 있어요. 휴대폰과 네이버·카카오톡 앱 안에서도 들을 수 있어요.</p>
+  </section>
+
+  <section class="pack wrap" id="pack">
+    <div class="packcard">
+      <p class="kicker">새로 나왔어요 · 유료 팩</p>
+      <h2>경제 영어 팩: 지금 세계 경제를 영어로 읽기</h2>
+      <p class="packlede">유가에서 시작해 경기 침체까지, 다섯 개 모듈이 하나의 이야기로 이어져요. 순서대로 읽으면 경제 뉴스가 훨씬 잘 들려요.</p>
+      <ol class="chain" aria-label="모듈 순서">
+        <li><b>유가</b><span>Oil</span></li>
+        <li><b>물가</b><span>Inflation</span></li>
+        <li><b>금리</b><span>Interest rates</span></li>
+        <li><b>환율</b><span>The won &amp; dollar</span></li>
+        <li><b>경기 침체</b><span>Recession</span></li>
+      </ol>
+      <ul class="inside">
+        <li>모듈마다 A2 · B1 · B2 세 가지 레벨</li>
+        <li>자연스러운 AI 음성 오디오, 속도 조절, 단어를 누르면 그 단어부터 재생</li>
+        <li>한국어 뜻이 있는 단어장, 어휘 퀴즈와 독해 퀴즈</li>
+        <li>내려받아 풀 수 있는 PDF 워크시트와 정답</li>
+      </ul>
+      <p class="pprice">₩9,900 <span>얼리버드 가격</span></p>
+      <div class="packbtns">
+        <a class="pill solid" id="packBuy" href="#pack" aria-disabled="true">곧 판매 시작</a>
+        <a class="pill" href="pack/sample-oil.html">무료 샘플 읽기 (모듈 1 · A2)</a>
+      </div>
+      <a class="owned" href="https://pack.owlishenglishnews.com">이미 구매했어요 → 팩 열기</a>
+    </div>
   </section>
 </main>
 
@@ -193,7 +253,14 @@
      Leave BLOG_URL empty ("") to hide the blog button.
      ─────────────────────────────────────────────────────────────────────── */
   const BLOG_URL = "";
+  /* Smart Store listing for the Economics Pack. Empty = button shows "곧 판매 시작" and does nothing. */
+  const PACK_STORE_URL = "";
   (function(){
+    if(PACK_STORE_URL){
+      var pb = document.getElementById("packBuy");
+      pb.href = PACK_STORE_URL; pb.target = "_blank"; pb.rel = "noopener";
+      pb.removeAttribute("aria-disabled"); pb.textContent = "구매하기";
+    }
     if(BLOG_URL){
       var b = document.getElementById("blog");
       b.href = BLOG_URL;
