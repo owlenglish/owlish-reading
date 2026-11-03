@@ -3,515 +3,1415 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Graded Reading &mdash; The Placebo Effect | Owlish English</title>
-<meta name="reading-title" content="Can a Sugar Pill Really Heal You?">
-<meta name="reading-desc" content="The placebo effect — how belief, expectation, and care produce real, measurable healing.">
-<meta name="reading-levels" content="A2,B1,C1">
-<meta name="reading-order" content="2">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Can a Sugar Pill Really Heal You? — Owlish English</title>
+<meta name="description" content="Graded English reading A2–C1 on the placebo effect, with vocabulary, quizzes and listening.">
+<!-- Owlish English · free graded reading (built from the Economics Pack template) -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
-    --paper:#f6f2e9;
-    --ink:#22201c;
-    --muted:#6b6358;
-    --line:#d8cfbe;
-    --card:#fffdf8;
-    --accent:#2b6b5e;          /* default, overridden per level */
-    --accent-soft:#e4ede9;
-    --shadow:0 1px 0 rgba(0,0,0,.04), 0 12px 30px -18px rgba(40,30,10,.35);
+    --ink:#1c2b2d;--teal:#176b6e;--teal-deep:#0e4c4f;--amber:#e08a2b;--amber-soft:#f6e7cf;
+    --paper:#fbf7ee;--card:#ffffff;--line:#e2ddd0;--ok:#1f8a4c;--bad:#c23b3b;--muted:#6b6a62;
   }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    background:
-      radial-gradient(circle at 12% -10%, #fbf7ee 0, transparent 45%),
-      radial-gradient(circle at 100% 0, #f0eadc 0, transparent 40%),
-      var(--paper);
-    color:var(--ink);
-    font-family:"Newsreader",Georgia,serif;
-    font-size:18px;line-height:1.7;
-    -webkit-font-smoothing:antialiased;
-    padding:0 18px 90px;
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;}
+  .wrap{max-width:780px;margin:0 auto;padding:28px 20px 80px;}
+
+  header.masthead{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+  .owl{font-size:30px;line-height:1;}
+  .brand{font-weight:700;letter-spacing:.3px;color:var(--teal-deep);}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+  h1.title{font-family:Georgia,"Times New Roman",serif;font-size:30px;line-height:1.2;margin:18px 0 6px;color:var(--ink);}
+  p.dek{margin:0 0 16px;color:var(--muted);font-size:15px;}
+
+  .label-row{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:18px 0 7px;}
+
+  /* Source selector */
+  .sources{display:flex;flex-wrap:wrap;gap:8px;}
+  .sources button{
+    border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+    padding:10px 16px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;
+    display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.2;
   }
-  .wrap{max-width:780px;margin:0 auto}
+  .sources button small{font-weight:600;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .sources button:hover{border-color:var(--amber);}
+  .sources button.active{background:var(--amber);border-color:var(--amber);color:#3a2407;}
+  .sources button.active small{color:#7a4d12;}
 
-  /* Masthead */
-  header.mast{padding:38px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:4px}
-  .brand{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-  h1.title{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(30px,6vw,46px);line-height:1.05;margin:.18em 0 .15em;letter-spacing:-.01em}
-  .kicker{font-family:"Newsreader",serif;font-style:italic;color:var(--muted);font-size:19px}
+  /* Level toggle */
+  .levels{display:flex;flex-wrap:wrap;gap:8px;}
+  .levels button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;}
+  .levels button .lv{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;display:block;text-transform:uppercase;}
+  .levels button:hover{border-color:var(--teal);}
+  .levels button.active{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff;}
+  .levels button.active .lv{color:var(--amber-soft);}
 
-  /* Tabs */
-  .tabs{position:sticky;top:0;z-index:20;display:flex;gap:6px;flex-wrap:wrap;
-    background:linear-gradient(var(--paper) 70%, rgba(246,242,233,0));padding:14px 0 12px;margin-top:6px}
-  .tab{
-    font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:500;letter-spacing:.05em;
-    border:1.5px solid var(--ink);background:transparent;color:var(--ink);
-    padding:8px 15px;border-radius:999px;cursor:pointer;transition:all .18s ease;
-  }
-  .tab:hover{background:var(--ink);color:var(--paper)}
-  .tab.active{color:#fff;border-color:transparent}
-  .tab[data-l="A1"].active{background:#c2603a}
-  .tab[data-l="A2"].active{background:#c9942f}
-  .tab[data-l="B1"].active{background:#2f7d5b}
-  .tab[data-l="C1"].active{background:#2f6f8f}
-  .tab[data-l="C2"].active{background:#5b4b8a}
+  /* Source citation */
+  .source-line{margin:16px 0 0;font-size:14px;color:var(--muted);}
+  .source-line a{color:var(--teal-deep);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--amber-soft);}
+  .source-line a:hover{border-color:var(--teal);}
 
-  .panel{display:none;animation:fade .35s ease}
-  .panel.active{display:block}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  /* Audio bar */
+  .audiobar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:12px 0 22px;}
+  .audiobar .play{background:var(--amber);color:#3a2407;border:none;font-weight:700;padding:12px 22px;border-radius:12px;cursor:pointer;font-size:16px;min-height:48px;min-width:136px;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
+  .audiobar .play.playing{background:var(--teal);color:#fff;}
+  .speeds{display:flex;gap:6px;align-items:center;}
+  .speeds span{font-size:12px;color:var(--muted);margin-right:2px;}
+  .speeds button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:5px 9px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;}
+  .speeds button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .pdf-group{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+  .pdf-btn{border:1.5px solid var(--teal);background:#fff;color:var(--teal-deep);padding:8px 13px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;}
+  .pdf-btn:hover{background:var(--teal);color:#fff;}
+  .pdf-btn.all{border-color:var(--amber);color:#7a4d12;}
+  .pdf-btn.all:hover{background:var(--amber);color:#3a2407;}
+  /* Transport + timeline */
+  .tcontrols{display:flex;gap:6px;}
+  .tbtn{border:1px solid var(--line);background:#fff;color:var(--ink);width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1;}
+  .tbtn:hover{border-color:var(--teal);color:var(--teal-deep);}
+  .tbtn:active{transform:translateY(1px);}
+  .audiover{font-size:11px;opacity:.55;white-space:nowrap;align-self:center;}
+  .timeline{flex:1 1 100%;display:flex;align-items:center;gap:10px;margin-top:2px;}
+  .ttime{font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);min-width:36px;text-align:center;}
+  .track{position:relative;flex:1;height:24px;display:flex;align-items:center;cursor:pointer;touch-action:none;}
+  .track:focus{outline:none;}
+  .track:focus-visible .handle{box-shadow:0 0 0 3px var(--amber-soft),0 1px 3px rgba(0,0,0,.3);}
+  .track .rail{position:absolute;left:0;right:0;height:6px;background:var(--amber-soft);border-radius:999px;}
+  .track .fill{position:absolute;left:0;height:6px;width:0;background:var(--teal);border-radius:999px;pointer-events:none;}
+  .track .ticks{position:absolute;left:0;right:0;height:6px;pointer-events:none;}
+  .track .ticks i{position:absolute;top:0;width:2px;height:6px;background:rgba(14,76,79,.18);transform:translateX(-1px);border-radius:1px;}
+  .track .handle{position:absolute;left:0;width:15px;height:15px;border-radius:50%;background:var(--teal-deep);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transform:translateX(-7.5px);pointer-events:none;transition:background .12s;}
+  .track:hover .handle{background:var(--amber);}
 
-  .levelbadge{display:inline-flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;
-    font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--accent);
-    padding:4px 12px;border-radius:6px;margin:22px 0 2px}
+  article.reading{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:26px;}
+  article.reading h2{font-family:Georgia,serif;font-size:23px;margin:0 0 14px;color:var(--teal-deep);border-bottom:3px solid var(--amber-soft);padding-bottom:10px;}
+  article.reading p{font-family:Georgia,serif;font-size:18px;margin:0 0 16px;}
+  article.reading p:last-child{margin-bottom:0;}
+  article.reading span.w{cursor:pointer;border-radius:4px;padding:2px 0;margin:-2px 0;-webkit-tap-highlight-color:transparent;transition:background .15s;}
+  @media (hover:hover){ article.reading span.w:hover{background:var(--amber-soft);} }
+  article.reading span.w.tapped{background:var(--amber);color:#fff;}
+  .checked{white-space:nowrap;}
+  .packnav{margin-left:auto;font-size:14px;font-weight:700;color:var(--teal-deep);text-decoration:none;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;white-space:nowrap;}
+  .packnav:hover{border-color:var(--teal);}
+  .nextmod{display:block;margin:34px 0 0;padding:16px 18px;border-radius:14px;background:var(--teal-deep);color:#fff;font-weight:700;text-decoration:none;text-align:center;}
+  .nextmod:hover{background:var(--teal);}
+  .taphint{font-size:13px;color:var(--muted);margin:-14px 0 18px;}
 
-  /* Player */
-  .player{
-    background:var(--card);border:1px solid var(--line);border-radius:14px;
-    padding:16px 18px;margin:14px 0 26px;box-shadow:var(--shadow);
-  }
-  .player-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .pbtn{
-    font-family:"IBM Plex Mono",monospace;font-size:14px;font-weight:500;cursor:pointer;
-    border:1.5px solid var(--accent);color:#fff;background:var(--accent);
-    padding:9px 16px;border-radius:9px;transition:transform .1s ease,opacity .15s ease;
-  }
-  .pbtn:active{transform:translateY(1px)}
-  .pbtn.ghost{background:transparent;color:var(--accent)}
-  .pbtn:disabled{opacity:.4;cursor:default}
-  .speeds{display:flex;gap:4px;margin-left:auto;align-items:center}
-  .speeds .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.1em;margin-right:2px}
-  .spd{
-    font-family:"IBM Plex Mono",monospace;font-size:12px;cursor:pointer;border:1px solid var(--line);
-    background:#fff;color:var(--muted);padding:6px 9px;border-radius:7px;transition:all .15s ease;
-  }
-  .spd.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .status{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);margin-top:10px;letter-spacing:.02em}
+  .sec-h{display:flex;align-items:center;gap:10px;margin:34px 0 14px;}
+  .sec-h .tag{background:var(--teal-deep);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px;}
+  .sec-h h3{margin:0;font-size:19px;color:var(--ink);}
 
-  /* Article */
-  .article{font-size:19px}
-  .article h2{font-family:"Fraunces",serif;font-weight:600;font-size:26px;margin:0 0 .4em;line-height:1.15}
-  .article p{margin:0 0 1em}
-  .tts-word{border-radius:3px;transition:background .08s linear}
-  .tts-word.reading{background:var(--accent);color:#fff;padding:0 1px}
+  table.vocab{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  table.vocab th{background:var(--amber-soft);text-align:left;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--teal-deep);padding:10px 12px;}
+  table.vocab td{padding:11px 12px;border-top:1px solid var(--line);font-size:15px;vertical-align:top;}
+  table.vocab td.word{font-weight:700;white-space:nowrap;}
+  table.vocab td.pos{color:var(--muted);font-style:italic;white-space:nowrap;}
 
-  /* Sections */
-  .sec-h{font-family:"Fraunces",serif;font-weight:600;font-size:21px;margin:34px 0 12px;
-    padding-bottom:7px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:9px}
-  .sec-h .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent);letter-spacing:.1em}
+  .quiz{margin-top:4px;}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+  .q .stem{font-weight:600;margin-bottom:10px;}
+  .q .stem .num{color:var(--teal);font-weight:800;margin-right:6px;}
+  .opt{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px;cursor:pointer;transition:all .12s;font-size:15px;}
+  .opt:hover{border-color:var(--teal);background:#f3faf9;}
+  .opt input{margin-top:3px;accent-color:var(--teal);}
+  .opt .ltr{font-weight:700;color:var(--muted);}
+  .opt.correct{border-color:var(--ok);background:#eef9f1;}
+  .opt.wrong{border-color:var(--bad);background:#fbeeee;}
+  .opt.locked{cursor:default;}
+  .check-row{display:flex;align-items:center;gap:14px;margin-top:4px;}
+  .check-btn{background:var(--teal-deep);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .check-btn:hover{background:var(--teal);}
+  .score{font-weight:700;font-size:15px;}
+  .score.good{color:var(--ok);}
+  .score.mid{color:var(--amber);}
 
-  table.vocab{width:100%;border-collapse:collapse;font-size:16px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-  table.vocab th{background:var(--accent);color:#fff;font-family:"IBM Plex Mono",monospace;font-weight:500;
-    font-size:12px;letter-spacing:.06em;text-align:left;padding:9px 12px}
-  table.vocab td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
-  table.vocab td.w{font-weight:600;white-space:nowrap}
-  table.vocab td.pos{font-style:italic;color:var(--muted);font-size:14px;white-space:nowrap}
-  table.vocab tr:nth-child(even) td{background:rgba(0,0,0,.015)}
-
-  ol.comp{padding-left:22px;margin:6px 0}
-  ol.comp li{margin:0 0 16px;padding-left:4px}
-  ol.comp textarea{
-    width:100%;margin-top:8px;min-height:54px;resize:vertical;
-    border:1px solid var(--line);border-radius:8px;background:#fffef9;
-    font-family:"Newsreader",serif;font-size:16px;padding:9px 11px;color:var(--ink);line-height:1.5;
-  }
-  ol.comp textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
-
-  /* Source */
-  .source{background:#efe8d8;border:1px dashed var(--line);border-radius:12px;padding:14px 16px;margin:36px 0 8px;
-    font-size:14px;color:var(--muted);line-height:1.55}
-  .source b{color:var(--ink);font-weight:600}
-  .source a{color:var(--accent);word-break:break-all}
-
-  /* Print btn */
-  .printbar{position:fixed;right:18px;bottom:18px;z-index:40}
-  .printbar button{font-family:"IBM Plex Mono",monospace;font-size:13px;cursor:pointer;border:none;
-    background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px;box-shadow:var(--shadow)}
-
-  .backlink{display:inline-flex;align-items:center;gap:7px;font-family:"IBM Plex Mono",monospace;
-    font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;
-    transition:color .15s ease}
-  .backlink:hover{color:var(--ink)}
-  .backlink.top{margin:24px 0 -6px}
-  .backtolib{text-align:center;margin-top:36px}
-
-  .note{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);text-align:center;margin-top:30px;letter-spacing:.03em}
-
-  @media print{
-    .tabs,.printbar,.player,.note{display:none!important}
-    .panel{display:none!important}
-    .panel.active{display:block!important}
-    body{background:#fff;font-size:12pt;padding:0}
-    .source{background:#fff}
-    .tts-word.reading{background:none;color:inherit}
-  }
-
-  /* phones: stack each vocab row (word + type on top, meaning below) so the
-     table never pushes the page wider than the screen; thumb-sized speed buttons */
+  footer.foot{text-align:center;color:var(--muted);font-size:13px;margin-top:48px;border-top:1px solid var(--line);padding-top:18px;}
+  footer.foot .ob{color:var(--teal-deep);font-weight:700;}
   @media (max-width:520px){
-    table.vocab, table.vocab tbody{display:block;width:100%}
-    table.vocab tr:has(th){display:none}
-    table.vocab tr{display:grid;grid-template-columns:auto 1fr;column-gap:8px;padding:10px 14px;border-top:1px solid var(--line)}
-    table.vocab tr:nth-child(2){border-top:0}
-    table.vocab td{padding:0;border-top:0;background:none !important}
-    table.vocab td.w, table.vocab td.pos{white-space:normal}
-    table.vocab td.pos{align-self:center}
-    table.vocab td:not(.w):not(.pos){grid-column:1 / -1;margin-top:3px}
-    .spd{min-height:40px;min-width:48px}
-    .pbtn{min-height:44px}
+    h1.title{font-size:25px;}
+    article.reading{padding:20px 18px;}
+    article.reading p{font-size:17px;}
+    .pdf-group{margin-left:0;width:100%;}
+    /* phones: stack each vocab row (word + type on top, meaning below) so the
+       table never pushes the page wider than the screen */
+    table.vocab thead{display:none;}
+    table.vocab, table.vocab tbody{display:block;width:100%;}
+    table.vocab tr{display:grid;grid-template-columns:auto 1fr;column-gap:8px;padding:11px 14px;border-top:1px solid var(--line);}
+    table.vocab tr:first-child{border-top:0;}
+    table.vocab td{padding:0;border-top:0;}
+    table.vocab td.word{white-space:normal;}
+    table.vocab td.pos{white-space:normal;align-self:center;font-size:13px;}
+    table.vocab td:not(.word):not(.pos){grid-column:1 / -1;margin-top:3px;color:var(--ink);}
+    /* thumb-sized controls */
+    .speeds button{min-height:40px;min-width:48px;}
+    #playBtn,#prevBtn,#nextBtn{min-height:44px;}
   }
-  html,body{overflow-x:hidden}
-</style>
+  html,body{overflow-x:hidden;}
+  [hidden]{display:none !important;}
+  .appnotice{background:#fff6e8;border:1.5px solid var(--amber);border-radius:12px;padding:14px 16px;margin:0 0 14px;font-size:15px;line-height:1.55;}
+  .appnotice p{margin:0 0 10px;color:var(--ink);word-break:keep-all;}
+  .appnotice-btn{display:inline-block;background:var(--teal-deep);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:11px 18px;border-radius:10px;min-height:44px;box-sizing:border-box;}
 
+  /* lesson order: vocab → vocab quiz → listen (script folded) → comprehension */
+  .sec-h .tag{white-space:nowrap;}
+  .listen-hint{margin:-4px 0 14px;font-size:15px;color:var(--muted);word-break:keep-all;}
+  details.scriptbox{margin:16px 0 0;border:1.5px solid var(--line);border-radius:14px;background:var(--card);}
+  details.scriptbox > summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;font-size:16px;color:var(--teal-deep);display:flex;align-items:center;gap:10px;min-height:48px;-webkit-tap-highlight-color:transparent;}
+  details.scriptbox > summary::-webkit-details-marker{display:none;}
+  details.scriptbox > summary::after{content:"＋";margin-left:auto;font-size:18px;color:var(--muted);}
+  details.scriptbox[open] > summary::after{content:"－";}
+  details.scriptbox[open] > summary{border-bottom:1.5px solid var(--line);}
+  details.scriptbox .sum-closed{display:inline;} details.scriptbox .sum-open{display:none;}
+  details.scriptbox[open] .sum-closed{display:none;} details.scriptbox[open] .sum-open{display:inline;}
+  details.scriptbox article.reading{margin:0;border:0;border-radius:0 0 14px 14px;}
+  details.scriptbox .taphint{margin:0;padding:0 18px 16px;}
+  .worksheet{margin-top:34px;}
+  .worksheet p{margin:0 0 12px;font-size:15px;color:var(--muted);word-break:keep-all;}
+  .worksheet .pdf-group{margin-left:0;}
+  article.reading h3.sub{font-family:Georgia,"Times New Roman",serif;font-size:19px;margin:22px 0 6px;color:var(--teal-deep);}
+</style>
 </head>
 <body>
 <div class="wrap">
 
-  <a class="backlink top" href="index.html">&larr; Reading Library</a>
-
-  <header class="mast">
-    <div class="brand">Owlish English &nbsp;&middot;&nbsp; Graded Reading</div>
-    <h1 class="title">Can a Sugar Pill Really Heal You?</h1>
-    <div class="kicker">One article, three levels &mdash; read along, listen, and answer.</div>
+  <header class="masthead">
+    <div class="owl">🦉</div>
+    <div class="brand">Owlish English<small>Graded Reading</small></div>
+    <a class="packnav" href="index.html">← 읽기 자료 Library</a>
   </header>
 
-  <nav class="tabs" id="tabs">
-    <button class="tab active" data-l="A2" onclick="show('A2')">A2</button>
-    <button class="tab" data-l="B1" onclick="show('B1')">B1</button>
-    <button class="tab" data-l="C1" onclick="show('C1')">C1</button>
-  </nav>
+  <h1 class="title">Can a Sugar Pill Really Heal You?</h1>
+  <p class="dek">레벨을 고르고, 단어 → 단어 퀴즈 → 듣기 → 이해 퀴즈 순서로 공부해요. Pick your level, learn the words, listen, then check what you understood.</p>
 
-  <section class="panel active" id="panel-A2" style="--accent:#c9942f;--accent-soft:#f3e8cf">
-    <span class="levelbadge">A2 · Elementary</span>
-    <div class="player">
-      <div class="player-row">
-        <button class="pbtn" id="play-A2" onclick="toggle('A2')">&#9654; Play</button>
-        <button class="pbtn ghost" onclick="stop('A2')">&#9632; Stop</button>
-        <div class="speeds">
-          <span class="lbl">SPEED</span>
-          <button class="spd" data-s="0.7" onclick="setSpeed('A2',0.7)">0.7&times;</button>
-          <button class="spd active" data-s="0.85" onclick="setSpeed('A2',0.85)">0.85&times;</button>
-          <button class="spd" data-s="1" onclick="setSpeed('A2',1)">1&times;</button>
-          <button class="spd" data-s="1.10" onclick="setSpeed('A2',1.10)">1.10&times;</button>
-        </div>
+  <div class="sources" id="sourceToggle" hidden></div>
+
+  <div class="label-row">Level</div>
+  <div class="levels" id="levelToggle"></div>
+
+  <p class="source-line" id="sourceCite"></p>
+
+  <div class="sec-h"><span class="tag">1 · Vocabulary</span><h3 id="vocabLevelLabel"></h3></div>
+  <table class="vocab" id="vocabTable">
+    <thead><tr><th>Word</th><th>Part of speech</th><th>Meaning</th></tr></thead>
+    <tbody id="vocabBody"></tbody>
+  </table>
+
+  <div class="sec-h"><span class="tag">2 · Vocab Quiz</span><h3>단어 퀴즈 · Choose the best meaning</h3></div>
+  <div class="quiz" id="vocabQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('vocab')">Check answers</button><span class="score" id="vocabScore"></span></div>
+
+  <div class="sec-h"><span class="tag">3 · Listen</span><h3>듣기 · Listen first, then read</h3></div>
+  <p class="listen-hint">먼저 스크립트 없이 들어보세요. 잘 안 들리면 스크립트를 열고 다시 들어요.</p>
+  <div class="appnotice" id="appNotice" hidden>
+    <p id="appNoticeMsg">이 앱 안에서는 오디오가 나오지 않을 수 있어요. 크롬이나 사파리에서 열면 들을 수 있어요.</p>
+    <a class="appnotice-btn" id="appNoticeBtn" href="#">브라우저에서 열기</a>
+  </div>
+  <div class="audiobar">
+    <button class="play" id="playBtn" title="Play / pause (Space bar)">▶ Listen</button>
+    <div class="tcontrols">
+      <button class="tbtn" id="prevBtn" title="Previous sentence" aria-label="Previous sentence">⏮</button>
+      <button class="tbtn" id="nextBtn" title="Next sentence" aria-label="Next sentence">⏭</button>
+    </div>
+    <div class="speeds">
+      <span>Speed</span>
+      <button data-rate="0.7">0.7×</button>
+      <button data-rate="0.85" class="active">0.85×</button>
+      <button data-rate="1">1×</button>
+      <button data-rate="1.1">1.1×</button>
+    </div>
+    <span class="audiover" id="audioVer">audio v7</span>
+    <div class="timeline">
+      <span class="ttime" id="tCur">0:00</span>
+      <div class="track" id="track" tabindex="0" role="slider" aria-label="Audio position" aria-valuemin="0" aria-valuenow="0">
+        <div class="rail"></div>
+        <div class="ticks" id="ticks"></div>
+        <div class="fill" id="tFill"></div>
+        <div class="handle" id="tHandle"></div>
       </div>
-      <div class="status" id="status-A2">Press Play to listen and read along.</div>
+      <span class="ttime" id="tTot">0:00</span>
     </div>
+  </div>
+  <details class="scriptbox" id="scriptBox">
+    <summary><span class="sum-closed">📜 스크립트 보기 · Show script</span><span class="sum-open">📜 스크립트 접기 · Hide script</span></summary>
+    <article class="reading" id="reading"></article>
+    <p class="taphint">💡 단어를 길게 누르면 휴대폰 사전·번역을 쓸 수 있어요.</p>
+  </details>
 
-    <div class="article" id="article-A2">
-      <h2>What Is a Placebo?</h2><p>Sometimes doctors give patients a pill with no medicine inside. This is called a placebo. It looks like a real pill. But it has no active ingredients.</p><p>Something strange happens. Many patients feel better after taking a placebo. Their pain goes away. Their mood improves. But the pill did nothing &mdash; the body healed itself.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">Why Does It Work?</p><p>The brain is very powerful. When you believe a treatment will help you, your brain releases chemicals. These chemicals can reduce pain and improve your mood. This is called the placebo effect.</p><p>The relationship between a doctor and a patient is also important. When a doctor is kind and positive, patients feel better &mdash; even without real medicine.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">Is This Honest?</p><p>In the past, some people thought placebos were dishonest. But today, scientists have found something interesting. Patients can take a placebo and know it is a placebo. And it still works.</p><p>This shows us something important. Healing is not only about medicine. It is also about belief, care, and trust.</p>
+  <div class="sec-h"><span class="tag">4 · Comprehension</span><h3>이해 퀴즈 · Multiple choice</h3></div>
+  <div class="quiz" id="compQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('comp')">Check answers</button><span class="score" id="compScore"></span></div>
+
+  <div class="worksheet">
+    <div class="sec-h"><span class="tag">Worksheet</span><h3>PDF 워크시트</h3></div>
+    <p>내려받아 손으로 풀어보세요. 정답은 마지막 장에 있어요.</p>
+    <div class="pdf-group">
+      <button class="pdf-btn" id="pdfBtn">⤓ This reading</button>
+      <button class="pdf-btn all" id="pdfAllBtn">⤓ All 3 levels</button>
     </div>
-
-    <div class="sec-h"><span class="n">VOCAB</span> Key Words</div>
-    <table class="vocab"><tr><th>Word</th><th>Type</th><th>Meaning</th></tr><tr><td class="w">placebo</td><td class="pos">noun</td><td>a pill or treatment with no real medicine inside</td></tr><tr><td class="w">ingredients</td><td class="pos">noun</td><td>the things that are inside a medicine or food</td></tr><tr><td class="w">heal</td><td class="pos">verb</td><td>to get better from an illness or injury</td></tr><tr><td class="w">release</td><td class="pos">verb</td><td>to let something out; the brain releases chemicals</td></tr><tr><td class="w">chemical</td><td class="pos">noun</td><td>a substance made in the body or a laboratory</td></tr><tr><td class="w">honest</td><td class="pos">adj.</td><td>telling the truth; not lying or tricking someone</td></tr><tr><td class="w">belief</td><td class="pos">noun</td><td>when you think something is true or will happen</td></tr><tr><td class="w">treatment</td><td class="pos">noun</td><td>something a doctor gives you to help you get better</td></tr></table>
-
-    <div class="sec-h"><span class="n">CHECK</span> Comprehension</div>
-    <ol class="comp"><li>What is a placebo? Use your own words.<textarea></textarea></li><li>What happens in the brain when you take a placebo?<textarea></textarea></li><li>Can a placebo work if you know it has no medicine? What does the article say?<textarea></textarea></li><li>What does the article say is important for healing &mdash; not just medicine?<textarea></textarea></li></ol>
-  </section>
-
-  <section class="panel" id="panel-B1" style="--accent:#2f7d5b;--accent-soft:#d9ece2">
-    <span class="levelbadge">B1 · Intermediate</span>
-    <div class="player">
-      <div class="player-row">
-        <button class="pbtn" id="play-B1" onclick="toggle('B1')">&#9654; Play</button>
-        <button class="pbtn ghost" onclick="stop('B1')">&#9632; Stop</button>
-        <div class="speeds">
-          <span class="lbl">SPEED</span>
-          <button class="spd" data-s="0.7" onclick="setSpeed('B1',0.7)">0.7&times;</button>
-          <button class="spd active" data-s="0.85" onclick="setSpeed('B1',0.85)">0.85&times;</button>
-          <button class="spd" data-s="1" onclick="setSpeed('B1',1)">1&times;</button>
-          <button class="spd" data-s="1.10" onclick="setSpeed('B1',1.10)">1.10&times;</button>
-        </div>
-      </div>
-      <div class="status" id="status-B1">Press Play to listen and read along.</div>
-    </div>
-
-    <div class="article" id="article-B1">
-      <h2>What Is a Placebo?</h2><p>Imagine you are in a clinical trial for a new headache medication. After a few days, your headaches disappear and you feel much better. But then you find out the pill you were taking had no medicine inside &mdash; it was just a sugar pill. This is called the placebo effect, and it is one of the most surprising phenomena in modern medicine.</p><p>A placebo is a treatment with no active ingredients. It can be a sugar pill, a salt water injection, or even a fake surgery. What makes it remarkable is that patients often improve after receiving one &mdash; even when they know it contains nothing therapeutic.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">The Science Behind It</p><p>The placebo effect is not simply a trick of the mind. When a patient expects to feel better, the brain actually releases natural chemicals, including endorphins and dopamine, which reduce pain and improve mood. Brain scans show that these changes are real and measurable.</p><p>The way a placebo is given also matters. A placebo injection works better than a placebo pill. A pill that looks strong and professional works better than a plain one. This shows that the whole experience of receiving treatment plays a role in how the body responds.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">Placebos in Pain and Mental Health</p><p>Pain is one of the conditions most affected by the placebo effect. In some studies, a placebo has reduced pain as effectively as strong painkillers like morphine. This is because the brain produces its own natural pain-relieving chemicals when it expects relief.</p><p>Mental health is also strongly influenced by expectation. In some antidepressant trials, up to 50% of patients in the placebo group reported significant improvement. This raises important questions about whether some medications work mainly because patients believe they will.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">The Ethics of Placebos</p><p>For a long time, doctors believed that giving placebos was dishonest. However, recent research has changed this view. Studies show that placebos can work even when patients know they are taking one. These are called open-label placebos, and they suggest that the ritual of treatment &mdash; the care, the attention, the hope &mdash; is enough to produce real improvements.</p><p>This has important implications for medicine. The doctor-patient relationship, the environment of care, and the way a treatment is explained all influence how well a patient responds. Healing, it seems, is not only about the drug &mdash; it is also about the human experience surrounding it.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">What This Means for Alternative Medicine</p><p>Studies have found that fake acupuncture &mdash; where needles are placed randomly and do not penetrate the skin &mdash; can produce similar benefits to real acupuncture. Critics argue this means acupuncture has no specific effect. Supporters argue the opposite: if patients feel better, the outcome is real, even if the mechanism is not fully understood.</p><p>What is clear is that the mind has a profound influence on the body. Whether through belief, expectation, or the comfort of being cared for, the placebo effect reminds us that medicine is as much a human practice as it is a scientific one.</p>
-    </div>
-
-    <div class="sec-h"><span class="n">VOCAB</span> Key Words</div>
-    <table class="vocab"><tr><th>Word / Phrase</th><th>Type</th><th>Meaning</th></tr><tr><td class="w">clinical trial</td><td class="pos">noun phr.</td><td>a scientific study that tests a new medicine on real patients</td></tr><tr><td class="w">phenomenon</td><td class="pos">noun</td><td>something that happens and is striking, especially in science</td></tr><tr><td class="w">endorphins</td><td class="pos">noun</td><td>natural brain chemicals that reduce pain and lift mood</td></tr><tr><td class="w">dopamine</td><td class="pos">noun</td><td>a brain chemical linked to reward, motivation, and pleasure</td></tr><tr><td class="w">therapeutic</td><td class="pos">adj.</td><td>having a healing or positive effect on body or mind</td></tr><tr><td class="w">analgesia</td><td class="pos">noun</td><td>pain relief without loss of consciousness</td></tr><tr><td class="w">open-label placebo</td><td class="pos">noun phr.</td><td>a placebo the patient knows is a placebo &mdash; that still works</td></tr><tr><td class="w">sham surgery</td><td class="pos">noun phr.</td><td>a fake operation used in research; the preparation but no real procedure</td></tr><tr><td class="w">potency</td><td class="pos">noun</td><td>the strength or power of something, especially a treatment</td></tr><tr><td class="w">therapeutic alliance</td><td class="pos">noun phr.</td><td>the trusting doctor&ndash;patient bond that helps treatment work</td></tr></table>
-
-    <div class="sec-h"><span class="n">CHECK</span> Comprehension</div>
-    <ol class="comp"><li>What does the brain do when a person takes a placebo? Name at least two chemicals involved.<textarea></textarea></li><li>Why does a placebo injection work better than a placebo pill? What does this tell us?<textarea></textarea></li><li>What is an open-label placebo? Why is it surprising that it works?<textarea></textarea></li><li>What does the antidepressant trial data suggest about how some psychiatric drugs work?<textarea></textarea></li><li>The article discusses fake acupuncture. What do critics say? What do supporters say?<textarea></textarea></li><li>In your own words, what does it mean that the doctor&ndash;patient relationship is a kind of treatment in itself?<textarea></textarea></li></ol>
-  </section>
-
-  <section class="panel" id="panel-C1" style="--accent:#2f6f8f;--accent-soft:#dbe9f0">
-    <span class="levelbadge">C1 · Advanced</span>
-    <div class="player">
-      <div class="player-row">
-        <button class="pbtn" id="play-C1" onclick="toggle('C1')">&#9654; Play</button>
-        <button class="pbtn ghost" onclick="stop('C1')">&#9632; Stop</button>
-        <div class="speeds">
-          <span class="lbl">SPEED</span>
-          <button class="spd" data-s="0.7" onclick="setSpeed('C1',0.7)">0.7&times;</button>
-          <button class="spd active" data-s="0.85" onclick="setSpeed('C1',0.85)">0.85&times;</button>
-          <button class="spd" data-s="1" onclick="setSpeed('C1',1)">1&times;</button>
-          <button class="spd" data-s="1.10" onclick="setSpeed('C1',1.10)">1.10&times;</button>
-        </div>
-      </div>
-      <div class="status" id="status-C1">Press Play to listen and read along.</div>
-    </div>
-
-    <div class="article" id="article-C1">
-      <h2>A Sugar Pill That Heals</h2><p>Consider the following scenario: a patient enrolled in a clinical trial for a new headache medication takes her assigned pill for several days. Her symptoms improve markedly &mdash; the pain diminishes, her concentration returns, and her quality of life recovers. At the end of the trial, she learns she was assigned to the placebo group. The pill contained no active pharmaceutical ingredient whatsoever. And yet, by any measurable standard, it worked.</p><p>This is the placebo effect &mdash; one of the most studied, most debated, and most poorly understood phenomena in modern medicine. It challenges the reductive assumption that healing is primarily a chemical event, and forces us to confront the extent to which belief, context, and expectation are themselves biological forces.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">The Neurobiological Reality of Belief</p><p>The placebo effect is not, as it is sometimes dismissed, a matter of patients simply imagining improvement. Functional MRI studies have demonstrated that placebo treatments activate the same neural pathways as their pharmacologically active counterparts. In Parkinson&rsquo;s patients, placebo administration triggers measurable dopamine release in the striatum &mdash; precisely the mechanism that active medication targets. In pain studies, placebos stimulate the release of endogenous opioids, producing analgesia that is pharmacologically real, if not chemically induced.</p><p>Two distinct psychological mechanisms are thought to drive this response. The first is classical conditioning: patients who have previously responded to a given treatment form neurological associations between that treatment&rsquo;s appearance or ritual and physiological relief. The second, and arguably more powerful, is expectation. When a patient genuinely anticipates improvement, the brain initiates a cascade of preparatory physiological changes that can themselves produce the anticipated outcome.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">The Potency Variables</p><p>What makes the placebo effect particularly instructive is that its magnitude varies systematically with contextual factors that have nothing to do with pharmacology. Placebo injections outperform placebo pills. Capsules outperform tablets. Branded, professional-looking preparations outperform generic ones. More remarkably, the manner and confidence with which a clinician presents a treatment significantly predicts patient response. A doctor who communicates optimism, takes time to listen, and establishes a sense of therapeutic alliance amplifies the placebo response in ways that can be quantified.</p><p>This finding has direct implications for clinical practice. It suggests that the consultation itself &mdash; its tone, its duration, its emotional quality &mdash; functions as a co-intervention alongside whatever pharmacological treatment is prescribed. Medicine, in this view, is never purely technical.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">The Open-Label Paradox</p><p>Perhaps the most counterintuitive finding in placebo research is the open-label placebo: a placebo given to patients who are explicitly told it contains no active ingredient. Classical theory would predict that informed patients should be immune to the effect, since the deception that was assumed to be its mechanism has been eliminated. Yet controlled studies have consistently found that open-label placebos still produce statistically significant improvements in conditions ranging from irritable bowel syndrome to chronic lower back pain.</p><p>This finding has two major implications. First, it effectively decouples the placebo effect from deception, removing the primary ethical objection to its clinical use. Second, it suggests that the mechanism is not primarily cognitive &mdash; it is not the belief that one is receiving real medicine that drives the response. Rather, it appears to be the ritual of treatment itself: the act of being attended to, the structure of the therapeutic encounter, the expectation embedded in the healthcare setting.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">Implications for Alternative Medicine</p><p>The placebo question is particularly sharp in the context of alternative medicine. Controlled trials of acupuncture have repeatedly shown that sham acupuncture &mdash; needles inserted randomly or not at all &mdash; produces outcomes comparable to veridical acupuncture. Sceptics interpret this as evidence that acupuncture has no specific therapeutic effect beyond placebo. Practitioners of traditional medicine, however, contest this framing. If the outcomes are equivalent, they argue, and if both responses are neurobiologically real, then the distinction between placebo and treatment may be less meaningful than Western evidence-based medicine assumes.</p><p>This debate surfaces a deeper epistemological tension: what makes a treatment legitimate? Is it the mechanism &mdash; the presence of a specific, identifiable causal pathway? Or is it the outcome &mdash; measurable, reproducible improvement in patient well-being? The answer has significant consequences for how we evaluate traditional and integrative medicine systems, particularly those, like Korean medicine, that have operated for centuries outside the randomised controlled trial framework.</p><p style="font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:20px 0 6px;line-height:1.2">Healing as a Human Practice</p><p>What the placebo literature ultimately suggests is that medicine has been operating with an impoverished model of what healing is. The biomedical paradigm &mdash; identify the pathology, administer the specific intervention, measure the outcome &mdash; captures only part of what drives patient recovery. Context, meaning, relationship, and expectation are not peripheral to the therapeutic process; they are constitutive of it.</p><p>Harnessing the placebo effect ethically and deliberately is not a retreat from scientific medicine. It is an expansion of it &mdash; an acknowledgement that the brain&rsquo;s capacity to initiate physiological change in response to meaning and expectation is itself a clinical resource. The practitioner who communicates with warmth, who structures the encounter to inspire confidence, who takes the patient&rsquo;s experience seriously, is not simply being kind. They are practising medicine in its fullest sense.</p>
-    </div>
-
-    <div class="sec-h"><span class="n">VOCAB</span> Key Words</div>
-    <table class="vocab"><tr><th>Word / Phrase</th><th>Type</th><th>Meaning</th></tr><tr><td class="w">reductive</td><td class="pos">adj.</td><td>oversimplifying; treating a complex thing as if it had one simple cause</td></tr><tr><td class="w">neurobiological</td><td class="pos">adj.</td><td>relating to the biological processes of the nervous system</td></tr><tr><td class="w">endogenous opioids</td><td class="pos">noun phr.</td><td>pain-relieving chemicals the body makes itself</td></tr><tr><td class="w">classical conditioning</td><td class="pos">noun phr.</td><td>learning automatic associations between a stimulus and a response</td></tr><tr><td class="w">co-intervention</td><td class="pos">noun</td><td>a second factor acting alongside the main treatment</td></tr><tr><td class="w">counterintuitive</td><td class="pos">adj.</td><td>the opposite of what you would naturally expect</td></tr><tr><td class="w">decouple</td><td class="pos">verb</td><td>to separate two things once thought to be connected</td></tr><tr><td class="w">veridical</td><td class="pos">adj.</td><td>truthful, genuine; real and correctly performed</td></tr><tr><td class="w">epistemological</td><td class="pos">adj.</td><td>about what counts as valid knowledge or evidence</td></tr><tr><td class="w">constitutive</td><td class="pos">adj.</td><td>forming an essential part of something, not just adding to it</td></tr><tr><td class="w">impoverished</td><td class="pos">adj.</td><td>lacking depth or richness; failing to capture full complexity</td></tr><tr><td class="w">pharmacologically</td><td class="pos">adv.</td><td>in terms of the chemical action of drugs on the body</td></tr></table>
-
-    <div class="sec-h"><span class="n">CHECK</span> Comprehension</div>
-    <ol class="comp"><li>The article says the placebo effect is not patients simply imagining improvement. What evidence supports this?<textarea></textarea></li><li>Explain the difference between conditioning and expectation as mechanisms. Which does the article suggest is more powerful?<textarea></textarea></li><li>What does the open-label placebo imply about the assumption that deception is necessary? What does it suggest the real mechanism is?<textarea></textarea></li><li>The article argues the consultation itself is a co-intervention. What does this mean in practice for how doctors should work?<textarea></textarea></li><li>How does the article frame the sham-acupuncture debate? What deeper epistemological question does it raise?<textarea></textarea></li><li>What does it mean that medicine has used an impoverished model of healing? Do you agree?<textarea></textarea></li></ol>
-  </section>
-
-  <div class="source">
-    <b>Original graded reading by Owlish English.</b> These passages were written as teaching material for English-language learners. They explain the placebo effect, its neurobiology, and the ethical and philosophical questions it raises about healing. The content is original and not reproduced from any external publication.
   </div>
 
-  <div class="backtolib"><a class="backlink" href="index.html">&larr; Back to the Reading Library</a></div>
+  <a class="nextmod" href="index.html#pack">경제 영어 팩 보기 · Economics Pack →</a>
 
-  <div class="note">Tip: open this file in Chrome or Edge for the most natural speech. Listening reads only the currently selected level.</div>
-
+  <footer class="foot">
+    <div>🦉 <span class="ob">Owlish English</span></div>
+    <div>Graded Reading · A2 / B1 / C1</div>
+  </footer>
 </div>
 
-<div class="printbar"><button onclick="window.print()">&#9112; Print this level</button></div>
-
 <script>
-/* ===================== Owlish tabbed-reading player (audio v7) =====================
-   Works with the page's own buttons: show(L), toggle(L), stop(L), setSpeed(L, s)
-   and the elements panel-L, play-L, status-L, article-L.
-   1) If GitHub has recorded an MP3 for a level (audio/<page>/<L>.mp3, made by
-      tools/make_audio.py) and its text still matches the page, play that. It works
-      inside the Naver / KakaoTalk app browsers, and speed / pause are exact.
-   2) Otherwise use the browser's own voice, with the speed / pause / long-sentence
-      fixes, and a notice in app browsers that have no voice.
-   ================================================================================== */
-  const LEVELS = Array.from(document.querySelectorAll('section.panel[id^="panel-"]')).map(function(s){ return s.id.slice(6); });
-  let current = LEVELS[0];
-  const state = {};
-  LEVELS.forEach(function(l){ state[l] = { rate:0.85, chunks:null, ci:0, status:'idle' }; });   // idle | playing | paused
-  const SS = window.speechSynthesis || null;
+/* ===================== CONTENT ===================== */
+const SOURCES = {
+ "placebo": {
+  "outlet": "Owlish English",
+  "short": "Placebo",
+  "url": null,
+  "byline": "",
+  "cite": "Original graded reading written by Owlish English for English learners.",
+  "levels": {
+   "a2": {
+    "name": "A2",
+    "label": "A2 (elementary)",
+    "title": "What Is a Placebo?",
+    "paragraphs": [
+     "Sometimes doctors give patients a pill with no medicine inside. This is called a placebo. It looks like a real pill. But it has no active ingredients.",
+     "Something strange happens. Many patients feel better after taking a placebo. Their pain goes away. Their mood improves. But the pill did nothing — the body healed itself.",
+     "## Why Does It Work?",
+     "The brain is very powerful. When you believe a treatment will help you, your brain releases chemicals. These chemicals can reduce pain and improve your mood. This is called the placebo effect.",
+     "The relationship between a doctor and a patient is also important. When a doctor is kind and positive, patients feel better — even without real medicine.",
+     "## Is This Honest?",
+     "In the past, some people thought placebos were dishonest. But today, scientists have found something interesting. Patients can take a placebo and know it is a placebo. And it still works.",
+     "This shows us something important. Healing is not only about medicine. It is also about belief, care, and trust."
+    ],
+    "vocab": [
+     [
+      "placebo",
+      "noun",
+      "위약(가짜 약) · a pill or treatment with no real medicine inside"
+     ],
+     [
+      "ingredients",
+      "noun",
+      "성분 · the things that are inside a medicine or food"
+     ],
+     [
+      "heal",
+      "verb",
+      "낫다, 치유되다 · to get better from an illness or injury"
+     ],
+     [
+      "release",
+      "verb",
+      "내보내다, 분비하다 · to let something out; the brain releases chemicals"
+     ],
+     [
+      "chemical",
+      "noun",
+      "화학 물질 · a substance made in the body or a laboratory"
+     ],
+     [
+      "honest",
+      "adj",
+      "정직한 · telling the truth; not lying or tricking someone"
+     ],
+     [
+      "belief",
+      "noun",
+      "믿음 · when you think something is true or will happen"
+     ],
+     [
+      "treatment",
+      "noun",
+      "치료 · something a doctor gives you to help you get better"
+     ]
+    ],
+    "vocabQuiz": [
+     [
+      "A \"placebo\" is…",
+      [
+       "a strong medicine",
+       "a pill with no real medicine inside",
+       "a kind of doctor"
+      ],
+      1
+     ],
+     [
+      "To \"heal\" means to…",
+      [
+       "get better from an illness or injury",
+       "feel worried",
+       "take a test"
+      ],
+      0
+     ],
+     [
+      "\"Ingredients\" are…",
+      [
+       "doctors and nurses",
+       "kinds of pain",
+       "the things inside a medicine or food"
+      ],
+      2
+     ],
+     [
+      "If you are \"honest,\" you…",
+      [
+       "tell the truth",
+       "take many pills",
+       "feel pain"
+      ],
+      0
+     ]
+    ],
+    "comp": [
+     [
+      "What is a placebo?",
+      [
+       "a pill that looks real but has no active ingredients",
+       "a new kind of painkiller",
+       "a brain chemical"
+      ],
+      0
+     ],
+     [
+      "What happens when you believe a treatment will help you?",
+      [
+       "Your brain stops working.",
+       "Your brain releases chemicals that can reduce pain.",
+       "You forget the pain."
+      ],
+      1
+     ],
+     [
+      "Can a placebo work if the patient knows it is a placebo?",
+      [
+       "No, never.",
+       "Only if the doctor lies.",
+       "Yes. Scientists found it still works."
+      ],
+      2
+     ],
+     [
+      "What else is important for healing, according to the article?",
+      [
+       "expensive pills",
+       "belief, care, and trust",
+       "only strong chemicals"
+      ],
+      1
+     ]
+    ]
+   },
+   "b1": {
+    "name": "B1",
+    "label": "B1 (intermediate)",
+    "title": "What Is a Placebo?",
+    "paragraphs": [
+     "Imagine you are in a clinical trial for a new headache medication. After a few days, your headaches disappear and you feel much better. But then you find out the pill you were taking had no medicine inside — it was just a sugar pill. This is called the placebo effect, and it is one of the most surprising phenomena in modern medicine.",
+     "A placebo is a treatment with no active ingredients. It can be a sugar pill, a salt water injection, or even a fake surgery. What makes it remarkable is that patients often improve after receiving one — even when they know it contains nothing therapeutic.",
+     "## The Science Behind It",
+     "The placebo effect is not simply a trick of the mind. When a patient expects to feel better, the brain actually releases natural chemicals, including endorphins and dopamine, which reduce pain and improve mood. Brain scans show that these changes are real and measurable.",
+     "The way a placebo is given also matters. A placebo injection works better than a placebo pill. A pill that looks strong and professional works better than a plain one. This shows that the whole experience of receiving treatment plays a role in how the body responds.",
+     "## Placebos in Pain and Mental Health",
+     "Pain is one of the conditions most affected by the placebo effect. In some studies, a placebo has reduced pain as effectively as strong painkillers like morphine. This is because the brain produces its own natural pain-relieving chemicals when it expects relief.",
+     "Mental health is also strongly influenced by expectation. In some antidepressant trials, up to 50% of patients in the placebo group reported significant improvement. This raises important questions about whether some medications work mainly because patients believe they will.",
+     "## The Ethics of Placebos",
+     "For a long time, doctors believed that giving placebos was dishonest. However, recent research has changed this view. Studies show that placebos can work even when patients know they are taking one. These are called open-label placebos, and they suggest that the ritual of treatment — the care, the attention, the hope — is enough to produce real improvements.",
+     "This has important implications for medicine. The doctor-patient relationship, the environment of care, and the way a treatment is explained all influence how well a patient responds. Healing, it seems, is not only about the drug — it is also about the human experience surrounding it.",
+     "## What This Means for Alternative Medicine",
+     "Studies have found that fake acupuncture — where needles are placed randomly and do not penetrate the skin — can produce similar benefits to real acupuncture. Critics argue this means acupuncture has no specific effect. Supporters argue the opposite: if patients feel better, the outcome is real, even if the mechanism is not fully understood.",
+     "What is clear is that the mind has a profound influence on the body. Whether through belief, expectation, or the comfort of being cared for, the placebo effect reminds us that medicine is as much a human practice as it is a scientific one."
+    ],
+    "vocab": [
+     [
+      "clinical trial",
+      "noun phr",
+      "임상 시험 · a scientific study that tests a new medicine on real patients"
+     ],
+     [
+      "phenomenon",
+      "noun",
+      "현상 · something that happens and is striking, especially in science"
+     ],
+     [
+      "endorphins",
+      "noun",
+      "엔도르핀 · natural brain chemicals that reduce pain and lift mood"
+     ],
+     [
+      "dopamine",
+      "noun",
+      "도파민 · a brain chemical linked to reward, motivation, and pleasure"
+     ],
+     [
+      "therapeutic",
+      "adj",
+      "치료 효과가 있는 · having a healing or positive effect on body or mind"
+     ],
+     [
+      "injection",
+      "noun",
+      "주사 · putting medicine into the body with a needle"
+     ],
+     [
+      "measurable",
+      "adj",
+      "측정할 수 있는 · big or real enough to be measured"
+     ],
+     [
+      "open-label placebo",
+      "noun phr",
+      "공개 위약 · a placebo the patient knows is a placebo — that still works"
+     ],
+     [
+      "acupuncture",
+      "noun",
+      "침술 · a treatment where thin needles are placed in the skin"
+     ],
+     [
+      "profound",
+      "adj",
+      "깊은, 엄청난 · very great or strong"
+     ]
+    ],
+    "vocabQuiz": [
+     [
+      "A \"clinical trial\" is…",
+      [
+       "a study that tests a new medicine on real patients",
+       "a type of headache",
+       "a hospital building"
+      ],
+      0
+     ],
+     [
+      "\"Therapeutic\" means…",
+      [
+       "dangerous",
+       "having a healing effect",
+       "very expensive"
+      ],
+      1
+     ],
+     [
+      "\"Measurable\" changes are…",
+      [
+       "only imagined",
+       "impossible to notice",
+       "real enough to be measured"
+      ],
+      2
+     ],
+     [
+      "An \"open-label placebo\" is…",
+      [
+       "a placebo the patient knows is a placebo",
+       "a secret medicine",
+       "a real painkiller"
+      ],
+      0
+     ],
+     [
+      "A \"profound\" influence is…",
+      [
+       "very small",
+       "very great or strong",
+       "completely false"
+      ],
+      1
+     ]
+    ],
+    "comp": [
+     [
+      "What does the brain release when a patient expects to feel better?",
+      [
+       "sugar and salt",
+       "endorphins and dopamine",
+       "painkillers like morphine"
+      ],
+      1
+     ],
+     [
+      "A placebo injection works better than a placebo pill. What does this show?",
+      [
+       "The whole experience of treatment matters.",
+       "Injections always contain medicine.",
+       "Pills are dangerous."
+      ],
+      0
+     ],
+     [
+      "What happened in some antidepressant trials?",
+      [
+       "No one in the placebo group improved.",
+       "The trials were stopped early.",
+       "Up to 50% of the placebo group reported significant improvement."
+      ],
+      2
+     ],
+     [
+      "Why are open-label placebos surprising?",
+      [
+       "They contain strong medicine.",
+       "They work even when patients know there is no medicine.",
+       "They only work for doctors."
+      ],
+      1
+     ],
+     [
+      "What do supporters of acupuncture argue?",
+      [
+       "If patients feel better, the outcome is real.",
+       "Acupuncture should be banned.",
+       "Real needles always work better."
+      ],
+      0
+     ]
+    ]
+   },
+   "c1": {
+    "name": "C1",
+    "label": "C1 (advanced)",
+    "title": "A Sugar Pill That Heals",
+    "paragraphs": [
+     "Consider the following scenario: a patient enrolled in a clinical trial for a new headache medication takes her assigned pill for several days. Her symptoms improve markedly — the pain diminishes, her concentration returns, and her quality of life recovers. At the end of the trial, she learns she was assigned to the placebo group. The pill contained no active pharmaceutical ingredient whatsoever. And yet, by any measurable standard, it worked.",
+     "This is the placebo effect — one of the most studied, most debated, and most poorly understood phenomena in modern medicine. It challenges the reductive assumption that healing is primarily a chemical event, and forces us to confront the extent to which belief, context, and expectation are themselves biological forces.",
+     "## The Neurobiological Reality of Belief",
+     "The placebo effect is not, as it is sometimes dismissed, a matter of patients simply imagining improvement. Functional MRI studies have demonstrated that placebo treatments activate the same neural pathways as their pharmacologically active counterparts. In Parkinson’s patients, placebo administration triggers measurable dopamine release in the striatum — precisely the mechanism that active medication targets. In pain studies, placebos stimulate the release of endogenous opioids, producing analgesia that is pharmacologically real, if not chemically induced.",
+     "Two distinct psychological mechanisms are thought to drive this response. The first is classical conditioning: patients who have previously responded to a given treatment form neurological associations between that treatment’s appearance or ritual and physiological relief. The second, and arguably more powerful, is expectation. When a patient genuinely anticipates improvement, the brain initiates a cascade of preparatory physiological changes that can themselves produce the anticipated outcome.",
+     "## The Potency Variables",
+     "What makes the placebo effect particularly instructive is that its magnitude varies systematically with contextual factors that have nothing to do with pharmacology. Placebo injections outperform placebo pills. Capsules outperform tablets. Branded, professional-looking preparations outperform generic ones. More remarkably, the manner and confidence with which a clinician presents a treatment significantly predicts patient response. A doctor who communicates optimism, takes time to listen, and establishes a sense of therapeutic alliance amplifies the placebo response in ways that can be quantified.",
+     "This finding has direct implications for clinical practice. It suggests that the consultation itself — its tone, its duration, its emotional quality — functions as a co-intervention alongside whatever pharmacological treatment is prescribed. Medicine, in this view, is never purely technical.",
+     "## The Open-Label Paradox",
+     "Perhaps the most counterintuitive finding in placebo research is the open-label placebo: a placebo given to patients who are explicitly told it contains no active ingredient. Classical theory would predict that informed patients should be immune to the effect, since the deception that was assumed to be its mechanism has been eliminated. Yet controlled studies have consistently found that open-label placebos still produce statistically significant improvements in conditions ranging from irritable bowel syndrome to chronic lower back pain.",
+     "This finding has two major implications. First, it effectively decouples the placebo effect from deception, removing the primary ethical objection to its clinical use. Second, it suggests that the mechanism is not primarily cognitive — it is not the belief that one is receiving real medicine that drives the response. Rather, it appears to be the ritual of treatment itself: the act of being attended to, the structure of the therapeutic encounter, the expectation embedded in the healthcare setting.",
+     "## Implications for Alternative Medicine",
+     "The placebo question is particularly sharp in the context of alternative medicine. Controlled trials of acupuncture have repeatedly shown that sham acupuncture — needles inserted randomly or not at all — produces outcomes comparable to veridical acupuncture. Sceptics interpret this as evidence that acupuncture has no specific therapeutic effect beyond placebo. Practitioners of traditional medicine, however, contest this framing. If the outcomes are equivalent, they argue, and if both responses are neurobiologically real, then the distinction between placebo and treatment may be less meaningful than Western evidence-based medicine assumes.",
+     "This debate surfaces a deeper epistemological tension: what makes a treatment legitimate? Is it the mechanism — the presence of a specific, identifiable causal pathway? Or is it the outcome — measurable, reproducible improvement in patient well-being? The answer has significant consequences for how we evaluate traditional and integrative medicine systems, particularly those, like Korean medicine, that have operated for centuries outside the randomised controlled trial framework.",
+     "## Healing as a Human Practice",
+     "What the placebo literature ultimately suggests is that medicine has been operating with an impoverished model of what healing is. The biomedical paradigm — identify the pathology, administer the specific intervention, measure the outcome — captures only part of what drives patient recovery. Context, meaning, relationship, and expectation are not peripheral to the therapeutic process; they are constitutive of it.",
+     "Harnessing the placebo effect ethically and deliberately is not a retreat from scientific medicine. It is an expansion of it — an acknowledgement that the brain’s capacity to initiate physiological change in response to meaning and expectation is itself a clinical resource. The practitioner who communicates with warmth, who structures the encounter to inspire confidence, who takes the patient’s experience seriously, is not simply being kind. They are practising medicine in its fullest sense."
+    ],
+    "vocab": [
+     [
+      "reductive",
+      "adj",
+      "지나치게 단순화하는 · oversimplifying; treating a complex thing as if it had one simple cause"
+     ],
+     [
+      "neurobiological",
+      "adj",
+      "신경생물학적인 · relating to the biological processes of the nervous system"
+     ],
+     [
+      "endogenous opioids",
+      "noun phr",
+      "내인성 오피오이드 · pain-relieving chemicals the body makes itself"
+     ],
+     [
+      "classical conditioning",
+      "noun phr",
+      "고전적 조건 형성 · learning automatic associations between a stimulus and a response"
+     ],
+     [
+      "co-intervention",
+      "noun",
+      "병행 개입 · a second factor acting alongside the main treatment"
+     ],
+     [
+      "counterintuitive",
+      "adj",
+      "직관에 반하는 · the opposite of what you would naturally expect"
+     ],
+     [
+      "decouple",
+      "verb",
+      "분리하다 · to separate two things once thought to be connected"
+     ],
+     [
+      "veridical",
+      "adj",
+      "진짜의 · truthful, genuine; real and correctly performed"
+     ],
+     [
+      "epistemological",
+      "adj",
+      "인식론적인 · about what counts as valid knowledge or evidence"
+     ],
+     [
+      "constitutive",
+      "adj",
+      "본질을 이루는 · forming an essential part of something, not just adding to it"
+     ],
+     [
+      "impoverished",
+      "adj",
+      "빈약한 · lacking depth or richness; failing to capture full complexity"
+     ],
+     [
+      "pharmacologically",
+      "adv",
+      "약리학적으로 · in terms of the chemical action of drugs on the body"
+     ]
+    ],
+    "vocabQuiz": [
+     [
+      "A \"reductive\" view…",
+      [
+       "oversimplifies something complex",
+       "adds more detail",
+       "is always correct"
+      ],
+      0
+     ],
+     [
+      "To \"decouple\" two things means to…",
+      [
+       "join them firmly",
+       "separate things once thought to be connected",
+       "measure them"
+      ],
+      1
+     ],
+     [
+      "\"Counterintuitive\" means…",
+      [
+       "easy to predict",
+       "very old",
+       "the opposite of what you would expect"
+      ],
+      2
+     ],
+     [
+      "\"Endogenous opioids\" are…",
+      [
+       "pain-relieving chemicals the body makes itself",
+       "illegal drugs",
+       "fake pills"
+      ],
+      0
+     ],
+     [
+      "If something is \"constitutive\" of healing, it…",
+      [
+       "is a minor extra",
+       "forms an essential part of it",
+       "prevents it"
+      ],
+      1
+     ]
+    ],
+    "comp": [
+     [
+      "What evidence shows the placebo effect is not just imagination?",
+      [
+       "Patients say they feel better.",
+       "Brain scans show placebos activate the same neural pathways as active drugs.",
+       "Doctors believe it works."
+      ],
+      1
+     ],
+     [
+      "Which mechanism does the article suggest is more powerful?",
+      [
+       "expectation",
+       "classical conditioning",
+       "deception"
+      ],
+      0
+     ],
+     [
+      "What do open-label placebos suggest the real mechanism is?",
+      [
+       "believing you are taking real medicine",
+       "hidden chemicals in the pill",
+       "the ritual of treatment itself"
+      ],
+      2
+     ],
+     [
+      "What does it mean that the consultation is a \"co-intervention\"?",
+      [
+       "Doctors should prescribe two drugs.",
+       "The doctor's tone, time and care work alongside the medicine.",
+       "Patients should treat themselves."
+      ],
+      1
+     ],
+     [
+      "What deeper question does the acupuncture debate raise?",
+      [
+       "whether needles are expensive",
+       "whether Korean medicine is older than Western medicine",
+       "what makes a treatment legitimate: its mechanism or its outcome"
+      ],
+      2
+     ]
+    ]
+   }
+  }
+ }
+};
 
-  function show(l){
-    if(current !== l) stop(current, true);
-    current = l;
-    LEVELS.forEach(function(x){
-      document.getElementById('panel-'+x).classList.toggle('active', x===l);
-      var t = document.querySelector('.tab[data-l="'+x+'"]'); if(t) t.classList.toggle('active', x===l);
+const SRC_ORDER = ["placebo"];
+const LVL_ORDER = ["a2", "b1", "c1"];
+const TAPS = false;             // tap-a-word-to-play is a paid-pack feature
+let currentSource = "placebo";
+let currentLevel = "a2";
+let rate = 0.85;
+
+function cur(){ return SOURCES[currentSource].levels[currentLevel]; }
+
+/* ===================== RENDER ===================== */
+function buildSourceToggle(){
+  const wrap=document.getElementById("sourceToggle"); wrap.innerHTML="";
+  SRC_ORDER.forEach(k=>{
+    const s=SOURCES[k];
+    const b=document.createElement("button");
+    b.innerHTML=`${s.short}<small>${s.outlet.replace("The ","")}</small>`;
+    b.dataset.key=k;
+    if(k===currentSource) b.classList.add("active");
+    b.onclick=()=>setSource(k);
+    wrap.appendChild(b);
+  });
+}
+function buildLevelToggle(){
+  const wrap=document.getElementById("levelToggle"); wrap.innerHTML="";
+  LVL_ORDER.forEach(k=>{
+    const d=SOURCES[currentSource].levels[k];
+    const b=document.createElement("button");
+    const desc=(d.label.split(" (")[1]||"").replace(")","");
+    b.innerHTML=`<span class="lv">${d.name}</span>${desc}`;
+    b.dataset.key=k;
+    if(k===currentLevel) b.classList.add("active");
+    b.onclick=()=>setLevel(k);
+    wrap.appendChild(b);
+  });
+}
+function renderCite(){
+  const s=SOURCES[currentSource];
+  if(s.url){document.getElementById("sourceCite").innerHTML=`Source: <strong>${s.outlet}</strong>${s.byline?` (${s.byline})`:""} — <a href="${s.url}" target="_blank" rel="noopener">Watch the original ▶</a>`;return;}
+  if(s.cite){document.getElementById("sourceCite").innerHTML=s.cite;return;}
+  document.getElementById("sourceCite").innerHTML=`Written by Owlish English from data and reporting by: <strong>${s.outlet}</strong>${s.checked?` <span class="checked">· Facts checked: ${s.checked}</span>`:""}`;
+}
+function renderLevel(){
+  const d=cur();
+  document.getElementById("reading").innerHTML=`<h2>${d.title}</h2>`+d.paragraphs.map((p,pi)=>/^## /.test(p)?`<h3 class="sub">${wrapWords(p.slice(3),pi)}</h3>`:`<p>${wrapWords(p,pi)}</p>`).join("");
+  buildWordMap();
+  document.getElementById("vocabLevelLabel").textContent=`${SOURCES[currentSource].short} · ${d.label}`;
+  document.getElementById("vocabBody").innerHTML=d.vocab.map(v=>`<tr><td class="word">${v[0]}</td><td class="pos">${v[1]}</td><td>${v[2]}</td></tr>`).join("");
+  renderQuiz("vocab",d.vocabQuiz,"vocabQuiz");
+  renderQuiz("comp",d.comp,"compQuiz");
+  document.getElementById("vocabScore").textContent="";
+  document.getElementById("compScore").textContent="";
+  renderCite();
+  resetAudio();
+}
+function renderQuiz(kind,items,mountId){
+  const L=["A","B","C","D"];
+  document.getElementById(mountId).innerHTML=items.map((it,qi)=>{
+    const opts=it[1].map((o,oi)=>`<label class="opt" data-q="${qi}" data-o="${oi}"><input type="radio" name="${kind}_${qi}" value="${oi}"><span class="ltr">${L[oi]}.</span><span>${o}</span></label>`).join("");
+    return `<div class="q" data-q="${qi}"><div class="stem"><span class="num">${qi+1}.</span>${it[0]}</div>${opts}</div>`;
+  }).join("");
+}
+function checkQuiz(kind){
+  const items=kind==="vocab"?cur().vocabQuiz:cur().comp;
+  const mount=document.getElementById(kind==="vocab"?"vocabQuiz":"compQuiz");
+  let correct=0;
+  items.forEach((it,qi)=>{
+    const ans=it[2];
+    const chosen=mount.querySelector(`input[name="${kind}_${qi}"]:checked`);
+    const opts=mount.querySelectorAll(`label.opt[data-q="${qi}"]`);
+    opts.forEach(o=>{o.classList.remove("correct","wrong");o.classList.add("locked");});
+    opts[ans].classList.add("correct");
+    if(chosen){const ci=parseInt(chosen.value); if(ci===ans) correct++; else opts[ci].classList.add("wrong");}
+  });
+  const total=items.length;
+  const el=document.getElementById(kind==="vocab"?"vocabScore":"compScore");
+  el.textContent=`Score: ${correct} / ${total}`;
+  el.className="score "+(correct===total?"good":correct>=Math.ceil(total/2)?"mid":"");
+}
+function setSource(k){
+  currentSource=k;
+  document.querySelectorAll("#sourceToggle button").forEach(b=>b.classList.toggle("active",b.dataset.key===k));
+  buildLevelToggle();
+  renderLevel();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function setLevel(k){
+  currentLevel=k;
+  document.querySelectorAll("#levelToggle button").forEach(b=>b.classList.toggle("active",b.dataset.key===k));
+  renderLevel();
+}
+
+/* ===================== TTS ===================== */
+let queue=[],qi=0;
+let audioState="idle";              // idle | playing | paused
+let selectedVoice=null;
+let speakToken=0;                   // invalidates stale utterance callbacks
+let durations=[],starts=[],totalDur=0;
+let lastSyncElapsed=0,lastSyncWall=0,playElapsed=0,scrubbing=false;
+const playBtn=document.getElementById("playBtn");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+const track=document.getElementById("track");
+const tFill=document.getElementById("tFill");
+const tHandle=document.getElementById("tHandle");
+const tCur=document.getElementById("tCur");
+const tTot=document.getElementById("tTot");
+const ticksEl=document.getElementById("ticks");
+
+function loadVoice(){
+  if(!(!!window.speechSynthesis)) return;
+  const all=speechSynthesis.getVoices();
+  if(!all.length) return; // fires again via onvoiceschanged
+  // macOS/iOS list joke voices (Albert, Bubbles, Bad News…) as en-US, and they
+  // sort first alphabetically — never pick those.
+  const NOVELTY=/^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/i;
+  const en=all.filter(v=>/^en/i.test(v.lang)&&!NOVELTY.test(v.name));
+  const us=en.filter(v=>/en[-_]?US/i.test(v.lang));
+  const PREFERRED=[/^Google US English$/,/Microsoft (Aria|Jenny|Ava|Andrew|Emma|Guy).*Natural/i,/^Samantha/,/^Ava/,/^Allison/,/^Alex$/,/Microsoft (Zira|David)/i];
+  selectedVoice=null;
+  for(const re of PREFERRED){ selectedVoice=us.find(v=>re.test(v.name)); if(selectedVoice)break; }
+  selectedVoice = selectedVoice ||
+    us.find(v=>v.default) || us.find(v=>v.localService) || us[0] ||   // any normal US English
+    en[0] || null;                                                   // any English (else browser default)
+}
+if(!!window.speechSynthesis){
+  loadVoice();
+  speechSynthesis.onvoiceschanged=loadVoice;
+}
+
+// --- Spoken-only number normalization -------------------------------------
+// Converts figures to written words for the TTS engine ONLY. The displayed
+// reading text is never touched. e.g. "$1.1 trillion" is spoken as
+// "one point one trillion dollars" instead of "one dollar one trillion".
+const _ones=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+const _tens=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+function _threeDigits(n){
+  let s="";
+  if(n>=100){ s+=_ones[Math.floor(n/100)]+" hundred"; n%=100; if(n)s+=" "; }
+  if(n>=20){ s+=_tens[Math.floor(n/10)]; const r=n%10; if(r)s+="-"+_ones[r]; }
+  else if(n>0){ s+=_ones[n]; }
+  return s;
+}
+function _intToWords(n){
+  if(n===0)return "zero";
+  const groups=["","thousand","million","billion","trillion","quadrillion"];
+  let parts=[],g=0;
+  while(n>0){ const c=n%1000; if(c)parts.unshift(_threeDigits(c)+(groups[g]?" "+groups[g]:"")); n=Math.floor(n/1000); g++; }
+  return parts.join(" ");
+}
+function numToWords(numStr){
+  numStr=numStr.replace(/,/g,"");
+  if(numStr.includes(".")){
+    const p=numStr.split(".");
+    return _intToWords(parseInt(p[0]||"0",10))+" point "+p[1].split("").map(d=>_ones[+d]).join(" ");
+  }
+  return _intToWords(parseInt(numStr,10));
+}
+function speechText(t){
+  return t
+    // "U.S." -> "US" so the voice reads it as letters ("you ess") and the
+    // sentence splitter doesn't break at the dots. Keep one period only when
+    // it genuinely ends a sentence (next word is capitalized).
+    .replace(/\bU\.S\.A\./g,"USA")
+    .replace(/\bU\.S\.(?=\s+[A-Z])/g,"US.")
+    .replace(/\bU\.S\./g,"US")
+    // $X[.Y] trillion/billion/million  ->  words + magnitude + "dollars"
+    .replace(/\$(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s+(trillion|billion|million)/gi,(m,n,mag)=>numToWords(n)+" "+mag.toLowerCase()+" dollars")
+    // remaining $X  ->  words + "dollar(s)"
+    .replace(/\$(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)/g,(m,n)=>numToWords(n)+(n==="1"?" dollar":" dollars"))
+    // X%  ->  words + "percent"
+    .replace(/(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)%/g,(m,n)=>numToWords(n)+" percent")
+    // standalone figures (skips ordinals like "20th" — digits followed by a letter)
+    .replace(/\b(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\b(?![%A-Za-z]|[.,]\d)/g,(m,n,off,str)=>{ if(/^(19|20)\d\d$/.test(n)) return n; if(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+$/.test(str.slice(Math.max(0,off-12),off))) return n; return numToWords(n); });
+}
+function buildChunks(){
+  const d=cur();
+  const chunks=[{text:speechText(d.title.replace(/[.?!]+$/,""))+".",pauseAfter:2000}];
+  d.paragraphs.forEach(p=>paraPieces(p).forEach(x=>chunks.push({text:x,pauseAfter:0})));
+  return chunks;
+}
+function paraPieces(p){
+  if(/^## /.test(p)) p=p.slice(3).replace(/[.?!:]*$/,".");   // a sub-heading is read as its own sentence
+  const sp=speechText(p),out=[];
+  (sp.match(/[^.!?]+[.!?]+/g)||[sp]).forEach(s=>{const t=s.trim();if(t)splitLong(t).forEach(x=>out.push(x));});
+  return out;
+}
+// Chrome's Google voices cut off any single utterance after ~15 s and then never
+// fire onend, which freezes playback. Split long sentences at commas/dashes so
+// each piece stays well under that, even at the slowest speed.
+const MAX_WORDS=20;
+function splitLong(t){
+  const n=s=>s.trim().split(/\s+/).length;
+  if(n(t)<=MAX_WORDS) return [t];
+  const parts=t.split(/(?<=[,;:—–])\s+/);
+  const out=[];let buf="";
+  parts.forEach(pt=>{
+    if(buf && n(buf+" "+pt)>MAX_WORDS){out.push(buf);buf=pt;}
+    else buf=buf?buf+" "+pt:pt;
+  });
+  if(buf)out.push(buf);
+  // a single comma-free run that is still too long: cut it at word boundaries
+  return out.flatMap(s=>{
+    if(n(s)<=MAX_WORDS+6) return [s];
+    const w=s.split(/\s+/),r=[];for(let i=0;i<w.length;i+=MAX_WORDS)r.push(w.slice(i,i+MAX_WORDS).join(" "));return r;
+  });
+}
+/* ----- audio script for the MP3 generator -------------------------------------
+   GitHub (tools/make_audio.py) calls this to get exactly what the page would say
+   for every version, and records it as MP3. Keys look like "wsj-a2". */
+window.owlishAudioScript=function(){
+  const keep=[currentSource,currentLevel],out={};
+  SRC_ORDER.forEach(s=>LVL_ORDER.forEach(l=>{
+    currentSource=s;currentLevel=l;
+    out[s+"-"+l]=buildChunks().map(c=>({text:c.text,pauseAfter:c.pauseAfter||0}));
+  }));
+  [currentSource,currentLevel]=keep;
+  return out;
+};
+
+/* ----- recorded audio (MP3) ------------------------------------------------------
+   If GitHub has made an MP3 for this version and its text still matches the page,
+   play that: it works inside the Naver/KakaoTalk app browsers, speed is exact, and
+   pause/seek are real. Otherwise fall back to the browser's own voice below. */
+const AUDIO_BASE=(location.pathname.split("/").pop()||"").replace(/\.html$/i,"")||"placebo";
+let MANIFEST=null, mode="tts";
+const audioEl=new Audio();
+audioEl.preload="auto";
+try{audioEl.preservesPitch=true;audioEl.webkitPreservesPitch=true;}catch(_){}
+function versionKey(){return currentSource+"-"+currentLevel;}
+function mp3For(){
+  if(!MANIFEST||!MANIFEST.versions)return null;
+  const v=MANIFEST.versions[versionKey()];
+  if(!v)return null;
+  const now=buildChunks().map(c=>c.text).join("\n");
+  return v.text===now?v:null;           // text edited since the MP3 was made -> don't use it
+}
+function useMp3IfReady(){
+  const v=mp3For();
+  if(!v){mode="tts";return false;}
+  mode="mp3";
+  const url="audio/"+AUDIO_BASE+"/"+v.file+(MANIFEST.build?"?v="+MANIFEST.build:"");
+  if(audioEl.dataset.src!==url){audioEl.src=url;audioEl.dataset.src=url;}
+  audioEl.playbackRate=rate;
+  starts=v.starts.slice();totalDur=v.duration;
+  if(tTot)tTot.textContent=fmt(totalDur);
+  renderTicks();
+  const box=document.getElementById("appNotice");if(box)box.hidden=true;  // audio will work here
+  return true;
+}
+fetch("audio/"+AUDIO_BASE+"/manifest.json",{cache:"no-cache"})
+  .then(r=>r.ok?r.json():null)
+  .then(m=>{ if(!m)return; MANIFEST=m; if(audioState==="idle"){resetAudio();} })
+  .catch(()=>{});
+audioEl.addEventListener("ended",()=>{ if(mode==="mp3")finishAudio(); });
+audioEl.addEventListener("error",()=>{            // file missing/broken -> browser voice
+  if(mode!=="mp3")return;
+  MANIFEST=null;mode="tts";audioEl.removeAttribute("src");delete audioEl.dataset.src;
+  const wasPlaying=audioState==="playing";resetAudio();
+  showAppNotice(false);
+  if(wasPlaying)togglePlay();
+});
+
+/* ----- tap a word to play from it ------------------------------------------------
+   Every word in the reading is a span. A quick tap plays from that word. Press-and-
+   hold is left alone, so the phone's own look-up / translate still works. Each shown
+   word is matched to the spoken words (numbers are spoken as words, so "$100" ->
+   "one hundred dollars"), giving the sentence and the word inside it to start from. */
+function wrapWords(p,pi){
+  if(!TAPS) return p;
+  let wi=0;
+  return p.split(/(\s+)/).map(tok=>/^\s+$/.test(tok)||tok===""?tok:`<span class="w" data-p="${pi}" data-w="${wi++}">${tok}</span>`).join("");
+}
+let WORDMAP={};      // "pi:wi" -> [chunkIndex, wordIndexInChunk]
+const norm=w=>w.toLowerCase().replace(/[^a-z]/g,"");
+function buildWordMap(){
+  WORDMAP={};
+  const d=cur(); let ci=1;                                   // chunk 0 is the title
+  d.paragraphs.forEach((p,pi)=>{
+    const spoken=[];                                          // [chunk, wordInChunk, normalized]
+    paraPieces(p).forEach(piece=>{ piece.split(/\s+/).forEach((w,k)=>spoken.push([ci,k,norm(w)])); ci++; });
+    const shown=p.replace(/^## /,"").split(/\s+/).filter(Boolean);
+    let j=0;
+    shown.forEach((w,wi)=>{
+      const n=norm(w);
+      if(n){ for(let k=j;k<Math.min(spoken.length,j+8);k++){ if(spoken[k][2]===n){ j=k; break; } } }
+      const hit=spoken[Math.min(j,spoken.length-1)];
+      WORDMAP[pi+":"+wi]=[hit[0],hit[1]];
+      if(n&&spoken[j]&&spoken[j][2]===n) j++;
+    });
+  });
+}
+let startWordInChunk=0;                                       // used once by the next speak
+function playFromWord(ci,wi){
+  ensureQueue(); if(ci>=queue.length) return;
+  if(mode==="mp3"){
+    const v=mp3For(); let t=starts[ci]||0;
+    const wt=v&&v.words&&v.words[ci];
+    if(wt&&wt.length) t=(starts[ci]||0)+(wt[Math.min(wi,wt.length-1)]||0);
+    else{ const next=(starts[ci+1]||totalDur), n=queue[ci].text.split(/\s+/).length; t+=Math.max(0,(next-t-0.2))*(wi/n); }
+    qi=ci; audioState="playing";
+    try{audioEl.currentTime=Math.max(0,t-0.05);}catch(_){}
+    audioEl.playbackRate=rate; const pr=audioEl.play(); if(pr&&pr.catch)pr.catch(()=>{audioState="paused";setUI();});
+    setUI(); return;
+  }
+  if(!window.speechSynthesis){showAppNotice(true);return;}
+  speakToken++; speechSynthesis.cancel();
+  qi=ci; startWordInChunk=wi; audioState="playing"; setUI();
+  setTimeout(()=>{ if(audioState==="playing") speakCurrent(); },60);
+}
+(function(){
+  const box=document.getElementById("reading"); let down=null;
+  box.addEventListener("pointerdown",e=>{ down={x:e.clientX,y:e.clientY,t:performance.now()}; });
+  box.addEventListener("click",e=>{
+    const w=e.target.closest&&e.target.closest("span.w"); if(!w) return;
+    const sel=window.getSelection&&String(window.getSelection()); if(sel&&sel.trim()) return;   // selecting text, not tapping
+    if(down&&(Math.abs(e.clientX-down.x)>8||Math.abs(e.clientY-down.y)>8||performance.now()-down.t>500)) return; // swipe or long-press
+    const m=WORDMAP[w.dataset.p+":"+w.dataset.w]; if(!m) return;
+    box.querySelectorAll("span.w.tapped").forEach(x=>x.classList.remove("tapped"));
+    w.classList.add("tapped"); setTimeout(()=>w.classList.remove("tapped"),900);
+    playFromWord(m[0],m[1]);
+  });
+})();
+
+/* ----- timeline model ----------------------------------------------------- */
+const BASE_WPS=2.8;                 // approx words/sec at rate 1 (estimate only)
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+function estimate(){
+  if(mode==="mp3"){audioEl.playbackRate=rate;return;}
+  durations=queue.map(c=>{
+    const words=(c.text.trim().split(/\s+/).length)||1;
+    const speak=Math.max(0.45, words/(BASE_WPS*rate));
+    return speak + (c.pauseAfter||0)/1000 + 0.18;   // + inter-sentence gap
+  });
+  starts=[];let acc=0;durations.forEach(d=>{starts.push(acc);acc+=d;});
+  totalDur=acc;
+  if(tTot)tTot.textContent=fmt(totalDur);
+}
+function renderTicks(){
+  if(!ticksEl)return;ticksEl.innerHTML="";
+  if(totalDur<=0)return;
+  for(let i=1;i<starts.length;i++){
+    const t=document.createElement("i");
+    t.style.left=(starts[i]/totalDur*100)+"%";
+    ticksEl.appendChild(t);
+  }
+}
+function ensureQueue(){
+  if(!queue.length){queue=buildChunks();qi=0;if(!useMp3IfReady()){estimate();renderTicks();}}
+}
+function setUI(){
+  const pct=totalDur>0?Math.min(100,(playElapsed/totalDur)*100):0;
+  if(tFill)tFill.style.width=pct+"%";
+  if(tHandle)tHandle.style.left=pct+"%";
+  if(tCur)tCur.textContent=fmt(playElapsed);
+  if(track)track.setAttribute("aria-valuenow",Math.round(playElapsed));
+  playBtn.textContent = audioState==="playing" ? "⏸ Pause" : (audioState==="paused" ? "▶ Resume" : "▶ Listen");
+  playBtn.classList.toggle("playing", audioState!=="idle");
+}
+function syncTo(i){lastSyncElapsed=starts[i]||0;lastSyncWall=performance.now();playElapsed=lastSyncElapsed;}
+(function raf(){
+  if(audioState==="playing" && !scrubbing){
+    if(mode==="mp3"){playElapsed=Math.min(totalDur,audioEl.currentTime||0);qi=timeToChunk(playElapsed);}
+    else playElapsed=Math.min(totalDur, lastSyncElapsed+(performance.now()-lastSyncWall)/1000);
+    setUI();
+  }
+  requestAnimationFrame(raf);
+})();
+
+/* ----- speaking ----------------------------------------------------------- */
+function playMp3From(i){
+  try{audioEl.currentTime=starts[i]||0;}catch(_){}
+  audioEl.playbackRate=rate;
+  const p=audioEl.play();
+  if(p&&p.catch)p.catch(()=>{audioState="paused";setUI();});   // e.g. autoplay blocked: wait for a tap
+}
+function speakCurrent(){
+  if(mode==="mp3"){ if(audioState!=="playing")return; playMp3From(qi); return; }
+  if(!window.speechSynthesis){audioState="idle";setUI();showAppNotice(true);return;}
+  if(audioState!=="playing")return;
+  if(qi>=queue.length){finishAudio();return;}
+  const myToken=++speakToken;
+  const c=queue[qi];
+  syncTo(qi);
+  let say=c.text;
+  if(startWordInChunk>0){ say=c.text.split(/\s+/).slice(startWordInChunk).join(" ")||c.text; startWordInChunk=0; }
+  const u=new SpeechSynthesisUtterance(say);
+  u.rate=rate;
+  if(selectedVoice){u.voice=selectedVoice;u.lang=selectedVoice.lang;}
+  else u.lang="en-US";
+  let done=false;
+  const advance=()=>{
+    if(done)return;done=true;clearTimeout(watchdog);
+    if(myToken!==speakToken||audioState!=="playing")return;  // stale or stopped
+    qi++;
+    if(qi>=queue.length){finishAudio();return;}
+    const gap=c.pauseAfter||0;
+    if(gap) setTimeout(()=>{if(myToken===speakToken&&audioState==="playing")speakCurrent();},gap);
+    else speakCurrent();
+  };
+  u.onend=advance;
+  // a voice that errors out would otherwise leave playback stuck forever
+  u.onerror=e=>{ if(e&&(e.error==="interrupted"||e.error==="canceled"))return; advance(); };
+  // last resort: if the engine never reports the end, move on anyway
+  const words=c.text.split(/\s+/).length;
+  // (generous: twice the slowest plausible speaking time, plus 4 s)
+  const watchdog=setTimeout(()=>{ if(myToken===speakToken&&audioState==="playing"&&!done){(window.speechSynthesis&&speechSynthesis.cancel());advance();} },
+                            (words/(BASE_WPS*0.5*rate))*1000+4000);
+  speechSynthesis.speak(u);
+}
+function finishAudio(){
+  if(mode==="mp3")audioEl.pause();
+  speakToken++;audioState="idle";(window.speechSynthesis&&speechSynthesis.cancel());
+  playElapsed=totalDur;qi=queue.length;setUI();
+}
+function timeToChunk(t){
+  let i=0;for(let k=0;k<starts.length;k++){if(t>=starts[k])i=k;else break;}return i;
+}
+function seekToTime(t,play){
+  ensureQueue();if(totalDur<=0)return;
+  t=Math.max(0,Math.min(totalDur,t));
+  qi=timeToChunk(t);
+  if(mode==="mp3"){
+    playElapsed=starts[qi];
+    if(play){audioState="playing";playMp3From(qi);}
+    else{try{audioEl.currentTime=starts[qi];}catch(_){}}
+    setUI();return;
+  }
+  playElapsed=starts[qi];           // snap handle to the sentence we'll speak
+  syncTo(qi);
+  if(play){audioState="playing";speakToken++;(window.speechSynthesis&&speechSynthesis.cancel());speakCurrent();}
+  setUI();
+}
+
+/* ----- transport controls ------------------------------------------------- */
+/* ----- in-app browsers (KakaoTalk, Naver, Instagram…) ------------------------
+   Links tapped inside these apps open in a built-in browser that often has no
+   speech voice (always on Android). Tell the reader and offer the real browser. */
+const UA=navigator.userAgent||"";
+const IN_APP=/KAKAOTALK|NAVER\(inapp|; ?wv\)|Instagram|FBAN|FBAV|Line\//i.test(UA);
+const IS_ANDROID=/Android/i.test(UA), IS_IOS=/iPhone|iPad|iPod/i.test(UA);
+function externalUrl(){
+  const here=location.href;
+  if(/KAKAOTALK/i.test(UA)) return "kakaotalk://web/openExternal?url="+encodeURIComponent(here);
+  if(IS_ANDROID) return "intent://"+here.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end";
+  return here;
+}
+function showAppNotice(force){
+  const box=document.getElementById("appNotice");if(!box)return;
+  if(mode==="mp3"){box.hidden=true;return;}
+  const noVoice=!(!!window.speechSynthesis);
+  if(!(force||noVoice||IN_APP))return;
+  const msg=document.getElementById("appNoticeMsg"),btn=document.getElementById("appNoticeBtn");
+  if(IS_IOS && !/KAKAOTALK/i.test(UA)){
+    msg.textContent = noVoice
+      ? "이 앱 안에서는 오디오가 나오지 않아요. 앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요."
+      : "소리가 안 나면 앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요.";
+    btn.hidden=true;
+  } else {
+    msg.textContent = noVoice
+      ? "이 앱 안에서는 오디오가 나오지 않아요. 아래 버튼을 눌러 브라우저에서 열어주세요."
+      : "이 앱 안에서는 오디오가 나오지 않을 수 있어요. 소리가 안 나면 브라우저에서 열어주세요.";
+    btn.href=externalUrl();
+  }
+  box.hidden=false;
+}
+showAppNotice(false);
+
+function togglePlay(){
+  ensureQueue();
+  if(mode==="mp3"){
+    if(audioState==="playing"){audioState="paused";audioEl.pause();playElapsed=audioEl.currentTime||0;setUI();}
+    else if(audioState==="paused"){audioState="playing";audioEl.playbackRate=rate;const p=audioEl.play();if(p&&p.catch)p.catch(()=>{audioState="paused";setUI();});setUI();}
+    else{let t=playElapsed;if(t>=totalDur)t=0;seekToTime(t,true);}
+    return;
+  }
+  if(!(!!window.speechSynthesis)){showAppNotice(true);document.getElementById("appNotice").scrollIntoView({behavior:"smooth",block:"center"});return;}
+  ensureQueue();
+  // Pause = stop the voice and remember the sentence; Resume = say that sentence
+  // again. speechSynthesis.pause()/resume() is broken on Chrome's Google voices
+  // and on Android, and it keeps the OLD speed if the speed is changed while paused.
+  if(audioState==="playing"){                       // -> pause
+    audioState="paused";speakToken++;(window.speechSynthesis&&speechSynthesis.cancel());
+    playElapsed=starts[qi]||0;lastSyncElapsed=playElapsed;setUI();
+  } else if(audioState==="paused"){                  // -> resume (current sentence, current speed)
+    audioState="playing";speakCurrent();setUI();
+  } else {                                           // idle -> play
+    let t=playElapsed;if(t>=totalDur)t=0;
+    seekToTime(t,true);
+  }
+}
+function stopTTS(){speakToken++;audioState="idle";(window.speechSynthesis&&speechSynthesis.cancel());try{audioEl.pause();}catch(_){}}
+function resetAudio(){
+  stopTTS();queue=[];qi=0;playElapsed=0;
+  ensureQueue();playElapsed=0;setUI();
+}
+playBtn.onclick=togglePlay;
+// Space bar = play / pause (except while typing in a form field)
+document.addEventListener("keydown",e=>{
+  if(e.code!=="Space"&&e.key!==" ")return;
+  const t=e.target, tag=(t&&t.tagName)||"";
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(tag)||(t&&t.isContentEditable)||e.altKey||e.ctrlKey||e.metaKey)return;
+  e.preventDefault();                 // no page scroll, and no second "click" on a focused button
+  if(!e.repeat)togglePlay();
+});
+prevBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.max(0,qi-1)]||0,true);};
+nextBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.min(queue.length-1,qi+1)]||0,true);};
+
+/* ----- scrubbing ---------------------------------------------------------- */
+function clientXToTime(clientX){
+  const r=track.getBoundingClientRect();
+  const frac=Math.max(0,Math.min(1,(clientX-r.left)/r.width));
+  return frac*totalDur;
+}
+track.addEventListener("pointerdown",e=>{
+  ensureQueue();if(totalDur<=0)return;
+  scrubbing=true;try{track.setPointerCapture(e.pointerId);}catch(_){}
+  playElapsed=clientXToTime(e.clientX);setUI();
+});
+track.addEventListener("pointermove",e=>{
+  if(!scrubbing)return;playElapsed=clientXToTime(e.clientX);setUI();
+});
+function endScrub(e){
+  if(!scrubbing)return;scrubbing=false;
+  try{track.releasePointerCapture(e.pointerId);}catch(_){}
+  seekToTime(clientXToTime(e.clientX),true);
+}
+track.addEventListener("pointerup",endScrub);
+track.addEventListener("pointercancel",endScrub);
+track.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"){e.preventDefault();nextBtn.onclick();}
+  else if(e.key==="ArrowLeft"){e.preventDefault();prevBtn.onclick();}
+  else if(e.key===" "||e.key==="Enter"){e.preventDefault();togglePlay();}
+});
+
+/* ----- speed -------------------------------------------------------------- */
+document.querySelectorAll(".speeds button").forEach(b=>{
+  b.onclick=()=>{
+    const wasPlaying=audioState==="playing",at=qi;
+    rate=parseFloat(b.dataset.rate);
+    document.querySelectorAll(".speeds button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    if(mode==="mp3"){audioEl.playbackRate=rate;return;}
+    if(queue.length){estimate();renderTicks();}
+    if(wasPlaying){seekToTime(starts[at]||0,true);}
+    else{if(queue.length)playElapsed=starts[Math.min(qi,starts.length-1)]||0;setUI();}
+  };
+});
+
+/* ===================== PDF ===================== */
+function buildDoc(items, combined){
+  const { jsPDF }=window.jspdf;
+  const doc=new jsPDF({unit:"pt",format:"a4"});prepDoc(doc);
+  const M=48,W=595,RW=W-M*2,BOTTOM=792,L=["A","B","C","D"];
+  let y=54;
+  const H=()=>{doc.setFont("helvetica","bold");doc.setFontSize(15);doc.setTextColor(14,76,79);doc.text("Owlish English",M,y);
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(9);doc.setTextColor(120);doc.text("Graded Reading Worksheet",W-M,y,{align:"right"});
+    y+=10;doc.setDrawColor(224,138,43);doc.setLineWidth(1.5);doc.line(M,y,W-M,y);y+=22;doc.setTextColor(20);};
+  const newPage=(withHead)=>{doc.addPage();y=54;if(withHead)H();};
+  const need=(hh)=>{if(y+hh>BOTTOM)newPage(true);};
+  const h3=(t)=>{need(34);doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(14,76,79);doc.text(t,M,y);y+=6;doc.setDrawColor(230);doc.setLineWidth(.6);doc.line(M,y,W-M,y);y+=16;doc.setTextColor(20);};
+  const para=(t,size,gap)=>{doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(size);doc.splitTextToSize(t,RW).forEach(ln=>{need(size*1.4);doc.text(ln,M,y);y+=size*1.4;});y+=(gap||6);};
+  const mc=(it,i)=>{need(24);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.splitTextToSize(`${i+1}. ${it[0]}`,RW).forEach(ln=>{need(14);doc.text(ln,M,y);y+=14;});
+    doc.setFont(PDF_TEXT_FONT,"normal");it[1].forEach((o,oi)=>{doc.splitTextToSize(`${L[oi]}. ${o}`,RW-24).forEach(ln=>{need(13);doc.text(ln,M+18,y);y+=13;});});y+=8;};
+
+  if(combined){
+    H();
+    doc.setFont("helvetica","bold");doc.setFontSize(20);doc.text("Can a Sugar Pill Really Heal You?",M,y+8);y+=38;
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(12);doc.setTextColor(90);
+    doc.text("Owlish English \u00b7 Graded Reading \u2014 A2 / B1 / C1",M,y);y+=22;doc.setTextColor(20);
+    doc.setFontSize(11);
+    items.forEach((it,i)=>{const s=SOURCES[it.src],lv=s.levels[it.lvl];need(15);doc.text(`${i+1}.  ${s.short} — ${lv.name}`,M+10,y);y+=15;});
+  }
+
+  let firstDone=false;
+  items.forEach(it=>{
+    const s=SOURCES[it.src], d=s.levels[it.lvl];
+    if(combined||firstDone) newPage(false);
+    H();
+    doc.setFont("helvetica","bold");doc.setFontSize(16);doc.splitTextToSize(d.title,RW).forEach(ln=>{doc.text(ln,M,y);y+=18;});
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(10);doc.setTextColor(110);
+    doc.text(`Owlish English · Graded Reading  ·  Level: ${d.label}`,M,y);y+=13;
+    doc.splitTextToSize(`Source: ${s.url?s.outlet+(s.byline?" ("+s.byline+")":""):(s.cite||s.outlet).replace(/<[^>]+>/g,"")}`,RW).forEach(ln=>{doc.text(ln,M,y);y+=12;});
+    doc.setTextColor(20);y+=8;
+    if(!combined){doc.setFontSize(11);doc.text("Name: ______________________________",M,y);doc.text("Date: ________________",W-M-150,y);y+=22;}
+    h3("Reading");
+    doc.setFont("helvetica","bold");doc.setFontSize(12);need(18);doc.splitTextToSize(d.title,RW).forEach(ln=>{doc.text(ln,M,y);y+=16;});
+    d.paragraphs.forEach(p=>{ if(/^## /.test(p)){need(30);doc.setFont("helvetica","bold");doc.setFontSize(11.5);doc.text(p.slice(3),M,y+4);y+=20;} else para(p,11,8); });y+=4;
+    h3("Vocabulary");
+    d.vocab.forEach(v=>{need(20);doc.setFont("helvetica","bold");doc.setFontSize(11);const wl=doc.splitTextToSize(`${v[0]} (${v[1]})`,150);doc.text(wl,M,y);doc.setFont(PDF_TEXT_FONT,"normal");const dl=doc.splitTextToSize(pdfSafe(v[2]),RW-160);doc.text(dl,M+160,y);y+=Math.max(wl.length,dl.length)*13+5;});y+=4;
+    h3("Vocab Quiz  (circle the best answer)");
+    d.vocabQuiz.forEach((q,i)=>mc(q,i));
+    h3("Comprehension  (circle the best answer)");
+    d.comp.forEach((q,i)=>mc(q,i));
+    if(!combined){
+      newPage(false);H();h3("Answer Key");
+      doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(11);
+      const vk=d.vocabQuiz.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ");
+      const ck=d.comp.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ");
+      doc.setFont("helvetica","bold");doc.text("Vocab Quiz:",M,y);doc.setFont(PDF_TEXT_FONT,"normal");doc.text(vk,M+78,y);y+=18;
+      doc.setFont("helvetica","bold");doc.text("Comprehension:",M,y);doc.setFont(PDF_TEXT_FONT,"normal");doc.text(ck,M+98,y);y+=18;
+    }
+    firstDone=true;
+  });
+
+  if(combined){
+    newPage(false);H();h3("Answer Keys — all readings");
+    items.forEach(it=>{
+      const s=SOURCES[it.src],d=s.levels[it.lvl];
+      need(42);
+      doc.setFont("helvetica","bold");doc.setFontSize(11);doc.setTextColor(14,76,79);doc.text(`${s.short} — ${d.name}`,M,y);y+=14;doc.setTextColor(20);
+      doc.setFont(PDF_TEXT_FONT,"normal");
+      doc.text(`Vocab: ${d.vocabQuiz.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ")}`,M+10,y);y+=13;
+      doc.text(`Comprehension: ${d.comp.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ")}`,M+10,y);y+=16;
     });
   }
 
-  /* ---------- what gets spoken ---------- */
-  var ONES=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
-  var TENS=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
-  function three(n){ var s=""; if(n>=100){ s+=ONES[Math.floor(n/100)]+" hundred"; n%=100; if(n)s+=" "; }
-    if(n>=20){ s+=TENS[Math.floor(n/10)]; if(n%10)s+="-"+ONES[n%10]; } else if(n>0){ s+=ONES[n]; } return s; }
-  function intWords(n){ if(n===0)return "zero"; var g=["","thousand","million","billion","trillion"],p=[],i=0;
-    while(n>0){ var c=n%1000; if(c)p.unshift(three(c)+(g[i]?" "+g[i]:"")); n=Math.floor(n/1000); i++; } return p.join(" "); }
-  function numWords(s){ s=s.replace(/,/g,""); if(s.indexOf(".")>-1){ var q=s.split("."); return intWords(parseInt(q[0]||"0",10))+" point "+q[1].split("").map(function(d){return ONES[+d];}).join(" "); } return intWords(parseInt(s,10)); }
-  function speechText(t){
-    return t.replace(/\bU\.S\.A\./g,"USA").replace(/\bU\.S\.(?=\s+[A-Z])/g,"US.").replace(/\bU\.S\./g,"US")
-      .replace(/\$(\d[\d,]*(?:\.\d+)?)\s+(trillion|billion|million)/gi,function(m,n,g){return numWords(n)+" "+g.toLowerCase()+" dollars";})
-      .replace(/\$(\d[\d,]*(?:\.\d+)?)/g,function(m,n){return numWords(n)+(n==="1"?" dollar":" dollars");})
-      .replace(/(\d[\d,]*(?:\.\d+)?)%/g,function(m,n){return numWords(n)+" percent";})
-      // plain numbers, but leave years (1900-2099) for the voice to say naturally
-      .replace(/\b(\d[\d,]*(?:\.\d+)?)\b(?![\d.,%]|[A-Za-z])/g,function(m,n){ return /^(19|20)\d\d$/.test(n)?n:numWords(n); });
-  }
-  var MAX_WORDS=20;   // Chrome's Google voices cut off any single utterance after ~15 s
-  function words(s){ return s.trim().split(/\s+/).length; }
-  function splitLong(t){
-    if(words(t)<=MAX_WORDS) return [t];
-    var out=[],buf="";
-    t.split(/(?<=[,;:—–])\s+/).forEach(function(pt){
-      if(buf && words(buf+" "+pt)>MAX_WORDS){ out.push(buf); buf=pt; } else buf = buf ? buf+" "+pt : pt;
-    });
-    if(buf) out.push(buf);
-    return out.reduce(function(acc,s){
-      if(words(s)<=MAX_WORDS+6){ acc.push(s); return acc; }
-      var w=s.split(/\s+/); for(var i=0;i<w.length;i+=MAX_WORDS) acc.push(w.slice(i,i+MAX_WORDS).join(" ")); return acc;
-    },[]);
-  }
-  function buildChunks(l){
-    var art=document.getElementById('article-'+l), out=[];
-    var h=art.querySelector('h1,h2,h3');
-    if(h){ var tt=speechText(h.textContent.replace(/\s+/g,' ').trim().replace(/[.?!:]+$/,''))+'.'; out.push({text:tt,pauseAfter:1500}); }
-    art.querySelectorAll('p,li,blockquote').forEach(function(el){
-      if(el.closest('ul,ol')&&el.tagName!=='LI') return;
-      var raw=speechText(el.textContent.replace(/\s+/g,' ').trim()); if(!raw) return;
-      var parts=raw.match(/[^.!?]+(?:[.!?]+["'”’)]*|$)/g)||[raw];
-      parts.forEach(function(p){ p=p.trim(); if(p) splitLong(p).forEach(function(x){ out.push({text:x,pauseAfter:0}); }); });
-    });
-    return out;
-  }
-  function chunksFor(l){ if(!state[l].chunks) state[l].chunks=buildChunks(l); return state[l].chunks; }
-  // GitHub (tools/make_audio.py) calls this to record the MP3s. Keys are the level names.
-  window.owlishAudioScript=function(){ var o={}; LEVELS.forEach(function(l){ o[l]=buildChunks(l); }); return o; };
+  const pages=doc.getNumberOfPages();
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(9);doc.setTextColor(140);doc.text("Owlish English",M,812);doc.text(`Page ${p} of ${pages}`,W-M,812,{align:"right"});}
+  return doc;
+}
+/* Korean in the vocab list needs a Korean font: the PDF tool's built-in fonts have
+   no Hangul. Nanum Gothic (free, OFL) is loaded from fonts/ only when someone
+   downloads, then reused. If it can't load, the PDF is still made, and the Korean
+   meanings are left out instead of coming out garbled. */
+let PDF_TEXT_FONT="helvetica", koreanFontB64=null, koreanFontTried=false;
+function ab2b64(buf){let s="",b=new Uint8Array(buf);for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s);}
+async function ensureKoreanFont(){
+  if(koreanFontB64||koreanFontTried)return;
+  koreanFontTried=true;
+  try{const r=await fetch("fonts/NanumGothic-Regular.ttf");if(r.ok)koreanFontB64=ab2b64(await r.arrayBuffer());}catch(_){}
+}
+function prepDoc(doc){
+  if(koreanFontB64){doc.addFileToVFS("NanumGothic.ttf",koreanFontB64);doc.addFont("NanumGothic.ttf","NanumGothic","normal");PDF_TEXT_FONT="NanumGothic";}
+  else PDF_TEXT_FONT="helvetica";
+}
+function pdfSafe(t){ return koreanFontB64 ? t : String(t).replace(/[\u3131-\u318E\uAC00-\uD7A3][^·]*·\s*/g,"").replace(/[^\x00-\xFF]/g,""); }
+async function withPdf(btn,fn){
+  const label=btn.innerHTML;btn.disabled=true;btn.innerHTML="⏳ Making PDF…";
+  try{await ensureKoreanFont();fn();}finally{btn.disabled=false;btn.innerHTML=label;}
+}
+document.getElementById("pdfBtn").onclick=function(){
+  withPdf(this,()=>buildDoc([{src:currentSource,lvl:currentLevel}],false).save(`Owlish-Placebo-${cur().name}.pdf`));
+};
+document.getElementById("pdfAllBtn").onclick=function(){
+  const items=[];
+  SRC_ORDER.forEach(s=>LVL_ORDER.forEach(l=>items.push({src:s,lvl:l})));
+  withPdf(this,()=>buildDoc(items,true).save("Owlish-Placebo-ALL.pdf"));
+};
 
-  /* ---------- recorded audio (MP3) ---------- */
-  var AUDIO_BASE=(location.pathname.split('/').pop()||'').replace(/\.html$/i,'')||document.documentElement.dataset.audio||'';
-  var MANIFEST=null;
-  var audioEl=new Audio(); audioEl.preload='auto';
-  try{ audioEl.preservesPitch=true; audioEl.webkitPreservesPitch=true; }catch(_){}
-  var audioLevel=null;
-  function mp3For(l){
-    if(!MANIFEST||!MANIFEST.versions||!MANIFEST.versions[l]) return null;
-    var v=MANIFEST.versions[l], now=chunksFor(l).map(function(c){return c.text;}).join('\n');
-    return v.text===now ? v : null;     // page text edited after recording -> don't play stale audio
-  }
-  function usesMp3(l){ return !!mp3For(l); }
-  fetch('audio/'+AUDIO_BASE+'/manifest.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():null;})
-    .then(function(m){ if(!m) return; MANIFEST=m; LEVELS.forEach(function(l){ if(state[l].status==='idle') setStatus(l, idleText(l)); }); updateNotice(); })
-    .catch(function(){});
-  audioEl.addEventListener('ended',function(){ if(audioLevel) finish(audioLevel); });
-  audioEl.addEventListener('timeupdate',function(){
-    var l=audioLevel; if(!l||state[l].status!=='playing') return;
-    var v=mp3For(l); if(!v) return; var t=audioEl.currentTime, i=0;
-    for(var k=0;k<v.starts.length;k++){ if(t>=v.starts[k]) i=k; else break; }
-    state[l].ci=i;
-  });
-  audioEl.addEventListener('error',function(){       // file missing or broken -> browser voice
-    var l=audioLevel; if(!l||!audioEl.getAttribute('src')) return;
-    MANIFEST=null; audioEl.removeAttribute('src'); audioLevel=null;
-    var was=state[l].status==='playing'; state[l].status='idle'; updateNotice();
-    if(was) toggle(l); else setStatus(l, idleText(l));
-  });
-  function playMp3(l, fromStart){
-    var v=mp3For(l), url='audio/'+AUDIO_BASE+'/'+v.file+(MANIFEST.build?'?v='+MANIFEST.build:'');
-    if(audioEl.dataset.src!==url){ audioEl.src=url; audioEl.dataset.src=url; }
-    audioLevel=l;
-    if(fromStart){ try{ audioEl.currentTime=0; }catch(_){} }
-    audioEl.playbackRate=state[l].rate;
-    var p=audioEl.play(); if(p&&p.catch) p.catch(function(){ state[l].status='paused'; setBtn(l,'resume'); setStatus(l,'Tap Resume to listen.'); });
-  }
-
-  /* ---------- browser voice (fallback) ---------- */
-  let lockedVoice = null;
-  var NOVELTY=/^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/i;
-  function resolveVoice(){
-    if(!SS) return;
-    var all=SS.getVoices(); if(!all.length) return;
-    var en=all.filter(function(v){ return /^en/i.test(v.lang)&&!NOVELTY.test(v.name); });
-    var us=en.filter(function(v){ return /en[-_]?US/i.test(v.lang); });
-    var pref=[/^Google US English$/,/Microsoft (Aria|Jenny|Ava|Andrew|Emma|Guy).*Natural/i,/^Samantha/,/^Ava/,/^Allison/,/^Alex$/,/Microsoft (Zira|David)/i];
-    lockedVoice=null;
-    for(var i=0;i<pref.length&&!lockedVoice;i++) lockedVoice=us.find(function(v){ return pref[i].test(v.name); })||null;
-    lockedVoice = lockedVoice || us.find(function(v){return v.default;}) || us[0] || en[0] || null;
-  }
-  if(SS){ SS.onvoiceschanged=resolveVoice; resolveVoice(); setTimeout(resolveVoice,300); setTimeout(resolveVoice,1200); }
-  var token=0;
-  function speakFrom(l, i){
-    var ch=chunksFor(l);
-    if(state[l].status!=='playing') return;
-    if(i>=ch.length){ finish(l); return; }
-    state[l].ci=i;
-    var my=++token, c=ch[i], done=false;
-    var u=new SpeechSynthesisUtterance(c.text);
-    u.rate=state[l].rate; u.lang='en-US';
-    if(lockedVoice){ u.voice=lockedVoice; u.lang=lockedVoice.lang; }
-    function next(){
-      if(done) return; done=true; clearTimeout(dog);
-      if(my!==token||state[l].status!=='playing') return;          // stale (speed change, pause, stop)
-      if(c.pauseAfter) setTimeout(function(){ if(my===token&&state[l].status==='playing') speakFrom(l,i+1); }, c.pauseAfter);
-      else speakFrom(l,i+1);
-    }
-    u.onend=next;
-    u.onerror=function(e){ if(e&&(e.error==='interrupted'||e.error==='canceled')) return; next(); };
-    var dog=setTimeout(function(){ if(my===token&&state[l].status==='playing'&&!done){ SS.cancel(); next(); } },
-                       (words(c.text)/(2.8*0.5*state[l].rate))*1000+4000);   // engine never reported the end
-    SS.speak(u);
-  }
-
-  /* ---------- controls (called by the page's buttons) ---------- */
-  function setBtn(l, mode){
-    var b=document.getElementById('play-'+l); if(!b) return;
-    b.innerHTML = mode==='pause' ? '❚❚ Pause' : (mode==='resume' ? '▶ Resume' : '▶ Play');
-  }
-  function setStatus(l, t){ var s=document.getElementById('status-'+l); if(s) s.textContent=t; }
-  function voiceName(l){ return usesMp3(l) ? 'Ava (recorded)' : (lockedVoice?lockedVoice.name:'browser default'); }
-  function nowReading(l){ return 'Voice: '+voiceName(l)+'  ·  '+state[l].rate+'×'; }
-  function idleText(l){ return 'Press Play to listen and read along.'; }
-  function silenceAll(except){
-    token++; if(SS) SS.cancel();
-    if(audioLevel&&audioLevel!==except){ audioEl.pause(); }
-    LEVELS.forEach(function(x){ if(x!==except&&state[x].status!=='idle'){ state[x].status='idle'; state[x].ci=0; setBtn(x,'play'); } });
-  }
-  function toggle(l){
-    var s=state[l];
-    if(usesMp3(l)){
-      if(s.status==='playing'){ s.status='paused'; audioEl.pause(); setBtn(l,'resume'); setStatus(l,'Paused.'); return; }
-      silenceAll(l);
-      var fresh = s.status==='idle' || audioLevel!==l;
-      s.status='playing'; setBtn(l,'pause'); setStatus(l, nowReading(l)); playMp3(l, fresh); return;
-    }
-    if(!SS){ s.status='idle'; setBtn(l,'play'); setStatus(l,'No audio in this app. Open the page in Chrome or Safari to listen.'); showNotice(true); return; }
-    if(s.status==='playing'){                // pause = stop, remember the sentence
-      s.status='paused'; token++; SS.cancel(); setBtn(l,'resume'); setStatus(l,'Paused.'); return;
-    }
-    silenceAll(l);
-    var from = s.status==='paused' ? s.ci : 0;     // resume = say the current sentence again
-    s.status='playing'; setBtn(l,'pause'); setStatus(l, nowReading(l));
-    setTimeout(function(){ speakFrom(l, from); }, 60);
-  }
-  function finish(l){
-    state[l].status='idle'; state[l].ci=0; if(audioLevel===l){ audioEl.pause(); }
-    setBtn(l,'play'); setStatus(l,'Finished. Press Play to read again.');
-  }
-  function stop(l, quiet){
-    if(!state[l]) return;
-    var was=state[l].status!=='idle';
-    token++; if(SS) SS.cancel(); if(audioLevel===l){ audioEl.pause(); try{ audioEl.currentTime=0; }catch(_){} }
-    state[l].status='idle'; state[l].ci=0; setBtn(l,'play');
-    if(!quiet||was) setStatus(l, quiet ? idleText(l) : 'Stopped. Press Play to start again.');
-  }
-  function setSpeed(l, sp){
-    state[l].rate=sp;
-    document.querySelectorAll('#panel-'+l+' .spd').forEach(function(b){ b.classList.toggle('active', parseFloat(b.dataset.s)===sp); });
-    if(usesMp3(l)){ if(audioLevel===l) audioEl.playbackRate=sp; if(state[l].status==='playing') setStatus(l, nowReading(l)); return; }
-    if(state[l].status==='playing'){
-      token++; if(SS) SS.cancel(); setStatus(l, nowReading(l));
-      var at=state[l].ci; setTimeout(function(){ speakFrom(l, at); }, 80);
-    }
-    // paused: the new speed is used when Resume says the sentence again
-  }
-
-  /* ---------- in-app browsers (Naver, KakaoTalk, Instagram...) ---------- */
-  var UA=navigator.userAgent||'';
-  var IN_APP=/KAKAOTALK|NAVER\(inapp|; ?wv\)|Instagram|FBAN|FBAV|Line\//i.test(UA);
-  var IS_ANDROID=/Android/i.test(UA), IS_IOS=/iPhone|iPad|iPod/i.test(UA);
-  var notice=null;
-  function showNotice(force){
-    if(LEVELS.some(usesMp3)) { if(notice) notice.hidden=true; return; }   // recorded audio works everywhere
-    if(!(force||!SS||IN_APP)) return;
-    if(!notice){
-      notice=document.createElement('div');
-      notice.style.cssText='background:#fff6e8;border:1.5px solid #c9942f;border-radius:12px;padding:14px 16px;margin:0 0 16px;font-size:15px;line-height:1.55;word-break:keep-all';
-      var anchor=document.querySelector('nav.tabs')||document.querySelector('section.panel');
-      anchor.parentNode.insertBefore(notice, anchor);
-    }
-    var here=location.href, btn='';
-    var noVoice=!SS;
-    if(IS_IOS && !/KAKAOTALK/i.test(UA)){
-      notice.innerHTML='<p style="margin:0">'+(noVoice?'이 앱 안에서는 오디오가 나오지 않아요. ':'소리가 안 나면 ')+"앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요.</p>";
-    } else {
-      var url=/KAKAOTALK/i.test(UA) ? 'kakaotalk://web/openExternal?url='+encodeURIComponent(here)
-            : (IS_ANDROID ? 'intent://'+here.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package=com.android.chrome;end' : here);
-      notice.innerHTML='<p style="margin:0 0 10px">'+(noVoice?'이 앱 안에서는 오디오가 나오지 않아요. 아래 버튼을 눌러 브라우저에서 열어주세요.':'이 앱 안에서는 오디오가 나오지 않을 수 있어요. 소리가 안 나면 브라우저에서 열어주세요.')+'</p>'
-        +'<a href="'+url+'" style="display:inline-block;background:#22201c;color:#fff;text-decoration:none;font-weight:700;padding:11px 18px;border-radius:10px">브라우저에서 열기</a>';
-    }
-    notice.hidden=false;
-  }
-  function updateNotice(){ showNotice(false); }
-  updateNotice();
-
-  // phones stop the browser voice when the screen locks; pause cleanly (recorded audio may keep going)
-  document.addEventListener('visibilitychange', function(){
-    if(document.hidden && state[current] && state[current].status==='playing' && !usesMp3(current)) toggle(current);
-  });
-  window.addEventListener('beforeunload', function(){ if(SS) SS.cancel(); });
+/* ===================== INIT ===================== */
+buildSourceToggle();
+buildLevelToggle();
+renderLevel();
+window.addEventListener("beforeunload",stopTTS);
+// phones stop the voice when the screen locks or the app is switched; pause
+// cleanly so Resume picks up at the same sentence instead of skipping ahead
+// Switching tabs keeps playing. Only on phones, where the browser voice is cut off in
+// the background, pause cleanly so Resume picks up the same sentence. (Recorded audio
+// keeps going even with the screen locked.)
+document.addEventListener("visibilitychange",()=>{ if(document.hidden&&audioState==="playing"&&mode!=="mp3"&&(IS_ANDROID||IS_IOS))togglePlay(); });
 </script>
-
 </body>
 </html>

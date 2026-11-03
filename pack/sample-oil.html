@@ -53,7 +53,7 @@
 
   /* Audio bar */
   .audiobar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:12px 0 22px;}
-  .audiobar .play{background:var(--amber);color:#3a2407;border:none;font-weight:700;padding:9px 16px;border-radius:10px;cursor:pointer;font-size:14px;}
+  .audiobar .play{background:var(--amber);color:#3a2407;border:none;font-weight:700;padding:12px 22px;border-radius:12px;cursor:pointer;font-size:16px;min-height:48px;min-width:136px;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
   .audiobar .play.playing{background:var(--teal);color:#fff;}
   .speeds{display:flex;gap:6px;align-items:center;}
   .speeds span{font-size:12px;color:var(--muted);margin-right:2px;}
@@ -159,6 +159,23 @@
   .appnotice{background:#fff6e8;border:1.5px solid var(--amber);border-radius:12px;padding:14px 16px;margin:0 0 14px;font-size:15px;line-height:1.55;}
   .appnotice p{margin:0 0 10px;color:var(--ink);word-break:keep-all;}
   .appnotice-btn{display:inline-block;background:var(--teal-deep);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:11px 18px;border-radius:10px;min-height:44px;box-sizing:border-box;}
+
+  /* lesson order: vocab → vocab quiz → listen (script folded) → comprehension */
+  .sec-h .tag{white-space:nowrap;}
+  .listen-hint{margin:-4px 0 14px;font-size:15px;color:var(--muted);word-break:keep-all;}
+  details.scriptbox{margin:16px 0 0;border:1.5px solid var(--line);border-radius:14px;background:var(--card);}
+  details.scriptbox > summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;font-size:16px;color:var(--teal-deep);display:flex;align-items:center;gap:10px;min-height:48px;-webkit-tap-highlight-color:transparent;}
+  details.scriptbox > summary::-webkit-details-marker{display:none;}
+  details.scriptbox > summary::after{content:"＋";margin-left:auto;font-size:18px;color:var(--muted);}
+  details.scriptbox[open] > summary::after{content:"－";}
+  details.scriptbox[open] > summary{border-bottom:1.5px solid var(--line);}
+  details.scriptbox .sum-closed{display:inline;} details.scriptbox .sum-open{display:none;}
+  details.scriptbox[open] .sum-closed{display:none;} details.scriptbox[open] .sum-open{display:inline;}
+  details.scriptbox article.reading{margin:0;border:0;border-radius:0 0 14px 14px;}
+  details.scriptbox .taphint{margin:0;padding:0 18px 16px;}
+  .worksheet{margin-top:34px;}
+  .worksheet p{margin:0 0 12px;font-size:15px;color:var(--muted);word-break:keep-all;}
+  .worksheet .pdf-group{margin-left:0;}
 </style>
 </head>
 <body>
@@ -172,7 +189,7 @@
 
   <div class="samplebar">🎁 무료 샘플 · 경제 영어 팩 <b>Module 1 (A2)</b>을 그대로 체험해보세요. 전체 팩은 5개 모듈 × 3개 레벨이에요.</div>
   <h1 class="title">Module 1 · Oil: Why One Narrow Sea Moves the World</h1>
-  <p class="dek">Pick your level. Read and listen, learn the key words, then check what you understood. Next module: inflation.</p>
+  <p class="dek">레벨을 고르고, 단어 → 단어 퀴즈 → 듣기 → 이해 퀴즈 순서로 공부해요. Pick your level, learn the words, listen, then check what you understood. Next module: inflation.</p>
 
   <div class="sources" id="sourceToggle" hidden></div>
 
@@ -181,13 +198,24 @@
 
   <p class="source-line" id="sourceCite"></p>
 
+  <div class="sec-h"><span class="tag">1 · Vocabulary</span><h3 id="vocabLevelLabel"></h3></div>
+  <table class="vocab" id="vocabTable">
+    <thead><tr><th>Word</th><th>Part of speech</th><th>Meaning</th></tr></thead>
+    <tbody id="vocabBody"></tbody>
+  </table>
+
+  <div class="sec-h"><span class="tag">2 · Vocab Quiz</span><h3>단어 퀴즈 · Choose the best meaning</h3></div>
+  <div class="quiz" id="vocabQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('vocab')">Check answers</button><span class="score" id="vocabScore"></span></div>
+
+  <div class="sec-h"><span class="tag">3 · Listen</span><h3>듣기 · Listen first, then read</h3></div>
+  <p class="listen-hint">먼저 스크립트 없이 들어보세요. 잘 안 들리면 스크립트를 열고 다시 들어요.</p>
   <div class="appnotice" id="appNotice" hidden>
     <p id="appNoticeMsg">이 앱 안에서는 오디오가 나오지 않을 수 있어요. 크롬이나 사파리에서 열면 들을 수 있어요.</p>
     <a class="appnotice-btn" id="appNoticeBtn" href="#">브라우저에서 열기</a>
   </div>
-
   <div class="audiobar">
-    <button class="play" id="playBtn">▶ Listen</button>
+    <button class="play" id="playBtn" title="Play / pause (Space bar)">▶ Listen</button>
     <div class="tcontrols">
       <button class="tbtn" id="prevBtn" title="Previous sentence" aria-label="Previous sentence">⏮</button>
       <button class="tbtn" id="nextBtn" title="Next sentence" aria-label="Next sentence">⏭</button>
@@ -198,10 +226,6 @@
       <button data-rate="0.85" class="active">0.85×</button>
       <button data-rate="1">1×</button>
       <button data-rate="1.1">1.1×</button>
-    </div>
-    <div class="pdf-group">
-      <button class="pdf-btn" id="pdfBtn">⤓ This reading</button>
-      <button class="pdf-btn all" id="pdfAllBtn" hidden>⤓ All levels</button>
     </div>
     <span class="audiover" id="audioVer">audio v7</span>
     <div class="timeline">
@@ -215,23 +239,24 @@
       <span class="ttime" id="tTot">0:00</span>
     </div>
   </div>
+  <details class="scriptbox" id="scriptBox">
+    <summary><span class="sum-closed">📜 스크립트 보기 · Show script</span><span class="sum-open">📜 스크립트 접기 · Hide script</span></summary>
+    <article class="reading" id="reading"></article>
+    <p class="taphint">💡 문장 속 단어를 누르면 그 단어부터 들을 수 있어요. 길게 누르면 휴대폰 사전·번역을 쓸 수 있어요.</p>
+  </details>
 
-  <article class="reading" id="reading"></article>
-  <p class="taphint">💡 문장 속 단어를 누르면 그 단어부터 들을 수 있어요. 길게 누르면 휴대폰 사전·번역을 쓸 수 있어요.</p>
-
-  <div class="sec-h"><span class="tag">Vocabulary</span><h3 id="vocabLevelLabel"></h3></div>
-  <table class="vocab" id="vocabTable">
-    <thead><tr><th>Word</th><th>Part of speech</th><th>Meaning</th></tr></thead>
-    <tbody id="vocabBody"></tbody>
-  </table>
-
-  <div class="sec-h"><span class="tag">Vocab Quiz</span><h3>Choose the best meaning</h3></div>
-  <div class="quiz" id="vocabQuiz"></div>
-  <div class="check-row"><button class="check-btn" onclick="checkQuiz('vocab')">Check answers</button><span class="score" id="vocabScore"></span></div>
-
-  <div class="sec-h"><span class="tag">Comprehension</span><h3>Multiple choice</h3></div>
+  <div class="sec-h"><span class="tag">4 · Comprehension</span><h3>이해 퀴즈 · Multiple choice</h3></div>
   <div class="quiz" id="compQuiz"></div>
   <div class="check-row"><button class="check-btn" onclick="checkQuiz('comp')">Check answers</button><span class="score" id="compScore"></span></div>
+
+  <div class="worksheet">
+    <div class="sec-h"><span class="tag">Worksheet</span><h3>PDF 워크시트</h3></div>
+    <p>내려받아 손으로 풀어보세요. 정답은 마지막 장에 있어요.</p>
+    <div class="pdf-group">
+      <button class="pdf-btn" id="pdfBtn">⤓ This reading</button>
+      <button class="pdf-btn all" id="pdfAllBtn" hidden>⤓ All levels</button>
+    </div>
+  </div>
 
   <div class="buybox">
     <h3>마음에 드셨나요? 전체 팩으로 이어서 읽어보세요</h3>
@@ -876,6 +901,14 @@ function resetAudio(){
   ensureQueue();playElapsed=0;setUI();
 }
 playBtn.onclick=togglePlay;
+// Space bar = play / pause (except while typing in a form field)
+document.addEventListener("keydown",e=>{
+  if(e.code!=="Space"&&e.key!==" ")return;
+  const t=e.target, tag=(t&&t.tagName)||"";
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(tag)||(t&&t.isContentEditable)||e.altKey||e.ctrlKey||e.metaKey)return;
+  e.preventDefault();                 // no page scroll, and no second "click" on a focused button
+  if(!e.repeat)togglePlay();
+});
 prevBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.max(0,qi-1)]||0,true);};
 nextBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.min(queue.length-1,qi+1)]||0,true);};
 

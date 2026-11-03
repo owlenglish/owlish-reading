@@ -6,7 +6,7 @@ name: Make reading audio
 on:
   push:
     branches: [main]
-    paths: ["*.html", "tools/make_audio.py", ".github/workflows/audio.yml"]
+    paths: ["*.html", "pack/*.html", "tools/make_audio.py", ".github/workflows/audio.yml"]
   workflow_dispatch:
 
 permissions:
@@ -41,7 +41,7 @@ jobs:
           for attempt in 1 2 3; do
             git fetch -q origin main && git reset -q --hard origin/main
             python tools/make_audio.py
-            git add audio
+            git add -A audio pack/audio
             if git diff --cached --quiet; then echo "No audio changes"; exit 0; fi
             git commit -q -m "Update reading audio"
             if git push -q origin HEAD:main; then echo "Saved audio"; exit 0; fi
