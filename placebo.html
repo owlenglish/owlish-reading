@@ -170,9 +170,14 @@
   .worksheet{margin-top:34px;}
   .worksheet p{margin:0 0 12px;font-size:15px;color:var(--muted);word-break:keep-all;}
   .worksheet .pdf-group{margin-left:0;}
-  article.reading h3.sub{font-family:Georgia,"Times New Roman",serif;font-size:19px;margin:22px 0 6px;color:var(--teal-deep);}
   img.owl{display:block;width:44px;height:44px;border-radius:12px;flex:none;}
   img.owl-mini{width:18px;height:18px;border-radius:5px;vertical-align:-3px;margin-right:4px;}
+  /* double-tap meaning bubble */
+  article.reading{touch-action:manipulation;}
+  article.reading span.w.glossed{background:var(--amber-soft);box-shadow:0 0 0 2px var(--amber-soft);}
+  .gloss{position:absolute;z-index:50;max-width:min(300px,calc(100vw - 16px));background:var(--teal-deep);color:#fff;border-radius:12px;padding:10px 14px;font-size:15px;line-height:1.45;box-shadow:0 10px 24px -10px rgba(0,0,0,.45);pointer-events:auto;word-break:keep-all;}
+  .gloss b{display:block;font-size:13px;font-weight:700;color:#f6e3c6;letter-spacing:.2px;margin-bottom:2px;}
+  article.reading h3.sub{font-family:Georgia,"Times New Roman",serif;font-size:19px;margin:22px 0 6px;color:var(--teal-deep);}
 </style>
 </head>
 <body>
@@ -238,7 +243,7 @@
   <details class="scriptbox" id="scriptBox">
     <summary><span class="sum-closed">📜 스크립트 보기 · Show script</span><span class="sum-open">📜 스크립트 접기 · Hide script</span></summary>
     <article class="reading" id="reading"></article>
-    <p class="taphint">💡 단어를 길게 누르면 휴대폰 사전·번역을 쓸 수 있어요.</p>
+    <p class="taphint">📱 휴대폰에서는 단어를 길게 누르면 사전·번역을 쓸 수 있어요.</p>
   </details>
 
   <div class="sec-h"><span class="tag">4 · Comprehension</span><h3>이해 퀴즈 · Multiple choice</h3></div>
@@ -756,6 +761,7 @@ const SOURCES = {
  }
 };
 
+const GLOSS = {};
 const SRC_ORDER = ["placebo"];
 const LVL_ORDER = ["a2", "b1", "c1"];
 const TAPS = false;             // tap-a-word-to-play is a paid-pack feature
@@ -1065,18 +1071,44 @@ function playFromWord(ci,wi){
   qi=ci; startWordInChunk=wi; audioState="playing"; setUI();
   setTimeout(()=>{ if(audioState==="playing") speakCurrent(); },60);
 }
+/* ----- double-tap a word: Korean meaning bubble -------------------------------- */
+const TAP2_MS=300; let tapTimer=null, tapWord=null;
+const glossKey=t=>t.toLowerCase().replace(/[’]/g,"'").replace(/[^a-z0-9'$%.,-]/g,"").replace(/^[.,'-]+|[.,'-]+$/g,"");
+const glossBox=document.createElement("div"); glossBox.className="gloss"; glossBox.hidden=true; glossBox.setAttribute("role","status");
+document.body.appendChild(glossBox);
+function showGloss(w){
+  const word=w.textContent.replace(/^[^A-Za-z0-9$]+|[^A-Za-z0-9%]+$/g,""), ko=GLOSS[glossKey(w.textContent)];
+  if(!ko) return;
+  glossBox.innerHTML=`<b>${word}</b><span>${ko}</span>`; glossBox.hidden=false;
+  document.querySelectorAll("#reading span.w.glossed").forEach(x=>x.classList.remove("glossed")); w.classList.add("glossed");
+  const r=w.getBoundingClientRect(), bw=glossBox.offsetWidth, bh=glossBox.offsetHeight, vw=document.documentElement.clientWidth;
+  let left=r.left+r.width/2-bw/2; left=Math.max(8,Math.min(left,vw-bw-8));
+  let top=r.top-bh-10; glossBox.classList.toggle("below",top<8); if(top<8) top=r.bottom+10;
+  glossBox.style.left=(left+scrollX)+"px"; glossBox.style.top=(top+scrollY)+"px";
+}
+function hideGloss(){ glossBox.hidden=true; document.querySelectorAll("#reading span.w.glossed").forEach(x=>x.classList.remove("glossed")); }
+document.addEventListener("click",e=>{ if(!(e.target.closest&&(e.target.closest("span.w")||e.target.closest(".gloss")))) hideGloss(); });
+window.addEventListener("resize",hideGloss);
 (function(){
   const box=document.getElementById("reading"); let down=null;
   box.addEventListener("pointerdown",e=>{ down={x:e.clientX,y:e.clientY,t:performance.now()}; });
   box.addEventListener("click",e=>{
     const w=e.target.closest&&e.target.closest("span.w"); if(!w) return;
-    const sel=window.getSelection&&String(window.getSelection()); if(sel&&sel.trim()) return;   // selecting text, not tapping
+    const sel=window.getSelection&&String(window.getSelection()); if(sel&&sel.trim()&&!(tapTimer&&tapWord===w)) return;   // selecting text, not tapping
     if(down&&(Math.abs(e.clientX-down.x)>8||Math.abs(e.clientY-down.y)>8||performance.now()-down.t>500)) return; // swipe or long-press
     const m=WORDMAP[w.dataset.p+":"+w.dataset.w]; if(!m) return;
-    box.querySelectorAll("span.w.tapped").forEach(x=>x.classList.remove("tapped"));
-    w.classList.add("tapped"); setTimeout(()=>w.classList.remove("tapped"),900);
-    playFromWord(m[0],m[1]);
+    // a second tap on the same word within TAP2_MS = show its meaning instead of playing
+    if(tapTimer&&tapWord===w){ clearTimeout(tapTimer); tapTimer=null; tapWord=null; showGloss(w); return; }
+    clearTimeout(tapTimer); tapWord=w; hideGloss();
+    tapTimer=setTimeout(()=>{
+      tapTimer=null; tapWord=null;
+      box.querySelectorAll("span.w.tapped").forEach(x=>x.classList.remove("tapped"));
+      w.classList.add("tapped"); setTimeout(()=>w.classList.remove("tapped"),900);
+      playFromWord(m[0],m[1]);
+    },TAP2_MS);
   });
+  // a desktop double-click would otherwise select the word
+  box.addEventListener("mousedown",e=>{ if(e.detail>1&&e.target.closest&&e.target.closest("span.w")) e.preventDefault(); });
 })();
 
 /* ----- timeline model ----------------------------------------------------- */

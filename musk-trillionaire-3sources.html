@@ -170,9 +170,14 @@
   .worksheet{margin-top:34px;}
   .worksheet p{margin:0 0 12px;font-size:15px;color:var(--muted);word-break:keep-all;}
   .worksheet .pdf-group{margin-left:0;}
-  article.reading h3.sub{font-family:Georgia,"Times New Roman",serif;font-size:19px;margin:22px 0 6px;color:var(--teal-deep);}
   img.owl{display:block;width:44px;height:44px;border-radius:12px;flex:none;}
   img.owl-mini{width:18px;height:18px;border-radius:5px;vertical-align:-3px;margin-right:4px;}
+  /* double-tap meaning bubble */
+  article.reading{touch-action:manipulation;}
+  article.reading span.w.glossed{background:var(--amber-soft);box-shadow:0 0 0 2px var(--amber-soft);}
+  .gloss{position:absolute;z-index:50;max-width:min(300px,calc(100vw - 16px));background:var(--teal-deep);color:#fff;border-radius:12px;padding:10px 14px;font-size:15px;line-height:1.45;box-shadow:0 10px 24px -10px rgba(0,0,0,.45);pointer-events:auto;word-break:keep-all;}
+  .gloss b{display:block;font-size:13px;font-weight:700;color:#f6e3c6;letter-spacing:.2px;margin-bottom:2px;}
+  article.reading h3.sub{font-family:Georgia,"Times New Roman",serif;font-size:19px;margin:22px 0 6px;color:var(--teal-deep);}
 </style>
 </head>
 <body>
@@ -239,7 +244,7 @@
   <details class="scriptbox" id="scriptBox">
     <summary><span class="sum-closed">📜 스크립트 보기 · Show script</span><span class="sum-open">📜 스크립트 접기 · Hide script</span></summary>
     <article class="reading" id="reading"></article>
-    <p class="taphint">💡 단어를 길게 누르면 휴대폰 사전·번역을 쓸 수 있어요.</p>
+    <p class="taphint">📱 휴대폰에서는 단어를 길게 누르면 사전·번역을 쓸 수 있어요.</p>
   </details>
 
   <div class="sec-h"><span class="tag">4 · Comprehension</span><h3>이해 퀴즈 · Multiple choice</h3></div>
@@ -287,52 +292,52 @@ const SOURCES = {
      [
       "tied up",
       "phrase",
-      "묶여 있는 · 묶여 있는 · (of money) invested in something, so it is not free to spend"
+      "묶여 있는 · 묶여 있는 · 묶여 있는 · (of money) invested in something, so it is not free to spend"
      ],
      [
       "miscellaneous",
       "adj",
-      "잡다한, 여러 종류의 · 잡다한, 여러 종류의 · made up of many different kinds of things"
+      "잡다한, 여러 종류의 · 잡다한, 여러 종류의 · 잡다한, 여러 종류의 · made up of many different kinds of things"
      ],
      [
       "valuation",
       "noun",
-      "가치 평가 · 가치 평가 · an estimate of how much something is worth"
+      "가치 평가 · 가치 평가 · 가치 평가 · an estimate of how much something is worth"
      ],
      [
       "bullish",
       "adj",
-      "낙관적인(상승을 기대하는) · 낙관적인(상승을 기대하는) · confident that a price or value will rise"
+      "낙관적인(상승을 기대하는) · 낙관적인(상승을 기대하는) · 낙관적인(상승을 기대하는) · confident that a price or value will rise"
      ],
      [
       "counteract",
       "verb",
-      "상쇄하다 · 상쇄하다 · to reduce or cancel out the effect of something"
+      "상쇄하다 · 상쇄하다 · 상쇄하다 · to reduce or cancel out the effect of something"
      ],
      [
       "threshold",
       "noun",
-      "기준점, 문턱 · 기준점, 문턱 · a level or point that marks the start of something"
+      "기준점, 문턱 · 기준점, 문턱 · 기준점, 문턱 · a level or point that marks the start of something"
      ],
      [
       "borrow against",
       "phrase",
-      "~을 담보로 돈을 빌리다 · ~을 담보로 돈을 빌리다 · to take a loan using something you own as security"
+      "~을 담보로 돈을 빌리다 · ~을 담보로 돈을 빌리다 · ~을 담보로 돈을 빌리다 · to take a loan using something you own as security"
      ],
      [
       "notable",
       "adj",
-      "주목할 만한 · 주목할 만한 · worth paying attention to; significant"
+      "주목할 만한 · 주목할 만한 · 주목할 만한 · worth paying attention to; significant"
      ],
      [
       "dramatically",
       "adv",
-      "극적으로 · 극적으로 · to a large and sudden degree"
+      "극적으로 · 극적으로 · 극적으로 · to a large and sudden degree"
      ],
      [
       "wrap your head around",
       "idiom",
-      "이해하다 · 이해하다 · to manage to fully understand something difficult"
+      "이해하다 · 이해하다 · 이해하다 · to manage to fully understand something difficult"
      ]
     ],
     "vocabQuiz": [
@@ -476,52 +481,52 @@ const SOURCES = {
      [
       "rich",
       "adj",
-      "부유한 · 부유한 · having a lot of money"
+      "부유한 · 부유한 · 부유한 · having a lot of money"
      ],
      [
       "trillion",
       "noun",
-      "1조 · 1조 · one thousand billion (1,000,000,000,000)"
+      "1조 · 1조 · 1조 · one thousand billion (1,000,000,000,000)"
      ],
      [
       "billion",
       "noun",
-      "10억 · 10억 · one thousand million"
+      "10억 · 10억 · 10억 · one thousand million"
      ],
      [
       "own",
       "verb",
-      "소유하다 · 소유하다 · to have something that belongs to you"
+      "소유하다 · 소유하다 · 소유하다 · to have something that belongs to you"
      ],
      [
       "worth",
       "adj",
-      "~의 가치가 있는 · ~의 가치가 있는 · having a value of a certain amount"
+      "~의 가치가 있는 · ~의 가치가 있는 · ~의 가치가 있는 · having a value of a certain amount"
      ],
      [
       "company",
       "noun",
-      "회사 · 회사 · a business that makes or sells things"
+      "회사 · 회사 · 회사 · a business that makes or sells things"
      ],
      [
       "leader",
       "noun",
-      "대표, 리더 · 대표, 리더 · the person in charge of a group or company"
+      "대표, 리더 · 대표, 리더 · 대표, 리더 · the person in charge of a group or company"
      ],
      [
       "electric",
       "adj",
-      "전기의 · 전기의 · using electricity, not gas"
+      "전기의 · 전기의 · 전기의 · using electricity, not gas"
      ],
      [
       "price",
       "noun",
-      "가격 · 가격 · the money you pay to buy something"
+      "가격 · 가격 · 가격 · the money you pay to buy something"
      ],
      [
       "imagine",
       "verb",
-      "상상하다 · 상상하다 · to make a picture of something in your mind"
+      "상상하다 · 상상하다 · 상상하다 · to make a picture of something in your mind"
      ]
     ],
     "vocabQuiz": [
@@ -664,52 +669,52 @@ const SOURCES = {
      [
       "wealth",
       "noun",
-      "재산, 부 · 재산, 부 · a large amount of money and valuable things"
+      "재산, 부 · 재산, 부 · 재산, 부 · a large amount of money and valuable things"
      ],
      [
       "fortune",
       "noun",
-      "큰 재산 · 큰 재산 · a very large amount of money"
+      "큰 재산 · 큰 재산 · 큰 재산 · a very large amount of money"
      ],
      [
       "stake",
       "noun",
-      "지분 · 지분 · a part or share of a company that someone owns"
+      "지분 · 지분 · 지분 · a part or share of a company that someone owns"
      ],
      [
       "estimate",
       "verb",
-      "추정하다 · 추정하다 · to guess an amount or value carefully"
+      "추정하다 · 추정하다 · 추정하다 · to guess an amount or value carefully"
      ],
      [
       "investor",
       "noun",
-      "투자자 · 투자자 · a person who puts money into a company to make a profit"
+      "투자자 · 투자자 · 투자자 · a person who puts money into a company to make a profit"
      ],
      [
       "shareholder",
       "noun",
-      "주주 · 주주 · a person who owns shares in a company"
+      "주주 · 주주 · 주주 · a person who owns shares in a company"
      ],
      [
       "struggle",
       "verb",
-      "애쓰다, 힘들어하다 · 애쓰다, 힘들어하다 · to try hard to do something that is difficult"
+      "애쓰다, 힘들어하다 · 애쓰다, 힘들어하다 · 애쓰다, 힘들어하다 · to try hard to do something that is difficult"
      ],
      [
       "tricky",
       "adj",
-      "까다로운 · 까다로운 · difficult to do or deal with"
+      "까다로운 · 까다로운 · 까다로운 · difficult to do or deal with"
      ],
      [
       "roughly",
       "adv",
-      "대략 · 대략 · approximately; not exactly"
+      "대략 · 대략 · 대략 · approximately; not exactly"
      ],
      [
       "striking",
       "adj",
-      "눈에 띄는 · 눈에 띄는 · very noticeable or surprising"
+      "눈에 띄는 · 눈에 띄는 · 눈에 띄는 · very noticeable or surprising"
      ]
     ],
     "vocabQuiz": [
@@ -859,52 +864,52 @@ const SOURCES = {
      [
       "catapult",
       "verb",
-      "단숨에 올려놓다 · 단숨에 올려놓다 · to suddenly send someone or something into a new position or situation"
+      "단숨에 올려놓다 · 단숨에 올려놓다 · 단숨에 올려놓다 · to suddenly send someone or something into a new position or situation"
      ],
      [
       "market debut",
       "phrase",
-      "상장 첫 거래 · 상장 첫 거래 · the first time a company's shares are traded publicly"
+      "상장 첫 거래 · 상장 첫 거래 · 상장 첫 거래 · the first time a company's shares are traded publicly"
      ],
      [
       "amass",
       "verb",
-      "모으다, 축적하다 · 모으다, 축적하다 · to gather or collect a large amount of something"
+      "모으다, 축적하다 · 모으다, 축적하다 · 모으다, 축적하다 · to gather or collect a large amount of something"
      ],
      [
       "unprecedented",
       "adj",
-      "전례 없는 · 전례 없는 · never having happened before"
+      "전례 없는 · 전례 없는 · 전례 없는 · never having happened before"
      ],
      [
       "valuation",
       "noun",
-      "가치 평가 · 가치 평가 · an estimate of how much something is worth"
+      "가치 평가 · 가치 평가 · 가치 평가 · an estimate of how much something is worth"
      ],
      [
       "comprehend",
       "verb",
-      "이해하다 · 이해하다 · to understand something fully"
+      "이해하다 · 이해하다 · 이해하다 · to understand something fully"
      ],
      [
       "put in perspective",
       "idiom",
-      "비교해서 실감 나게 하다 · 비교해서 실감 나게 하다 · to compare something so its size or importance is clearer"
+      "비교해서 실감 나게 하다 · 비교해서 실감 나게 하다 · 비교해서 실감 나게 하다 · to compare something so its size or importance is clearer"
      ],
      [
       "eclipse",
       "verb",
-      "능가하다, 가리다 · 능가하다, 가리다 · to be far greater or more important than something else"
+      "능가하다, 가리다 · 능가하다, 가리다 · 능가하다, 가리다 · to be far greater or more important than something else"
      ],
      [
       "GDP",
       "noun",
-      "국내총생산 · 국내총생산 · the total value of goods and services a country produces in a year"
+      "국내총생산 · 국내총생산 · 국내총생산 · the total value of goods and services a country produces in a year"
      ],
      [
       "permanent",
       "adj",
-      "영구적인 · 영구적인 · lasting for a very long time or forever"
+      "영구적인 · 영구적인 · 영구적인 · lasting for a very long time or forever"
      ]
     ],
     "vocabQuiz": [
@@ -1046,52 +1051,52 @@ const SOURCES = {
      [
       "rich",
       "adj",
-      "부유한 · 부유한 · having a lot of money"
+      "부유한 · 부유한 · 부유한 · having a lot of money"
      ],
      [
       "trillion",
       "noun",
-      "1조 · 1조 · one thousand billion; a one with twelve zeros"
+      "1조 · 1조 · 1조 · one thousand billion; a one with twelve zeros"
      ],
      [
       "company",
       "noun",
-      "회사 · 회사 · a business that makes or sells things"
+      "회사 · 회사 · 회사 · a business that makes or sells things"
      ],
      [
       "share",
       "noun",
-      "주식 · 주식 · a small part of a company that people can buy"
+      "주식 · 주식 · 주식 · a small part of a company that people can buy"
      ],
      [
       "cost",
       "verb",
-      "(비용이) 들다 · (비용이) 들다 · to have a price"
+      "(비용이) 들다 · (비용이) 들다 · (비용이) 들다 · to have a price"
      ],
      [
       "save",
       "verb",
-      "저축하다 · 저축하다 · to keep money instead of spending it"
+      "저축하다 · 저축하다 · 저축하다 · to keep money instead of spending it"
      ],
      [
       "example",
       "noun",
-      "예시 · 예시 · a thing that shows what you mean"
+      "예시 · 예시 · 예시 · a thing that shows what you mean"
      ],
      [
       "country",
       "noun",
-      "나라 · 나라 · a land with its own people and government"
+      "나라 · 나라 · 나라 · a land with its own people and government"
      ],
      [
       "build",
       "verb",
-      "짓다, 만들다 · 짓다, 만들다 · to make something by putting parts together"
+      "짓다, 만들다 · 짓다, 만들다 · 짓다, 만들다 · to make something by putting parts together"
      ],
      [
       "hope",
       "verb",
-      "바라다 · 바라다 · to want something to happen"
+      "바라다 · 바라다 · 바라다 · to want something to happen"
      ]
     ],
     "vocabQuiz": [
@@ -1233,52 +1238,52 @@ const SOURCES = {
      [
       "fortune",
       "noun",
-      "큰 재산 · 큰 재산 · a very large amount of money"
+      "큰 재산 · 큰 재산 · 큰 재산 · a very large amount of money"
      ],
      [
       "estimate",
       "verb",
-      "추정하다 · 추정하다 · to guess an amount or value carefully"
+      "추정하다 · 추정하다 · 추정하다 · to guess an amount or value carefully"
      ],
      [
       "enormous",
       "adj",
-      "엄청난 · 엄청난 · extremely large"
+      "엄청난 · 엄청난 · 엄청난 · extremely large"
      ],
      [
       "compare",
       "verb",
-      "비교하다 · 비교하다 · to look at how two things are similar or different"
+      "비교하다 · 비교하다 · 비교하다 · to look at how two things are similar or different"
      ],
      [
       "earn",
       "verb",
-      "벌다 · 벌다 · to get money by working"
+      "벌다 · 벌다 · 벌다 · to get money by working"
      ],
      [
       "produce",
       "verb",
-      "생산하다 · 생산하다 · to make or grow something, especially in large amounts"
+      "생산하다 · 생산하다 · 생산하다 · to make or grow something, especially in large amounts"
      ],
      [
       "economy",
       "noun",
-      "경제 · 경제 · the system of money, jobs, and trade in a country"
+      "경제 · 경제 · 경제 · the system of money, jobs, and trade in a country"
      ],
      [
       "equally",
       "adv",
-      "똑같이 · 똑같이 · in the same amount for each person"
+      "똑같이 · 똑같이 · 똑같이 · in the same amount for each person"
      ],
      [
       "vast",
       "adj",
-      "막대한 · 막대한 · extremely large in size or amount"
+      "막대한 · 막대한 · 막대한 · extremely large in size or amount"
      ],
      [
       "rely on",
       "phrasal verb",
-      "~에 의존하다 · ~에 의존하다 · to need or depend on someone or something"
+      "~에 의존하다 · ~에 의존하다 · ~에 의존하다 · to need or depend on someone or something"
      ]
     ],
     "vocabQuiz": [
@@ -1428,52 +1433,52 @@ const SOURCES = {
      [
       "on paper",
       "idiom",
-      "서류상으로는 · 서류상으로는 · in theory or in writing, but not necessarily in reality"
+      "서류상으로는 · 서류상으로는 · 서류상으로는 · in theory or in writing, but not necessarily in reality"
      ],
      [
       "reported",
       "adj",
-      "보도된 · 보도된 · said to be true by a source, though not always confirmed"
+      "보도된 · 보도된 · 보도된 · said to be true by a source, though not always confirmed"
      ],
      [
       "heyday",
       "noun",
-      "전성기 · 전성기 · the time when someone or something was most successful or popular"
+      "전성기 · 전성기 · 전성기 · the time when someone or something was most successful or popular"
      ],
      [
       "symbol",
       "noun",
-      "상징 · 상징 · something that strongly represents an idea"
+      "상징 · 상징 · 상징 · something that strongly represents an idea"
      ],
      [
       "accelerate",
       "verb",
-      "가속하다 · 가속하다 · to happen or increase faster"
+      "가속하다 · 가속하다 · 가속하다 · to happen or increase faster"
      ],
      [
       "on record",
       "phrase",
-      "기록상 · 기록상 · officially written down or known"
+      "기록상 · 기록상 · 기록상 · officially written down or known"
      ],
      [
       "struggle",
       "verb",
-      "애쓰다, 힘들어하다 · 애쓰다, 힘들어하다 · to try hard to do something difficult"
+      "애쓰다, 힘들어하다 · 애쓰다, 힘들어하다 · 애쓰다, 힘들어하다 · to try hard to do something difficult"
      ],
      [
       "poverty",
       "noun",
-      "가난, 빈곤 · 가난, 빈곤 · the state of being very poor"
+      "가난, 빈곤 · 가난, 빈곤 · 가난, 빈곤 · the state of being very poor"
      ],
      [
       "on the brink of",
       "idiom",
-      "~직전의 · ~직전의 · very close to a (usually bad) situation"
+      "~직전의 · ~직전의 · ~직전의 · very close to a (usually bad) situation"
      ],
      [
       "fund",
       "verb",
-      "자금을 대다 · 자금을 대다 · to provide money for something"
+      "자금을 대다 · 자금을 대다 · 자금을 대다 · to provide money for something"
      ]
     ],
     "vocabQuiz": [
@@ -1615,52 +1620,52 @@ const SOURCES = {
      [
       "trillionaire",
       "noun",
-      "조만장자(1조 달러 부자) · 조만장자(1조 달러 부자) · a person who has one trillion dollars"
+      "조만장자(1조 달러 부자) · 조만장자(1조 달러 부자) · 조만장자(1조 달러 부자) · a person who has one trillion dollars"
      ],
      [
       "on paper",
       "phrase",
-      "서류상으로는 · 서류상으로는 · true in writing, but maybe not real money you can use"
+      "서류상으로는 · 서류상으로는 · 서류상으로는 · true in writing, but maybe not real money you can use"
      ],
      [
       "country",
       "noun",
-      "나라 · 나라 · a land with its own people and government"
+      "나라 · 나라 · 나라 · a land with its own people and government"
      ],
      [
       "imagine",
       "verb",
-      "상상하다 · 상상하다 · to make a picture in your mind"
+      "상상하다 · 상상하다 · 상상하다 · to make a picture in your mind"
      ],
      [
       "line",
       "noun",
-      "줄 · 줄 · a long row of things, one after another"
+      "줄 · 줄 · 줄 · a long row of things, one after another"
      ],
      [
       "problem",
       "noun",
-      "문제 · 문제 · something that is wrong and needs to be fixed"
+      "문제 · 문제 · 문제 · something that is wrong and needs to be fixed"
      ],
      [
       "gap",
       "noun",
-      "격차 · 격차 · a big space or difference between two things"
+      "격차 · 격차 · 격차 · a big space or difference between two things"
      ],
      [
       "charity",
       "noun",
-      "자선 단체 · 자선 단체 · a group that helps people who need help"
+      "자선 단체 · 자선 단체 · 자선 단체 · a group that helps people who need help"
      ],
      [
       "poor",
       "adj",
-      "가난한 · 가난한 · having very little money"
+      "가난한 · 가난한 · 가난한 · having very little money"
      ],
      [
       "save",
       "verb",
-      "저축하다 · 저축하다 · to help someone stay alive or safe"
+      "저축하다 · 저축하다 · 저축하다 · to help someone stay alive or safe"
      ]
     ],
     "vocabQuiz": [
@@ -1802,52 +1807,52 @@ const SOURCES = {
      [
       "on paper",
       "idiom",
-      "서류상으로는 · 서류상으로는 · true in theory or in writing, but not as cash that can be spent"
+      "서류상으로는 · 서류상으로는 · 서류상으로는 · true in theory or in writing, but not as cash that can be spent"
      ],
      [
       "reported",
       "adj",
-      "보도된 · 보도된 · said to be true by a source, though not fully confirmed"
+      "보도된 · 보도된 · 보도된 · said to be true by a source, though not fully confirmed"
      ],
      [
       "grasp",
       "verb",
-      "이해하다, 파악하다 · 이해하다, 파악하다 · to understand something, especially something difficult"
+      "이해하다, 파악하다 · 이해하다, 파악하다 · 이해하다, 파악하다 · to understand something, especially something difficult"
      ],
      [
       "symbol",
       "noun",
-      "상징 · 상징 · something that represents a larger idea"
+      "상징 · 상징 · 상징 · something that represents a larger idea"
      ],
      [
       "gap",
       "noun",
-      "격차 · 격차 · a large difference between two things or groups"
+      "격차 · 격차 · 격차 · a large difference between two things or groups"
      ],
      [
       "record",
       "noun",
-      "최고 기록 · 최고 기록 · the highest or best level ever measured"
+      "최고 기록 · 최고 기록 · 최고 기록 · the highest or best level ever measured"
      ],
      [
       "poverty",
       "noun",
-      "가난, 빈곤 · 가난, 빈곤 · the state of being very poor"
+      "가난, 빈곤 · 가난, 빈곤 · 가난, 빈곤 · the state of being very poor"
      ],
      [
       "contrast",
       "noun",
-      "대조 · 대조 · a clear difference between two things"
+      "대조 · 대조 · 대조 · a clear difference between two things"
      ],
      [
       "starvation",
       "noun",
-      "굶주림 · 굶주림 · suffering or death caused by not having enough food"
+      "굶주림 · 굶주림 · 굶주림 · suffering or death caused by not having enough food"
      ],
      [
       "fund",
       "verb",
-      "자금을 대다 · 자금을 대다 · to provide the money needed for something"
+      "자금을 대다 · 자금을 대다 · 자금을 대다 · to provide the money needed for something"
      ]
     ],
     "vocabQuiz": [
@@ -1979,6 +1984,7 @@ const SOURCES = {
  }
 };
 
+const GLOSS = {};
 const SRC_ORDER = ["wsj", "forbes", "reuters"];
 const LVL_ORDER = ["original", "a2", "b12"];
 const TAPS = false;             // tap-a-word-to-play is a paid-pack feature
@@ -2288,18 +2294,44 @@ function playFromWord(ci,wi){
   qi=ci; startWordInChunk=wi; audioState="playing"; setUI();
   setTimeout(()=>{ if(audioState==="playing") speakCurrent(); },60);
 }
+/* ----- double-tap a word: Korean meaning bubble -------------------------------- */
+const TAP2_MS=300; let tapTimer=null, tapWord=null;
+const glossKey=t=>t.toLowerCase().replace(/[’]/g,"'").replace(/[^a-z0-9'$%.,-]/g,"").replace(/^[.,'-]+|[.,'-]+$/g,"");
+const glossBox=document.createElement("div"); glossBox.className="gloss"; glossBox.hidden=true; glossBox.setAttribute("role","status");
+document.body.appendChild(glossBox);
+function showGloss(w){
+  const word=w.textContent.replace(/^[^A-Za-z0-9$]+|[^A-Za-z0-9%]+$/g,""), ko=GLOSS[glossKey(w.textContent)];
+  if(!ko) return;
+  glossBox.innerHTML=`<b>${word}</b><span>${ko}</span>`; glossBox.hidden=false;
+  document.querySelectorAll("#reading span.w.glossed").forEach(x=>x.classList.remove("glossed")); w.classList.add("glossed");
+  const r=w.getBoundingClientRect(), bw=glossBox.offsetWidth, bh=glossBox.offsetHeight, vw=document.documentElement.clientWidth;
+  let left=r.left+r.width/2-bw/2; left=Math.max(8,Math.min(left,vw-bw-8));
+  let top=r.top-bh-10; glossBox.classList.toggle("below",top<8); if(top<8) top=r.bottom+10;
+  glossBox.style.left=(left+scrollX)+"px"; glossBox.style.top=(top+scrollY)+"px";
+}
+function hideGloss(){ glossBox.hidden=true; document.querySelectorAll("#reading span.w.glossed").forEach(x=>x.classList.remove("glossed")); }
+document.addEventListener("click",e=>{ if(!(e.target.closest&&(e.target.closest("span.w")||e.target.closest(".gloss")))) hideGloss(); });
+window.addEventListener("resize",hideGloss);
 (function(){
   const box=document.getElementById("reading"); let down=null;
   box.addEventListener("pointerdown",e=>{ down={x:e.clientX,y:e.clientY,t:performance.now()}; });
   box.addEventListener("click",e=>{
     const w=e.target.closest&&e.target.closest("span.w"); if(!w) return;
-    const sel=window.getSelection&&String(window.getSelection()); if(sel&&sel.trim()) return;   // selecting text, not tapping
+    const sel=window.getSelection&&String(window.getSelection()); if(sel&&sel.trim()&&!(tapTimer&&tapWord===w)) return;   // selecting text, not tapping
     if(down&&(Math.abs(e.clientX-down.x)>8||Math.abs(e.clientY-down.y)>8||performance.now()-down.t>500)) return; // swipe or long-press
     const m=WORDMAP[w.dataset.p+":"+w.dataset.w]; if(!m) return;
-    box.querySelectorAll("span.w.tapped").forEach(x=>x.classList.remove("tapped"));
-    w.classList.add("tapped"); setTimeout(()=>w.classList.remove("tapped"),900);
-    playFromWord(m[0],m[1]);
+    // a second tap on the same word within TAP2_MS = show its meaning instead of playing
+    if(tapTimer&&tapWord===w){ clearTimeout(tapTimer); tapTimer=null; tapWord=null; showGloss(w); return; }
+    clearTimeout(tapTimer); tapWord=w; hideGloss();
+    tapTimer=setTimeout(()=>{
+      tapTimer=null; tapWord=null;
+      box.querySelectorAll("span.w.tapped").forEach(x=>x.classList.remove("tapped"));
+      w.classList.add("tapped"); setTimeout(()=>w.classList.remove("tapped"),900);
+      playFromWord(m[0],m[1]);
+    },TAP2_MS);
   });
+  // a desktop double-click would otherwise select the word
+  box.addEventListener("mousedown",e=>{ if(e.detail>1&&e.target.closest&&e.target.closest("span.w")) e.preventDefault(); });
 })();
 
 /* ----- timeline model ----------------------------------------------------- */
