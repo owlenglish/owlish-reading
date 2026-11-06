@@ -47,13 +47,18 @@ export default async function handler(req, res) {
       if (!validEdition(edition)) return json(res, 400, { error: 'Unknown drill.' });
 
       const progress = (await readJSON(P.prg(key))) || blankProgress();
+      const prev = progress.editions && progress.editions[edition];
       const next = clean(body.state);
       progress.editions = progress.editions || {};
       progress.editions[edition] = next;
       await writeJSON(P.prg(key), progress);
 
-      const marked = Object.keys(next.results).length;
-      await touchRoster(key, body.email, edition, {
+      /* The roster only needs updating when the shape of the work changes, not on every
+         keystroke autosave; each write counts against the storage plan. */
+      const count = (e, f) => Object.keys((e && e[f]) || {}).length;
+      const marked = count(next, 'results');
+      const changed = !prev || ['results', 'answers', 'recs'].some((f) => count(prev, f) !== count(next, f));
+      if (changed) await touchRoster(key, body.email, edition, {
         marked, written: Object.keys(next.answers).length,
         recorded: Object.keys(next.recs).length, idx: next.idx, last: next.updated,
       });

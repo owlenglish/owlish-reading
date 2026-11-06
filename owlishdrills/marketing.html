@@ -287,7 +287,7 @@ const C={ink:'#14213d',data:'#2a6f97',data2:'#bc4749',amber:'#e09f3e',
   grid:'#dde3ea',axis:'#9aa7b4',muted:'#5b6b7b',pie2:'#dde3ea',soft:'#9dc0d6'};
 
 /* ---------------- chart geometry ---------------- */
-const W=480,H=250,padL=50,padR=18,padT=24,padB=40;
+const W=480,H=250,padL=50,padR=28,padT=34,padB=40;
 const x0=padL, xR=W-padR, y0=H-padB, yT=padT;
 const plotW=xR-x0, plotH=y0-yT;
 const xAt=(i,n)=> n<=1 ? (x0+xR)/2 : x0 + plotW*(i/(n-1));
@@ -298,7 +298,7 @@ function axisBase(max,xlabels){
   let s=`<line x1="${x0}" y1="${yT}" x2="${x0}" y2="${y0}" stroke="${C.axis}" stroke-width="1"/>`;
   s+=`<line x1="${x0}" y1="${y0}" x2="${xR}" y2="${y0}" stroke="${C.axis}" stroke-width="1"/>`;
   [0,.5,1].forEach(f=>{
-    const y=y0-f*plotH, v=Math.round(max*f*10)/10;
+    const y=y0-f*plotH, v=(Math.round(max*f*100)/100).toLocaleString('en-US');
     if(f>0) s+=`<line x1="${x0}" y1="${y}" x2="${xR}" y2="${y}" stroke="${C.grid}" stroke-width="1"/>`;
     s+=`<text x="${x0-8}" y="${y+4}" text-anchor="end" font-size="11" fill="${C.muted}">${v}</text>`;
   });
@@ -311,16 +311,16 @@ function svgWrap(inner){return `<svg class="chart" viewBox="0 0 ${W} ${H}" role=
 function legend(items){
   let s='<g font-size="11" font-weight="600">',cx=x0+6;
   items.forEach(it=>{
-    s+=`<rect x="${cx}" y="${yT-6}" width="12" height="3" rx="1.5" fill="${it.c}"/>`+
-       `<text x="${cx+17}" y="${yT-1}" fill="${C.muted}">${it.n}</text>`;
-    cx+=22+it.n.length*6.1;
+    s+=`<rect x="${cx}" y="${yT-22}" width="12" height="3" rx="1.5" fill="${it.c}"/>`+
+       `<text x="${cx+17}" y="${yT-17}" fill="${C.muted}">${it.n}</text>`;
+    cx+=26+it.n.length*6.8;
   });
   return s+'</g>';
 }
-function threshLine(max,t){
-  const y=yAt(t.v,max);
+function threshLine(max,t,side='right',below=false){
+  const y=yAt(t.v,max), left=side==='left';
   return `<line x1="${x0}" y1="${y}" x2="${xR}" y2="${y}" stroke="${C.data2}" stroke-width="1.8" stroke-dasharray="6 4"/>`+
-         `<text x="${xR}" y="${y-6}" text-anchor="end" font-size="11" font-weight="700" fill="${C.data2}">${t.label}</text>`;
+         `<text x="${left?x0+6:xR}" y="${below?y+15:y-6}" text-anchor="${left?'start':'end'}" font-size="11" font-weight="700" fill="${C.data2}">${t.label}</text>`;
 }
 
 /* ---- vertical bars ---- */
@@ -368,6 +368,7 @@ function sbars(series,{labels,max,names}){
     series.forEach((sr,k)=>{
       const yTop=yAt(run+sr[i],max), yBot=yAt(run,max);
       s+=`<rect x="${x}" y="${yTop}" width="${bw}" height="${Math.max(yBot-yTop,0)}" fill="${cols[k%3]}"/>`;
+      if(yBot-yTop>=15) s+=`<text x="${cx}" y="${(yTop+yBot)/2+4}" text-anchor="middle" font-size="10.5" font-weight="700" fill="${k%3===2?C.ink:'#fff'}">${fmt(sr[i])}</text>`;
       run+=sr[i];
     });
     s+=`<text x="${cx}" y="${yAt(tot,max)-6}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${C.ink}">${fmt(tot)}</text>`;
@@ -379,7 +380,7 @@ function sbars(series,{labels,max,names}){
 
 /* ---- horizontal bars ---- */
 function hbars(data,{labels,max,highlight=-1,unit=''}){
-  const n=data.length, top=16, rowH=(H-top-14)/n, lx=86, bx=94, maxW=W-bx-70;
+  const n=data.length, top=16, rowH=(H-top-14)/n, lx=Math.max(86,Math.max(...labels.map(l=>l.length))*6.9+6), bx=lx+8, maxW=W-bx-70;
   let s='';
   data.forEach((v,i)=>{
     const y=top+rowH*i+rowH*0.18, h=rowH*0.62, w=maxW*(v/max);
@@ -426,7 +427,11 @@ function line(data,{labels,max,mark={},startEnd=false,thresh=null,event=null,zoo
     const a=xAt(zoom[0],n)-10,b=xAt(zoom[1],n)+10;
     s+=`<rect x="${a}" y="${yT}" width="${b-a}" height="${plotH}" fill="${C.amber}" opacity=".16" rx="4"/>`;
   }
-  if(thresh) s+=threshLine(max,thresh);
+  if(thresh){
+    /* put the label on whichever end the line is further from, so it never sits on a data point */
+    const ty=yAt(thresh.v,max), dR=Math.abs(pts[n-1][1]-ty), dL=Math.abs(pts[0][1]-ty);
+    s+=threshLine(max,thresh,(dR<22&&dL>dR)?'left':'right',dR<22&&dL<22);
+  }
   if(event){
     const ex=xAt(event.i,n);
     s+=`<line x1="${ex}" y1="${yT}" x2="${ex}" y2="${y0}" stroke="${C.ink}" stroke-width="1.5" stroke-dasharray="4 4"/>`+
@@ -434,11 +439,12 @@ function line(data,{labels,max,mark={},startEnd=false,thresh=null,event=null,zoo
   }
   s+=`<polyline fill="none" stroke="${C.data}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="${pts.map(p=>p.join(',')).join(' ')}"/>`;
   pts.forEach(p=> s+=`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#fff" stroke="${C.data}" stroke-width="2"/>`);
-  if(values) data.forEach((v,i)=> s+=`<text x="${pts[i][0]}" y="${pts[i][1]-9}" text-anchor="middle" font-size="11" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`);
+  if(values) data.forEach((v,i)=>{const e=i===0?'start':i===n-1?'end':'middle', dx=i===0?3:i===n-1?-3:0;
+    s+=`<text x="${pts[i][0]+dx}" y="${pts[i][1]-9}" text-anchor="${e}" font-size="11" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;});
   if(startEnd){
     [[0,data[0]],[n-1,data[n-1]]].forEach(([i,v])=>{
       const p=pts[i];
-      s+=`<text x="${p[0]}" y="${p[1]-9}" text-anchor="middle" font-size="12" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;
+      s+=`<text x="${p[0]+(i===0?3:-3)}" y="${p[1]-9}" text-anchor="${i===0?'start':'end'}" font-size="12" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;
     });
   }
   if(mark.peak!=null){const i=data.indexOf(Math.max(...data));const p=pts[i];
@@ -618,7 +624,7 @@ const CARDS=[
   cap:"Cost per install within each spend tier · $",
   q:"Give the cost of the next users, not the average so far.",
   model:"<em>The incremental cost of</em> the next 10,000 installs is about 14 dollars each.",
-  up:"Our average is 8 dollars, but <em>the incremental cost of</em> the next 10,000 is 14 — that's the number the decision turns on.",
+  up:"Our average is about 9 dollars, but <em>the incremental cost of</em> the next 10,000 is 14 — that's the number the decision turns on.",
   watch:"Incremental (the next one) is not average (all of them so far). Quoting the average when asked for the incremental is how budgets get over-committed."},
 
 /* ===== F · Funnel & attribution ===== */
@@ -628,7 +634,7 @@ const CARDS=[
   cap:"Users remaining at each step · % of installs",
   q:"Point to the worst step in the funnel.",
   model:"<em>The biggest drop-off is between</em> install and registration.",
-  up:"<em>The biggest drop-off is between</em> install and registration — we lose 45 percent before anyone finishes a profile.",
+  up:"<em>The biggest drop-off is between</em> install and registration — we lose 45 percent before they even register.",
   watch:"“Between” needs both ends: between install and registration. “The drop-off between registration” is an unfinished sentence."},
  {id:'F2',t:'F',chunk:'on a last-click basis',
   sc:'Your attribution model flatters search, and you would rather say so than be caught.',
@@ -711,8 +717,8 @@ const CARDS=[
   chart:gbars([34,28,12,10,16],[26,22,18,10,24],{labels:MKT,max:40,names:['Current %','Proposed %']}),
   cap:"Share of budget by market · %",
   q:"Close with one concrete recommendation from this chart.",
-  model:"<em>I'd recommend shifting</em> 20 percent of the budget into India and Taiwan.",
-  up:"<em>I'd recommend shifting</em> 20 percent into India and Taiwan, where cost per install is lowest and growth is fastest.",
+  model:"<em>I'd recommend shifting</em> about 14 percent of the budget into India and Taiwan.",
+  up:"<em>I'd recommend shifting</em> 14 points into India and Taiwan, where cost per install is lowest and growth is fastest.",
   watch:"“Recommend shifting”, or “recommend that we shift”. “I recommend to shift” is the single most common mistake in this sentence."},
  {id:'D2',t:'D',chunk:'the trade-off is',
   sc:'Your recommendation has a real cost. Better you name it than someone else.',
@@ -720,7 +726,7 @@ const CARDS=[
   cap:"Indexed · Q1 = 100 · under the proposed shift",
   q:"Name the downside of your own proposal before you are asked.",
   model:"<em>The trade-off is</em> that volume drops while we build up the new markets.",
-  up:"<em>The trade-off is</em> two quarters of lower volume in exchange for a materially better CPI from Q3 onward.",
+  up:"<em>The trade-off is</em> three quarters of lower volume in exchange for a materially better CPI from Q3 onward.",
   watch:"“Trade-off” is the noun — the trade-off is. The verb is two words: “we'd trade volume off against efficiency”."},
  {id:'D3',t:'D',chunk:'if we hold spend flat',
   sc:'Leadership asks what happens if they give you no extra budget at all.',
@@ -779,7 +785,7 @@ function render(){
     <div class="answer">
       <p class="alab">Your answer — type it, or record it</p>
       <textarea id="ans" rows="2" spellcheck="true"
-        placeholder="Say it aloud first, then type what you said here.">${(answers[c.id]||'').replace(/</g,'&lt;')}</textarea>
+        placeholder="Say it aloud first, then type what you said here.">${(answers[c.id]||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</textarea>
       <div class="recrow" id="recbox"></div>
     </div>
     <div class="reveal ${open?'show':''}" id="reveal">
@@ -896,7 +902,7 @@ async function toggleRecord(id){
           ext:/mp4|m4a|aac/.test(type)?'m4a':/ogg/.test(type)?'ogg':'webm'};
       }
       const done=recId; mr=null; recId=null;
-      paintRec(done);
+      if(deck[idx]&&deck[idx].id===done) paintRec(done);
       if(blob.size>0) pushAudio(done,blob,type);
     };
     mr.start();
@@ -958,7 +964,7 @@ function advance(){
 }
 document.getElementById('next').onclick=advance;
 document.getElementById('seeRes').onclick=()=>showResults();
-document.getElementById('prev').onclick=()=>{if(idx>0){idx--;render();window.scrollTo({top:0,behavior:'smooth'});}};
+document.getElementById('prev').onclick=()=>{if(idx>0){idx--;queueSave();render();window.scrollTo({top:0,behavior:'smooth'});}};
 
 /* ---------------- results ---------------- */
 function plain(s){
@@ -1025,7 +1031,14 @@ function showResults(){
     ['card','nav','progress','sectionbar'].forEach(i=>document.getElementById(i).style.display='');
     render();window.scrollTo({top:0,behavior:'smooth'});
   };
-  document.getElementById('restart').onclick=()=>location.reload();
+  document.getElementById('restart').onclick=()=>{
+    if(!confirm('Start over? This clears your \u2713/\u25b3/\u2717 marks. Your typed answers and recordings are kept.')) return;
+    Object.keys(results).forEach(k=>delete results[k]);
+    Object.keys(revealed).forEach(k=>delete revealed[k]);
+    deck=CARDS; idx=0; if(secEl) secEl.value='ALL';
+    queueSave(true);
+    document.getElementById('back').onclick();
+  };
   const so=document.getElementById('signout');
   if(SY.on){ so.style.display=''; so.onclick=signOut; }
   document.getElementById('pdf').onclick=()=>makePDF(counts,redrill,ts);
@@ -1156,7 +1169,7 @@ function queueSave(now){
   clearTimeout(SY.timer);
   if(now){ doSave(); return; }
   setSync('saving');
-  SY.timer=setTimeout(()=>{SY.timer=null;doSave();},1500);
+  SY.timer=setTimeout(()=>{SY.timer=null;doSave();},2500);
 }
 
 async function doSave(opts){
@@ -1184,7 +1197,7 @@ function applyProgress(p){
   Object.assign(revealed,e.revealed||{});
   Object.keys(e.recs||{}).forEach(id=>{
     recordings[id]={ms:(e.recs[id]||{}).ms||0,mime:(e.recs[id]||{}).mime||'audio/webm',
-      ext:/mp4|m4a/.test((e.recs[id]||{}).mime||'')?'m4a':'webm',url:null,saved:true};
+      ext:/mp4|m4a|aac/.test((e.recs[id]||{}).mime||'')?'m4a':/ogg/.test((e.recs[id]||{}).mime||'')?'ogg':'webm',url:null,saved:true};
   });
   const sec=e.section&&(e.section==='ALL'||TIERS[e.section])?e.section:'ALL';
   deck = sec==='ALL' ? CARDS : CARDS.filter(c=>c.t===sec);
@@ -1272,7 +1285,7 @@ function showResume(had,isNew){
   if(!el) return;
   const marked=CARDS.filter(c=>results[c.id]).length;
   if(isNew){
-    el.textContent='Signed in. Your notes, recordings and place will be saved as you go.';
+    el.textContent='New account for '+(SY.email||'this email')+'. Your notes, recordings and place will be saved as you go. Used this before? Check the email spelling.';
   }else if(had&&marked){
     el.textContent='Welcome back \u2014 picking up at card '+(idx+1)+' of '+deck.length+'. You have marked '+marked+' of '+CARDS.length+' so far.';
   }else if(had){
@@ -1305,8 +1318,9 @@ async function boot(){
       render(); setSync('saved'); showResume(had,false);
       return;
     }catch(e){
-      SY.token=null; lsDel(LS_TOK);
-      if(e.status!==401){ setSync('error',e.message); }
+      SY.token=null;
+      if(e.status===401){ lsDel(LS_TOK); }
+      else { openGate('Could not reach the save server. Check your connection and sign in again.'); return; }
     }
   }
   openGate();
@@ -1314,17 +1328,22 @@ async function boot(){
 
 if(gate){
   document.getElementById('gbtn').onclick=trySignIn;
-  document.getElementById('gskip').onclick=()=>{ closeGate(); setSync('local','You chose not to save. Download the PDF before you close the page.'); };
+  document.getElementById('gskip').onclick=()=>{ closeGate(); setSync('local','Not saving. Tap here to sign in, or download the PDF before you close the page.'); };
   document.getElementById('gcode').addEventListener('keydown',ev=>{ if(ev.key==='Enter') trySignIn(); });
   document.getElementById('gmail').addEventListener('keydown',ev=>{ if(ev.key==='Enter') document.getElementById('gcode').focus(); });
   document.getElementById('gcode').addEventListener('input',ev=>{ ev.target.value=ev.target.value.replace(/\D/g,'').slice(0,4); });
 }
 function flushSave(){
-  if(!SY.on||!SY.timer) return;
+  if(!SY.on||(!SY.timer&&!SY.pending)) return;
+  SY.pending=false;
   clearTimeout(SY.timer); SY.timer=null;
   doSave({keepalive:true});
 }
 window.addEventListener('pagehide',flushSave);
+/* no way back to sign-in after "continue without saving": the status pill reopens it */
+(function(){const el=document.getElementById('sync'); if(!el||!gate) return;
+  el.style.cursor='pointer';
+  el.onclick=()=>{ if(!SY.on && HOSTED) openGate(); };})();
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') flushSave(); });
 
 boot();

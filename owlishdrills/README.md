@@ -11,6 +11,8 @@ Live: deployed on Vercel (project `owlish-drills`).
 |---|---|
 | `index.html` | Landing page listing the drill editions |
 | `finance.html` | Finance & FP&A drill — 30 chunks across 6 meeting sections |
+| `marketing.html` | Marketing & analytics drill — 30 chunks across 6 sections |
+| `engineering.html` | Engineering drill — 30 chunks across 6 sections |
 | `api/signin.js` | Email + 4-digit code sign-in |
 | `api/progress.js` | Saves and loads place, notes and marks |
 | `api/audio.js` | Saves and serves voice recordings |

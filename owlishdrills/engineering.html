@@ -287,7 +287,7 @@ const C={ink:'#14213d',data:'#2a6f97',data2:'#bc4749',amber:'#e09f3e',
   grid:'#dde3ea',axis:'#9aa7b4',muted:'#5b6b7b',pie2:'#dde3ea',soft:'#9dc0d6'};
 
 /* ---------------- chart geometry ---------------- */
-const W=480,H=250,padL=50,padR=18,padT=24,padB=40;
+const W=480,H=250,padL=50,padR=28,padT=34,padB=40;
 const x0=padL, xR=W-padR, y0=H-padB, yT=padT;
 const plotW=xR-x0, plotH=y0-yT;
 const xAt=(i,n)=> n<=1 ? (x0+xR)/2 : x0 + plotW*(i/(n-1));
@@ -298,7 +298,7 @@ function axisBase(max,xlabels){
   let s=`<line x1="${x0}" y1="${yT}" x2="${x0}" y2="${y0}" stroke="${C.axis}" stroke-width="1"/>`;
   s+=`<line x1="${x0}" y1="${y0}" x2="${xR}" y2="${y0}" stroke="${C.axis}" stroke-width="1"/>`;
   [0,.5,1].forEach(f=>{
-    const y=y0-f*plotH, v=Math.round(max*f*10)/10;
+    const y=y0-f*plotH, v=(Math.round(max*f*100)/100).toLocaleString('en-US');
     if(f>0) s+=`<line x1="${x0}" y1="${y}" x2="${xR}" y2="${y}" stroke="${C.grid}" stroke-width="1"/>`;
     s+=`<text x="${x0-8}" y="${y+4}" text-anchor="end" font-size="11" fill="${C.muted}">${v}</text>`;
   });
@@ -311,16 +311,16 @@ function svgWrap(inner){return `<svg class="chart" viewBox="0 0 ${W} ${H}" role=
 function legend(items){
   let s='<g font-size="11" font-weight="600">',cx=x0+6;
   items.forEach(it=>{
-    s+=`<rect x="${cx}" y="${yT-6}" width="12" height="3" rx="1.5" fill="${it.c}"/>`+
-       `<text x="${cx+17}" y="${yT-1}" fill="${C.muted}">${it.n}</text>`;
-    cx+=22+it.n.length*6.1;
+    s+=`<rect x="${cx}" y="${yT-22}" width="12" height="3" rx="1.5" fill="${it.c}"/>`+
+       `<text x="${cx+17}" y="${yT-17}" fill="${C.muted}">${it.n}</text>`;
+    cx+=26+it.n.length*6.8;
   });
   return s+'</g>';
 }
-function threshLine(max,t){
-  const y=yAt(t.v,max);
+function threshLine(max,t,side='right',below=false){
+  const y=yAt(t.v,max), left=side==='left';
   return `<line x1="${x0}" y1="${y}" x2="${xR}" y2="${y}" stroke="${C.data2}" stroke-width="1.8" stroke-dasharray="6 4"/>`+
-         `<text x="${xR}" y="${y-6}" text-anchor="end" font-size="11" font-weight="700" fill="${C.data2}">${t.label}</text>`;
+         `<text x="${left?x0+6:xR}" y="${below?y+15:y-6}" text-anchor="${left?'start':'end'}" font-size="11" font-weight="700" fill="${C.data2}">${t.label}</text>`;
 }
 
 /* ---- vertical bars ---- */
@@ -368,6 +368,7 @@ function sbars(series,{labels,max,names}){
     series.forEach((sr,k)=>{
       const yTop=yAt(run+sr[i],max), yBot=yAt(run,max);
       s+=`<rect x="${x}" y="${yTop}" width="${bw}" height="${Math.max(yBot-yTop,0)}" fill="${cols[k%3]}"/>`;
+      if(yBot-yTop>=15) s+=`<text x="${cx}" y="${(yTop+yBot)/2+4}" text-anchor="middle" font-size="10.5" font-weight="700" fill="${k%3===2?C.ink:'#fff'}">${fmt(sr[i])}</text>`;
       run+=sr[i];
     });
     s+=`<text x="${cx}" y="${yAt(tot,max)-6}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${C.ink}">${fmt(tot)}</text>`;
@@ -379,7 +380,7 @@ function sbars(series,{labels,max,names}){
 
 /* ---- horizontal bars ---- */
 function hbars(data,{labels,max,highlight=-1,unit=''}){
-  const n=data.length, top=16, rowH=(H-top-14)/n, lx=86, bx=94, maxW=W-bx-70;
+  const n=data.length, top=16, rowH=(H-top-14)/n, lx=Math.max(86,Math.max(...labels.map(l=>l.length))*6.9+6), bx=lx+8, maxW=W-bx-70;
   let s='';
   data.forEach((v,i)=>{
     const y=top+rowH*i+rowH*0.18, h=rowH*0.62, w=maxW*(v/max);
@@ -426,7 +427,11 @@ function line(data,{labels,max,mark={},startEnd=false,thresh=null,event=null,zoo
     const a=xAt(zoom[0],n)-10,b=xAt(zoom[1],n)+10;
     s+=`<rect x="${a}" y="${yT}" width="${b-a}" height="${plotH}" fill="${C.amber}" opacity=".16" rx="4"/>`;
   }
-  if(thresh) s+=threshLine(max,thresh);
+  if(thresh){
+    /* put the label on whichever end the line is further from, so it never sits on a data point */
+    const ty=yAt(thresh.v,max), dR=Math.abs(pts[n-1][1]-ty), dL=Math.abs(pts[0][1]-ty);
+    s+=threshLine(max,thresh,(dR<22&&dL>dR)?'left':'right',dR<22&&dL<22);
+  }
   if(event){
     const ex=xAt(event.i,n);
     s+=`<line x1="${ex}" y1="${yT}" x2="${ex}" y2="${y0}" stroke="${C.ink}" stroke-width="1.5" stroke-dasharray="4 4"/>`+
@@ -434,11 +439,12 @@ function line(data,{labels,max,mark={},startEnd=false,thresh=null,event=null,zoo
   }
   s+=`<polyline fill="none" stroke="${C.data}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="${pts.map(p=>p.join(',')).join(' ')}"/>`;
   pts.forEach(p=> s+=`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="#fff" stroke="${C.data}" stroke-width="2"/>`);
-  if(values) data.forEach((v,i)=> s+=`<text x="${pts[i][0]}" y="${pts[i][1]-9}" text-anchor="middle" font-size="11" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`);
+  if(values) data.forEach((v,i)=>{const e=i===0?'start':i===n-1?'end':'middle', dx=i===0?3:i===n-1?-3:0;
+    s+=`<text x="${pts[i][0]+dx}" y="${pts[i][1]-9}" text-anchor="${e}" font-size="11" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;});
   if(startEnd){
     [[0,data[0]],[n-1,data[n-1]]].forEach(([i,v])=>{
       const p=pts[i];
-      s+=`<text x="${p[0]}" y="${p[1]-9}" text-anchor="middle" font-size="12" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;
+      s+=`<text x="${p[0]+(i===0?3:-3)}" y="${p[1]-9}" text-anchor="${i===0?'start':'end'}" font-size="12" font-weight="700" fill="${C.ink}">${fmt(v)}</text>`;
     });
   }
   if(mark.peak!=null){const i=data.indexOf(Math.max(...data));const p=pts[i];
@@ -590,7 +596,7 @@ const CARDS=[
   watch:"“Degraded” means working but badly; “down” means not working. Using “down” for a partial failure overstates it and the correction will come from the room."},
  {id:'I2',t:'I',chunk:'the root cause was',
   sc:'Post-mortem. People are circling theories and you have the answer.',
-  chart:line([40,45,48,50,50,50,50],{labels:['09:00','10:00','11:00','12:00','13:00','14:00','15:00'],max:60,thresh:{v:50,label:'Pool limit 50'}}),
+  chart:line([40,46,50,50,50,50,50],{labels:['09:00','10:00','11:00','12:00','13:00','14:00','15:00'],max:60,thresh:{v:50,label:'Pool limit 50'}}),
   cap:"Database connections in use",
   q:"State the cause plainly, from the chart.",
   model:"<em>The root cause was</em> connection pool exhaustion.",
@@ -610,10 +616,10 @@ const CARDS=[
   cap:"Incident timeline · minutes",
   q:"Separate how long it took to notice from how long it took to recover.",
   model:"<em>Time to detect</em> was 38 minutes and <em>time to recover</em> was just under two and a half hours.",
-  up:"<em>Time to detect</em> was 38 minutes — that's our real problem; once we knew, <em>time to recover</em> was under two hours.",
+  up:"<em>Time to detect</em> was 38 minutes — that's our real problem; once we knew, we mitigated in 14 minutes, and <em>time to recover</em> was about two and a half hours.",
   watch:"These are measured from the start of the incident, not from each other. If you mean the gap between two of them, say “a further 14 minutes”."},
  {id:'I5',t:'I',chunk:'to stop it happening again',
-  sc:'End of the post-mortem. The same cause has now produced three incidents.',
+  sc:'End of the post-mortem. The same cause has produced four incidents this quarter alone.',
   chart:bars([1,2,4],{labels:['Q1','Q2','Q3'],max:6,values:true,highlight:2}),
   cap:"Incidents traced to the same root cause",
   q:"Close the post-mortem with the preventive action, not an apology.",
@@ -669,8 +675,8 @@ const CARDS=[
   chart:twoLine([5,10,15,20,25,30],[5,9,13,17,21,24],{labels:SPR,max:35,names:['Planned','Actual']}),
   cap:"Cumulative features delivered",
   q:"State how far behind plan you are, before anyone measures the gap themselves.",
-  model:"We're <em>tracking</em> about two sprints <em>behind</em> plan.",
-  up:"We're <em>tracking</em> roughly two sprints <em>behind</em> — six features short of plan, and the gap has widened each sprint.",
+  model:"We're <em>tracking</em> about a sprint <em>behind</em> plan.",
+  up:"We're <em>tracking</em> just over a sprint <em>behind</em> — six features short of plan, and the gap has widened each sprint.",
   watch:"“Tracking behind” or “running behind”. “Tracking late” is not idiomatic. Give the gap in a unit people plan in: sprints, weeks, features."},
  {id:'D2',t:'D',chunk:'the estimate assumes',
   sc:'You are giving a date, and you want the conditions on it to survive the meeting.',
@@ -716,11 +722,11 @@ const CARDS=[
   watch:"Debt is accrued, incurred or paid down. The metaphor is doing the work for you — “interest” on it is time, so say what it costs per month."},
  {id:'T2',t:'T',chunk:'build versus buy',
   sc:'Deciding whether to write the notification service yourselves or pay a vendor.',
-  chart:gbars([120,40,40],[60,60,60],{labels:['Yr 1','Yr 2','Yr 3'],max:140,names:['Build','Buy']}),
+  chart:gbars([120,20,20],[60,60,60],{labels:['Yr 1','Yr 2','Yr 3'],max:140,names:['Build','Buy']}),
   cap:"Cost · $K per year",
-  q:"Frame the decision and say where the lines cross.",
-  model:"This is a <em>build versus buy</em> decision — building costs more up front, less after year two.",
-  up:"On <em>build versus buy</em>, building is 120 thousand in year one against 60 to buy, but it's cheaper from year two — it pays back midway through year three.",
+  q:"Frame the decision and say when building pays back.",
+  model:"This is a <em>build versus buy</em> decision — building costs more up front, but less every year after that.",
+  up:"On <em>build versus buy</em>, building is 120 thousand in year one against 60 to buy, but it's cheaper every year after — it pays back midway through year three.",
   watch:"Fixed phrase, in that order: build versus buy. And “up front” as an adverb is two words; “an upfront cost” as an adjective is one."},
  {id:'T3',t:'T',chunk:'that would require us to',
   sc:'A stakeholder asks for one more feature in the same six weeks.',
@@ -779,7 +785,7 @@ function render(){
     <div class="answer">
       <p class="alab">Your answer — type it, or record it</p>
       <textarea id="ans" rows="2" spellcheck="true"
-        placeholder="Say it aloud first, then type what you said here.">${(answers[c.id]||'').replace(/</g,'&lt;')}</textarea>
+        placeholder="Say it aloud first, then type what you said here.">${(answers[c.id]||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</textarea>
       <div class="recrow" id="recbox"></div>
     </div>
     <div class="reveal ${open?'show':''}" id="reveal">
@@ -896,7 +902,7 @@ async function toggleRecord(id){
           ext:/mp4|m4a|aac/.test(type)?'m4a':/ogg/.test(type)?'ogg':'webm'};
       }
       const done=recId; mr=null; recId=null;
-      paintRec(done);
+      if(deck[idx]&&deck[idx].id===done) paintRec(done);
       if(blob.size>0) pushAudio(done,blob,type);
     };
     mr.start();
@@ -958,7 +964,7 @@ function advance(){
 }
 document.getElementById('next').onclick=advance;
 document.getElementById('seeRes').onclick=()=>showResults();
-document.getElementById('prev').onclick=()=>{if(idx>0){idx--;render();window.scrollTo({top:0,behavior:'smooth'});}};
+document.getElementById('prev').onclick=()=>{if(idx>0){idx--;queueSave();render();window.scrollTo({top:0,behavior:'smooth'});}};
 
 /* ---------------- results ---------------- */
 function plain(s){
@@ -1025,7 +1031,14 @@ function showResults(){
     ['card','nav','progress','sectionbar'].forEach(i=>document.getElementById(i).style.display='');
     render();window.scrollTo({top:0,behavior:'smooth'});
   };
-  document.getElementById('restart').onclick=()=>location.reload();
+  document.getElementById('restart').onclick=()=>{
+    if(!confirm('Start over? This clears your \u2713/\u25b3/\u2717 marks. Your typed answers and recordings are kept.')) return;
+    Object.keys(results).forEach(k=>delete results[k]);
+    Object.keys(revealed).forEach(k=>delete revealed[k]);
+    deck=CARDS; idx=0; if(secEl) secEl.value='ALL';
+    queueSave(true);
+    document.getElementById('back').onclick();
+  };
   const so=document.getElementById('signout');
   if(SY.on){ so.style.display=''; so.onclick=signOut; }
   document.getElementById('pdf').onclick=()=>makePDF(counts,redrill,ts);
@@ -1156,7 +1169,7 @@ function queueSave(now){
   clearTimeout(SY.timer);
   if(now){ doSave(); return; }
   setSync('saving');
-  SY.timer=setTimeout(()=>{SY.timer=null;doSave();},1500);
+  SY.timer=setTimeout(()=>{SY.timer=null;doSave();},2500);
 }
 
 async function doSave(opts){
@@ -1184,7 +1197,7 @@ function applyProgress(p){
   Object.assign(revealed,e.revealed||{});
   Object.keys(e.recs||{}).forEach(id=>{
     recordings[id]={ms:(e.recs[id]||{}).ms||0,mime:(e.recs[id]||{}).mime||'audio/webm',
-      ext:/mp4|m4a/.test((e.recs[id]||{}).mime||'')?'m4a':'webm',url:null,saved:true};
+      ext:/mp4|m4a|aac/.test((e.recs[id]||{}).mime||'')?'m4a':/ogg/.test((e.recs[id]||{}).mime||'')?'ogg':'webm',url:null,saved:true};
   });
   const sec=e.section&&(e.section==='ALL'||TIERS[e.section])?e.section:'ALL';
   deck = sec==='ALL' ? CARDS : CARDS.filter(c=>c.t===sec);
@@ -1272,7 +1285,7 @@ function showResume(had,isNew){
   if(!el) return;
   const marked=CARDS.filter(c=>results[c.id]).length;
   if(isNew){
-    el.textContent='Signed in. Your notes, recordings and place will be saved as you go.';
+    el.textContent='New account for '+(SY.email||'this email')+'. Your notes, recordings and place will be saved as you go. Used this before? Check the email spelling.';
   }else if(had&&marked){
     el.textContent='Welcome back \u2014 picking up at card '+(idx+1)+' of '+deck.length+'. You have marked '+marked+' of '+CARDS.length+' so far.';
   }else if(had){
@@ -1305,8 +1318,9 @@ async function boot(){
       render(); setSync('saved'); showResume(had,false);
       return;
     }catch(e){
-      SY.token=null; lsDel(LS_TOK);
-      if(e.status!==401){ setSync('error',e.message); }
+      SY.token=null;
+      if(e.status===401){ lsDel(LS_TOK); }
+      else { openGate('Could not reach the save server. Check your connection and sign in again.'); return; }
     }
   }
   openGate();
@@ -1314,17 +1328,22 @@ async function boot(){
 
 if(gate){
   document.getElementById('gbtn').onclick=trySignIn;
-  document.getElementById('gskip').onclick=()=>{ closeGate(); setSync('local','You chose not to save. Download the PDF before you close the page.'); };
+  document.getElementById('gskip').onclick=()=>{ closeGate(); setSync('local','Not saving. Tap here to sign in, or download the PDF before you close the page.'); };
   document.getElementById('gcode').addEventListener('keydown',ev=>{ if(ev.key==='Enter') trySignIn(); });
   document.getElementById('gmail').addEventListener('keydown',ev=>{ if(ev.key==='Enter') document.getElementById('gcode').focus(); });
   document.getElementById('gcode').addEventListener('input',ev=>{ ev.target.value=ev.target.value.replace(/\D/g,'').slice(0,4); });
 }
 function flushSave(){
-  if(!SY.on||!SY.timer) return;
+  if(!SY.on||(!SY.timer&&!SY.pending)) return;
+  SY.pending=false;
   clearTimeout(SY.timer); SY.timer=null;
   doSave({keepalive:true});
 }
 window.addEventListener('pagehide',flushSave);
+/* no way back to sign-in after "continue without saving": the status pill reopens it */
+(function(){const el=document.getElementById('sync'); if(!el||!gate) return;
+  el.style.cursor='pointer';
+  el.onclick=()=>{ if(!SY.on && HOSTED) openGate(); };})();
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') flushSave(); });
 
 boot();
