@@ -115,10 +115,17 @@
   .pprice{font-family:var(--display);font-weight:800;font-size:32px;margin:0 0 14px;letter-spacing:-.02em}
   .pprice span{font-family:var(--text);font-size:14px;font-weight:800;color:var(--coral-deep);margin-left:8px;letter-spacing:0}
   .packbtns{display:flex;gap:12px;flex-wrap:wrap}
-  .packbtns .pill{padding:15px 22px;font-size:16px}
+  .packbtns .pill{padding:14px 22px;font-size:16px;line-height:1.3;text-align:center;flex-wrap:wrap;column-gap:.3em;row-gap:0}
+  .nowrap{white-space:nowrap}
   .pill[aria-disabled="true"]{opacity:.55;pointer-events:none}
-  .owned{display:inline-block;margin-top:16px;font-size:15px;font-weight:700;color:var(--ink)}
+  .owned{display:inline-block;margin-top:14px;font-size:15px;font-weight:700;color:var(--ink)}
+  .buybox{margin:0 0 24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+  .insidehead{margin:0 0 10px;font-size:14px;font-weight:800;color:var(--muted)}
   @media (max-width:640px){
+    .packcard{padding:24px 20px 22px}
+    .packlede{font-size:16px;margin-bottom:16px}
+    .pprice{font-size:28px;margin-bottom:10px}
+    .buybox{margin-bottom:20px;padding-bottom:20px}
     .chain{grid-template-columns:1fr;gap:6px}
     .chain li{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 14px}
     .chain li::before{margin:0}
@@ -177,6 +184,15 @@
         <p class="kicker">새로 나왔어요 · 유료 팩</p>
         <h2>경제 영어 팩: 지금 세계 경제를 영어로 읽기</h2>
         <p class="packlede">유가에서 시작해 경기 침체까지, 다섯 개 모듈이 하나의 이야기로 이어져요. 순서대로 읽으면 경제 뉴스가 훨씬 잘 들려요.</p>
+        <div class="buybox">
+          <p class="pprice">₩9,900 <span>얼리버드 가격</span></p>
+          <div class="packbtns">
+            <a class="pill solid" id="packBuy" href="#pack" aria-disabled="true">곧 판매 시작</a>
+            <a class="pill" href="pack/sample-oil.html">무료 샘플 읽기 <span class="nowrap">(모듈 1 · A2)</span></a>
+          </div>
+          <a class="owned" href="https://pack.owlishenglishnews.com">이미 구매했어요 → 팩 열기</a>
+        </div>
+        <p class="insidehead">들어 있는 것</p>
         <ol class="chain" aria-label="모듈 순서">
           <li><b>유가</b><span>Oil</span></li>
           <li><b>물가</b><span>Inflation</span></li>
@@ -190,12 +206,6 @@
           <li>한국어 뜻이 있는 단어장, 어휘 퀴즈와 독해 퀴즈</li>
           <li>내려받아 풀 수 있는 PDF 워크시트와 정답</li>
         </ul>
-        <p class="pprice">₩9,900 <span>얼리버드 가격</span></p>
-        <div class="packbtns">
-          <a class="pill solid" id="packBuy" href="#pack" aria-disabled="true">곧 판매 시작</a>
-          <a class="pill" href="pack/sample-oil.html">무료 샘플 읽기 (모듈 1 · A2)</a>
-        </div>
-        <a class="owned" href="https://pack.owlishenglishnews.com">이미 구매했어요 → 팩 열기</a>
       </div>
     </section>
     <div class="herogrid" id="top">
