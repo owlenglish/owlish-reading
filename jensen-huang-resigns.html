@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jensen Huang Resigns: The Nvidia Spy Scandal — Owlish English</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Why Nvidia's CEO resigned: graded English reading at A2, B1 and B2 with vocabulary, quizzes and listening.">
+<meta name="reading-title" content="Jensen Huang Resigns: The Nvidia Spy Scandal">
+<meta name="reading-desc" content="Nvidia's founder steps down after an affair with a suspected Chinese spy. What happened, and why it matters for AI chips and U.S.–China trade.">
+<meta name="reading-levels" content="A2,B1,B2">
+<meta name="reading-order" content="-1">
+<!-- Owlish English · free graded reading (built from the Economics Pack template) -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#1c2b2d;--teal:#176b6e;--teal-deep:#0e4c4f;--amber:#e08a2b;--amber-soft:#f6e7cf;
+    --paper:#fbf7ee;--card:#ffffff;--line:#e2ddd0;--ok:#1f8a4c;--bad:#c23b3b;--muted:#6b6a62;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;}
+  .wrap{max-width:780px;margin:0 auto;padding:28px 20px 80px;}
+
+  header.masthead{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+  .owl{font-size:30px;line-height:1;}
+  .brand{font-weight:700;letter-spacing:.3px;color:var(--teal-deep);}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.4px;text-transform:uppercase;}
+  h1.title{font-family:Georgia,"Times New Roman",serif;font-size:30px;line-height:1.2;margin:18px 0 6px;color:var(--ink);}
+  p.dek{margin:0 0 16px;color:var(--muted);font-size:15px;}
+
+  .label-row{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:18px 0 7px;}
+
+  /* Source selector */
+  .sources{display:flex;flex-wrap:wrap;gap:8px;}
+  .sources button{
+    border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+    padding:10px 16px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;
+    display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.2;
+  }
+  .sources button small{font-weight:600;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .sources button:hover{border-color:var(--amber);}
+  .sources button.active{background:var(--amber);border-color:var(--amber);color:#3a2407;}
+  .sources button.active small{color:#7a4d12;}
+
+  /* Level toggle */
+  .levels{display:flex;flex-wrap:wrap;gap:8px;}
+  .levels button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;}
+  .levels button .lv{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;display:block;text-transform:uppercase;}
+  .levels button:hover{border-color:var(--teal);}
+  .levels button.active{background:var(--teal-deep);border-color:var(--teal-deep);color:#fff;}
+  .levels button.active .lv{color:var(--amber-soft);}
+
+  /* Source citation */
+  .source-line{margin:16px 0 0;font-size:14px;color:var(--muted);}
+  .source-line a{color:var(--teal-deep);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--amber-soft);}
+  .source-line a:hover{border-color:var(--teal);}
+
+  /* Audio bar */
+  .audiobar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:12px 0 22px;}
+  .audiobar .play{background:var(--amber);color:#3a2407;border:none;font-weight:700;padding:12px 22px;border-radius:12px;cursor:pointer;font-size:16px;min-height:48px;min-width:136px;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
+  .audiobar .play.playing{background:var(--teal);color:#fff;}
+  .speeds{display:flex;gap:6px;align-items:center;}
+  .speeds span{font-size:12px;color:var(--muted);margin-right:2px;}
+  .speeds button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:5px 9px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;}
+  .speeds button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .pdf-group{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+  .pdf-btn{border:1.5px solid var(--teal);background:#fff;color:var(--teal-deep);padding:8px 13px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;}
+  .pdf-btn:hover{background:var(--teal);color:#fff;}
+  .pdf-btn.all{border-color:var(--amber);color:#7a4d12;}
+  .pdf-btn.all:hover{background:var(--amber);color:#3a2407;}
+  /* Transport + timeline */
+  .tcontrols{display:flex;gap:6px;}
+  .tbtn{border:1px solid var(--line);background:#fff;color:var(--ink);width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;line-height:1;}
+  .tbtn:hover{border-color:var(--teal);color:var(--teal-deep);}
+  .tbtn:active{transform:translateY(1px);}
+  .audiover{font-size:11px;opacity:.55;white-space:nowrap;align-self:center;}
+  .timeline{flex:1 1 100%;display:flex;align-items:center;gap:10px;margin-top:2px;}
+  .ttime{font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);min-width:36px;text-align:center;}
+  .track{position:relative;flex:1;height:24px;display:flex;align-items:center;cursor:pointer;touch-action:none;}
+  .track:focus{outline:none;}
+  .track:focus-visible .handle{box-shadow:0 0 0 3px var(--amber-soft),0 1px 3px rgba(0,0,0,.3);}
+  .track .rail{position:absolute;left:0;right:0;height:6px;background:var(--amber-soft);border-radius:999px;}
+  .track .fill{position:absolute;left:0;height:6px;width:0;background:var(--teal);border-radius:999px;pointer-events:none;}
+  .track .ticks{position:absolute;left:0;right:0;height:6px;pointer-events:none;}
+  .track .ticks i{position:absolute;top:0;width:2px;height:6px;background:rgba(14,76,79,.18);transform:translateX(-1px);border-radius:1px;}
+  .track .handle{position:absolute;left:0;width:15px;height:15px;border-radius:50%;background:var(--teal-deep);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transform:translateX(-7.5px);pointer-events:none;transition:background .12s;}
+  .track:hover .handle{background:var(--amber);}
+
+  article.reading{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:26px;}
+  article.reading h2{font-family:Georgia,serif;font-size:23px;margin:0 0 14px;color:var(--teal-deep);border-bottom:3px solid var(--amber-soft);padding-bottom:10px;}
+  article.reading p{font-family:Georgia,serif;font-size:18px;margin:0 0 16px;}
+  article.reading p:last-child{margin-bottom:0;}
+  article.reading span.w{cursor:pointer;border-radius:4px;padding:2px 0;margin:-2px 0;-webkit-tap-highlight-color:transparent;transition:background .15s;}
+  @media (hover:hover){ article.reading span.w:hover{background:var(--amber-soft);} }
+  article.reading span.w.tapped{background:var(--amber);color:#fff;}
+  .checked{white-space:nowrap;}
+  .packnav{margin-left:auto;font-size:14px;font-weight:700;color:var(--teal-deep);text-decoration:none;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;white-space:nowrap;}
+  .packnav:hover{border-color:var(--teal);}
+  .nextmod{display:block;margin:34px 0 0;padding:16px 18px;border-radius:14px;background:var(--teal-deep);color:#fff;font-weight:700;text-decoration:none;text-align:center;}
+  .nextmod:hover{background:var(--teal);}
+  .taphint{font-size:13px;color:var(--muted);margin:-14px 0 18px;}
+
+  .sec-h{display:flex;align-items:center;gap:10px;margin:34px 0 14px;}
+  .sec-h .tag{background:var(--teal-deep);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px;}
+  .sec-h h3{margin:0;font-size:19px;color:var(--ink);}
+
+  table.vocab{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  table.vocab th{background:var(--amber-soft);text-align:left;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--teal-deep);padding:10px 12px;}
+  table.vocab td{padding:11px 12px;border-top:1px solid var(--line);font-size:15px;vertical-align:top;}
+  table.vocab td.word{font-weight:700;white-space:nowrap;}
+  table.vocab td.pos{color:var(--muted);font-style:italic;white-space:nowrap;}
+
+  .quiz{margin-top:4px;}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+  .q .stem{font-weight:600;margin-bottom:10px;}
+  .q .stem .num{color:var(--teal);font-weight:800;margin-right:6px;}
+  .opt{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px;cursor:pointer;transition:all .12s;font-size:15px;}
+  .opt:hover{border-color:var(--teal);background:#f3faf9;}
+  .opt input{margin-top:3px;accent-color:var(--teal);}
+  .opt .ltr{font-weight:700;color:var(--muted);}
+  .opt.correct{border-color:var(--ok);background:#eef9f1;}
+  .opt.wrong{border-color:var(--bad);background:#fbeeee;}
+  .opt.locked{cursor:default;}
+  .check-row{display:flex;align-items:center;gap:14px;margin-top:4px;}
+  .check-btn{background:var(--teal-deep);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .check-btn:hover{background:var(--teal);}
+  .score{font-weight:700;font-size:15px;}
+  .score.good{color:var(--ok);}
+  .score.mid{color:var(--amber);}
+
+  footer.foot{text-align:center;color:var(--muted);font-size:13px;margin-top:48px;border-top:1px solid var(--line);padding-top:18px;}
+  footer.foot .ob{color:var(--teal-deep);font-weight:700;}
+  @media (max-width:520px){
+    h1.title{font-size:25px;}
+    article.reading{padding:20px 18px;}
+    article.reading p{font-size:17px;}
+    .pdf-group{margin-left:0;width:100%;}
+    /* phones: stack each vocab row (word + type on top, meaning below) so the
+       table never pushes the page wider than the screen */
+    table.vocab thead{display:none;}
+    table.vocab, table.vocab tbody{display:block;width:100%;}
+    table.vocab tr{display:grid;grid-template-columns:auto 1fr;column-gap:8px;padding:11px 14px;border-top:1px solid var(--line);}
+    table.vocab tr:first-child{border-top:0;}
+    table.vocab td{padding:0;border-top:0;}
+    table.vocab td.word{white-space:normal;}
+    table.vocab td.pos{white-space:normal;align-self:center;font-size:13px;}
+    table.vocab td:not(.word):not(.pos){grid-column:1 / -1;margin-top:3px;color:var(--ink);}
+    /* thumb-sized controls */
+    .speeds button{min-height:40px;min-width:48px;}
+    #playBtn,#prevBtn,#nextBtn{min-height:44px;}
+  }
+  html,body{overflow-x:hidden;}
+  [hidden]{display:none !important;}
+  .appnotice{background:#fff6e8;border:1.5px solid var(--amber);border-radius:12px;padding:14px 16px;margin:0 0 14px;font-size:15px;line-height:1.55;}
+  .appnotice p{margin:0 0 10px;color:var(--ink);word-break:keep-all;}
+  .appnotice-btn{display:inline-block;background:var(--teal-deep);color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:11px 18px;border-radius:10px;min-height:44px;box-sizing:border-box;}
+
+  /* lesson order: vocab → vocab quiz → listen (script folded) → comprehension */
+  .sec-h .tag{white-space:nowrap;}
+  .listen-hint{margin:-4px 0 14px;font-size:15px;color:var(--muted);word-break:keep-all;}
+  details.scriptbox{margin:16px 0 0;border:1.5px solid var(--line);border-radius:14px;background:var(--card);}
+  details.scriptbox > summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;font-size:16px;color:var(--teal-deep);display:flex;align-items:center;gap:10px;min-height:48px;-webkit-tap-highlight-color:transparent;}
+  details.scriptbox > summary::-webkit-details-marker{display:none;}
+  details.scriptbox > summary::after{content:"＋";margin-left:auto;font-size:18px;color:var(--muted);}
+  details.scriptbox[open] > summary::after{content:"－";}
+  details.scriptbox[open] > summary{border-bottom:1.5px solid var(--line);}
+  details.scriptbox .sum-closed{display:inline;} details.scriptbox .sum-open{display:none;}
+  details.scriptbox[open] .sum-closed{display:none;} details.scriptbox[open] .sum-open{display:inline;}
+  details.scriptbox article.reading{margin:0;border:0;border-radius:0 0 14px 14px;}
+  details.scriptbox .taphint{margin:0;padding:0 18px 16px;}
+  .worksheet{margin-top:34px;}
+  .worksheet p{margin:0 0 12px;font-size:15px;color:var(--muted);word-break:keep-all;}
+  .worksheet .pdf-group{margin-left:0;}
+  img.owl{display:block;width:44px;height:44px;border-radius:12px;flex:none;}
+  img.owl-mini{width:18px;height:18px;border-radius:5px;vertical-align:-3px;margin-right:4px;}
+  /* double-tap meaning bubble */
+  article.reading{touch-action:manipulation;}
+  article.reading span.w.glossed{background:var(--amber-soft);box-shadow:0 0 0 2px var(--amber-soft);}
+  .gloss{position:absolute;z-index:50;max-width:min(300px,calc(100vw - 16px));background:var(--teal-deep);color:#fff;border-radius:12px;padding:10px 14px;font-size:15px;line-height:1.45;box-shadow:0 10px 24px -10px rgba(0,0,0,.45);pointer-events:auto;word-break:keep-all;}
+  .gloss b{display:block;font-size:13px;font-weight:700;color:#f6e3c6;letter-spacing:.2px;margin-bottom:2px;}
+  article.reading h3.sub{font-family:Georgia,"Times New Roman",serif;font-size:19px;margin:22px 0 6px;color:var(--teal-deep);}
+</style>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <img class="owl" src="owl-logo.png" alt="Owlish English" width="44" height="44">
+    <div class="brand">Owlish English<small>Graded Reading</small></div>
+    <a class="packnav" href="index.html">← 읽기 자료 Library</a>
+  </header>
+
+  <h1 class="title">Jensen Huang Resigns: The Nvidia Spy Scandal</h1>
+  <p class="dek">엔비디아 창업자 젠슨 황이 CEO에서 물러났어요. 무슨 일이 있었고, 왜 AI 칩과 미·중 무역에 중요한지 내 레벨로 읽어봐요. 단어 → 단어 퀴즈 → 듣기 → 이해 퀴즈 순서로 공부해요.</p>
+
+  <div class="label-row" hidden>Source</div>
+  <div class="sources" id="sourceToggle" hidden></div>
+
+  <div class="label-row">Level</div>
+  <div class="levels" id="levelToggle"></div>
+
+  <p class="source-line" id="sourceCite"></p>
+
+  <div class="sec-h"><span class="tag">1 · Vocabulary</span><h3 id="vocabLevelLabel"></h3></div>
+  <table class="vocab" id="vocabTable">
+    <thead><tr><th>Word</th><th>Part of speech</th><th>Meaning</th></tr></thead>
+    <tbody id="vocabBody"></tbody>
+  </table>
+
+  <div class="sec-h"><span class="tag">2 · Vocab Quiz</span><h3>단어 퀴즈 · Choose the best meaning</h3></div>
+  <div class="quiz" id="vocabQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('vocab')">Check answers</button><span class="score" id="vocabScore"></span></div>
+
+  <div class="sec-h"><span class="tag">3 · Listen</span><h3>듣기 · Listen first, then read</h3></div>
+  <p class="listen-hint">먼저 스크립트 없이 들어보세요. 잘 안 들리면 스크립트를 열고 다시 들어요.</p>
+  <div class="appnotice" id="appNotice" hidden>
+    <p id="appNoticeMsg">이 앱 안에서는 오디오가 나오지 않을 수 있어요. 크롬이나 사파리에서 열면 들을 수 있어요.</p>
+    <a class="appnotice-btn" id="appNoticeBtn" href="#">브라우저에서 열기</a>
+  </div>
+  <div class="audiobar">
+    <button class="play" id="playBtn" title="Play / pause (Space bar)">▶ Listen</button>
+    <div class="tcontrols">
+      <button class="tbtn" id="prevBtn" title="Previous sentence" aria-label="Previous sentence">⏮</button>
+      <button class="tbtn" id="nextBtn" title="Next sentence" aria-label="Next sentence">⏭</button>
+    </div>
+    <div class="speeds">
+      <span>Speed</span>
+      <button data-rate="0.7">0.7×</button>
+      <button data-rate="0.85" class="active">0.85×</button>
+      <button data-rate="1">1×</button>
+      <button data-rate="1.1">1.1×</button>
+    </div>
+    <span class="audiover" id="audioVer">audio v7</span>
+    <div class="timeline">
+      <span class="ttime" id="tCur">0:00</span>
+      <div class="track" id="track" tabindex="0" role="slider" aria-label="Audio position" aria-valuemin="0" aria-valuenow="0">
+        <div class="rail"></div>
+        <div class="ticks" id="ticks"></div>
+        <div class="fill" id="tFill"></div>
+        <div class="handle" id="tHandle"></div>
+      </div>
+      <span class="ttime" id="tTot">0:00</span>
+    </div>
+  </div>
+  <details class="scriptbox" id="scriptBox">
+    <summary><span class="sum-closed">📜 스크립트 보기 · Show script</span><span class="sum-open">📜 스크립트 접기 · Hide script</span></summary>
+    <article class="reading" id="reading"></article>
+  </details>
+
+  <div class="sec-h"><span class="tag">4 · Comprehension</span><h3>이해 퀴즈 · Multiple choice</h3></div>
+  <div class="quiz" id="compQuiz"></div>
+  <div class="check-row"><button class="check-btn" onclick="checkQuiz('comp')">Check answers</button><span class="score" id="compScore"></span></div>
+
+  <div class="worksheet">
+    <div class="sec-h"><span class="tag">Worksheet</span><h3>PDF 워크시트</h3></div>
+    <p>내려받아 손으로 풀어보세요. 정답은 마지막 장에 있어요.</p>
+    <div class="pdf-group">
+      <button class="pdf-btn" id="pdfBtn">⤓ This reading</button>
+      <button class="pdf-btn all" id="pdfAllBtn">⤓ All 3 levels</button>
+    </div>
+  </div>
+
+  <a class="nextmod" href="index.html#pack">경제 영어 팩 보기 · Economics Pack →</a>
+
+  <footer class="foot">
+    <div><img class="owl-mini" src="owl-logo.png" alt=""><span class="ob">Owlish English</span></div>
+    <div>Graded Reading · Original / A2 / B1-B2</div>
+  </footer>
+</div>
+
+<script>
+/* ===================== CONTENT ===================== */
+const SOURCES = {
+ "owlish": {
+  "outlet": "The New York Times, The Washington Post, NBC News, CNBC and Nvidia's SEC filing",
+  "short": "Nvidia",
+  "checked": "Nov 15, 2026",
+  "levels": {
+   "a2": {
+    "name": "A2",
+    "label": "A2 (elementary)",
+    "title": "The Boss of Nvidia Quits",
+    "paragraphs": [
+     "Jensen Huang started the chip company Nvidia in 1993. Nvidia makes the computer chips that power AI. Under his leadership, it became one of the most valuable companies in the world.",
+     "On October 29, The New York Times wrote a story about a woman named Alice Huang. She is a business executive. She is not related to Jensen Huang. American officials reportedly think she may be a spy for China.",
+     "On November 8, Jensen Huang wrote a letter to Nvidia's workers. He said he had a relationship with her while he was married. He said he was very sorry. Nvidia's board started an investigation.",
+     "Many people were worried. Nvidia's chips are very important to the United States. If a spy got close to the boss, could she learn secrets? Nvidia said it had no reason to believe that any secrets were lost.",
+     "On November 12, Jensen Huang quit his job. He was the boss of Nvidia for 33 years. Colette Kress, the head of the company's money, is now the temporary boss. Nvidia's stock price went down that day."
+    ],
+    "vocab": [
+     [
+      "chip",
+      "noun",
+      "반도체 칩 · a very small part inside a computer that does the work"
+     ],
+     [
+      "valuable",
+      "adjective",
+      "가치 있는 · worth a lot of money"
+     ],
+     [
+      "related",
+      "adjective",
+      "친척인 · in the same family"
+     ],
+     [
+      "spy",
+      "noun",
+      "스파이, 간첩 · a person who secretly collects information for another country"
+     ],
+     [
+      "relationship",
+      "noun",
+      "(연인) 관계 · a romantic connection between two people"
+     ],
+     [
+      "investigation",
+      "noun",
+      "조사 · a careful check to find out the truth"
+     ],
+     [
+      "secret",
+      "noun",
+      "비밀 · information that other people must not know"
+     ],
+     [
+      "quit",
+      "verb",
+      "그만두다 · to leave your job"
+     ],
+     [
+      "temporary",
+      "adjective",
+      "임시의 · for a short time only"
+     ]
+    ],
+    "vocabQuiz": [
+     [
+      "What does “quit” mean?",
+      [
+       "to start a new job",
+       "to leave your job",
+       "to buy a company",
+       "to say sorry"
+      ],
+      1
+     ],
+     [
+      "A “spy” is a person who…",
+      [
+       "builds computer chips",
+       "secretly collects information for another country",
+       "manages a company's money",
+       "writes news stories"
+      ],
+      1
+     ],
+     [
+      "“Temporary” means…",
+      [
+       "for a short time only",
+       "very expensive",
+       "very old",
+       "forever"
+      ],
+      0
+     ],
+     [
+      "An “investigation” is…",
+      [
+       "a party for workers",
+       "a careful check to find out the truth",
+       "a new computer chip",
+       "a letter to a family"
+      ],
+      1
+     ],
+     [
+      "If two people are “related,” they are…",
+      [
+       "in the same family",
+       "in the same office",
+       "on the same team",
+       "in the same city"
+      ],
+      0
+     ]
+    ],
+    "comp": [
+     [
+      "What does Nvidia make?",
+      [
+       "Cars",
+       "Phones",
+       "Chips that power AI",
+       "Newspapers"
+      ],
+      2
+     ],
+     [
+      "Who is Alice Huang?",
+      [
+       "Jensen Huang's sister",
+       "A business executive",
+       "Nvidia's new boss",
+       "A news reporter"
+      ],
+      1
+     ],
+     [
+      "What did Jensen Huang say in his letter?",
+      [
+       "He was leaving the United States",
+       "He had a relationship and was very sorry",
+       "Nvidia was losing money",
+       "He wanted a new job"
+      ],
+      1
+     ],
+     [
+      "Why were many people worried?",
+      [
+       "Nvidia's chips are important, and secrets could be lost",
+       "Nvidia's chips were too expensive",
+       "Nvidia's workers were angry",
+       "The letter was very long"
+      ],
+      0
+     ],
+     [
+      "Who is Nvidia's boss now?",
+      [
+       "Alice Huang",
+       "Jensen Huang",
+       "Colette Kress",
+       "The New York Times"
+      ],
+      2
+     ]
+    ]
+   },
+   "b1": {
+    "name": "B1",
+    "label": "B1 (intermediate)",
+    "title": "Nvidia's CEO Resigns After a Spy Scandal",
+    "paragraphs": [
+     "Jensen Huang, the co-founder of Nvidia, has resigned as the company's CEO. He led Nvidia for 33 years and turned it into the most important maker of AI chips. His exit, announced on November 12, came after a scandal that grew very quickly.",
+     "It began on October 29, when The New York Times reported that U.S. intelligence officials suspected a business executive named Alice Huang of working for Chinese intelligence. She had worked for Megaspeed, a company that bought large numbers of Nvidia chips. The two are not related.",
+     "On November 8, Huang admitted in a letter to employees that he had been unfaithful to his wife. He apologized to his family, to Nvidia's board and to shareholders. The board said it would run an independent investigation, but it also said it had no reason to believe that national security or company secrets had been compromised.",
+     "The pressure kept growing. News reports described more than one relationship, including one with an executive who reported to him. Nvidia's stock fell. Four days after his letter, Huang stepped down as CEO and left the board, effective immediately. Nvidia did not give a reason.",
+     "Colette Kress, Nvidia's chief financial officer, is now the interim CEO while the board looks for a permanent replacement. Harvey Jones became the company's first-ever chair. Nvidia will report its latest results on November 17, and investors will be watching closely."
+    ],
+    "vocab": [
+     [
+      "co-founder",
+      "noun",
+      "공동 창업자 · one of the people who started a company"
+     ],
+     [
+      "resign",
+      "verb",
+      "사임하다 · to officially leave a job"
+     ],
+     [
+      "intelligence",
+      "noun",
+      "정보기관, 첩보 · secret work to collect information about other countries"
+     ],
+     [
+      "suspect (someone of)",
+      "verb",
+      "~라고 의심하다 · to think someone may have done something wrong"
+     ],
+     [
+      "admit",
+      "verb",
+      "인정하다 · to say that something bad is true"
+     ],
+     [
+      "unfaithful",
+      "adjective",
+      "외도한 · having a romantic relationship outside your marriage"
+     ],
+     [
+      "compromise",
+      "verb",
+      "(보안을) 위태롭게 하다 · to put secret information at risk"
+     ],
+     [
+      "step down",
+      "phrasal verb",
+      "물러나다 · to leave an important position"
+     ],
+     [
+      "effective immediately",
+      "phrase",
+      "즉시 효력 · starting right now"
+     ],
+     [
+      "interim",
+      "adjective",
+      "임시의, 대행의 · in a job only until a permanent person is chosen"
+     ]
+    ],
+    "vocabQuiz": [
+     [
+      "“Step down” means…",
+      [
+       "to get a promotion",
+       "to leave an important position",
+       "to walk slowly",
+       "to lower a price"
+      ],
+      1
+     ],
+     [
+      "An “interim” CEO is…",
+      [
+       "a CEO for a short time until a permanent one is chosen",
+       "the company's first CEO",
+       "a CEO from another company",
+       "a CEO who is also the founder"
+      ],
+      0
+     ],
+     [
+      "If you “admit” something, you…",
+      [
+       "hide it",
+       "say that something bad is true",
+       "forget it",
+       "sell it"
+      ],
+      1
+     ],
+     [
+      "When secrets are “compromised,” they are…",
+      [
+       "kept very safe",
+       "put at risk",
+       "written down",
+       "made public by law"
+      ],
+      1
+     ],
+     [
+      "“Effective immediately” means…",
+      [
+       "next year",
+       "after a vote",
+       "starting right now",
+       "only on weekends"
+      ],
+      2
+     ]
+    ],
+    "comp": [
+     [
+      "How long did Jensen Huang lead Nvidia?",
+      [
+       "13 years",
+       "23 years",
+       "33 years",
+       "43 years"
+      ],
+      2
+     ],
+     [
+      "What did The New York Times report on October 29?",
+      [
+       "Nvidia's profits had fallen",
+       "U.S. officials suspected Alice Huang of working for Chinese intelligence",
+       "Jensen Huang was retiring",
+       "Megaspeed had closed"
+      ],
+      1
+     ],
+     [
+      "What did Nvidia's board say at first?",
+      [
+       "It had no reason to believe secrets were compromised",
+       "Huang must leave immediately",
+       "It would sell the company",
+       "The story was false"
+      ],
+      0
+     ],
+     [
+      "What reason did Nvidia give for Huang's departure?",
+      [
+       "The spy story",
+       "His age",
+       "His health",
+       "It gave no reason"
+      ],
+      3
+     ],
+     [
+      "What will happen on November 17?",
+      [
+       "Nvidia will choose a new CEO",
+       "Nvidia will report its latest results",
+       "Huang will return",
+       "Nvidia will launch a new chip"
+      ],
+      1
+     ]
+    ]
+   },
+   "b2": {
+    "name": "B2",
+    "label": "B2 (upper-intermediate)",
+    "title": "Why Jensen Huang's Fall Matters Beyond Nvidia",
+    "paragraphs": [
+     "Few executives have been as closely tied to a company as Jensen Huang was to Nvidia. He co-founded the chipmaker in 1993 and ran it for 33 years, steering it from a maker of gaming graphics cards to the backbone of the AI boom, worth more than four trillion dollars. On November 12, he resigned as chief executive and left the board with immediate effect.",
+     "The trigger was a story that mixed private conduct with national security. In late October, The New York Times reported that U.S. intelligence suspected Alice Huang, a former executive at Megaspeed, of having been recruited by China's Ministry of State Security. Megaspeed, a data-center company, had bought billions of dollars' worth of Nvidia chips. Huang later admitted to an extramarital relationship with her in a letter to staff, saying he was deeply sorry.",
+     "Nvidia's board initially stood behind him. It launched an independent investigation but stated that it had no reason to believe national security or company secrets had been compromised. Within days, however, reports of another relationship, with an executive who reported to him, and a falling share price changed the calculation. Nvidia's announcement gave no reason for his departure.",
+     "The consequences reach well beyond one company. Huang had been the industry's most influential voice against strict U.S. limits on selling advanced chips to China. Analysts say the scandal weakens that argument at a sensitive moment and could encourage lawmakers to push for tighter export controls. A House committee chair has also said that Huang is willing to testify before Congress.",
+     "For now, chief financial officer Colette Kress is serving as interim CEO while keeping her finance role, and Harvey Jones has become the board's first-ever chair. The first real test comes on November 17, when Nvidia reports its quarterly results. Investors will be listening not only to the numbers, but to how confidently the company describes its future without its founder."
+    ],
+    "vocab": [
+     [
+      "steer",
+      "verb",
+      "이끌다, 방향을 잡다 · to guide something in a particular direction"
+     ],
+     [
+      "backbone",
+      "noun",
+      "중추, 근간 · the most important part that supports everything else"
+     ],
+     [
+      "trigger",
+      "noun",
+      "계기, 도화선 · the event that causes something to happen"
+     ],
+     [
+      "conduct",
+      "noun",
+      "행동, 처신 · the way a person behaves"
+     ],
+     [
+      "extramarital",
+      "adjective",
+      "혼외의 · happening outside a marriage"
+     ],
+     [
+      "stand behind (someone)",
+      "phrasal verb",
+      "지지하다 · to support someone publicly"
+     ],
+     [
+      "change the calculation",
+      "phrase",
+      "판단을 바꾸다 · to change how people weigh the costs and benefits"
+     ],
+     [
+      "export controls",
+      "noun",
+      "수출 통제 · government rules that limit selling certain goods to other countries"
+     ],
+     [
+      "testify",
+      "verb",
+      "증언하다 · to answer questions officially, for example before lawmakers"
+     ],
+     [
+      "quarterly results",
+      "noun",
+      "분기 실적 · a company's financial results for three months"
+     ]
+    ],
+    "vocabQuiz": [
+     [
+      "A “trigger” is…",
+      [
+       "the event that causes something to happen",
+       "a kind of computer chip",
+       "a company rule",
+       "a type of investor"
+      ],
+      0
+     ],
+     [
+      "If the board “stands behind” the CEO, it…",
+      [
+       "replaces him",
+       "supports him publicly",
+       "investigates him secretly",
+       "pays him less"
+      ],
+      1
+     ],
+     [
+      "“Export controls” are…",
+      [
+       "rules that limit selling certain goods to other countries",
+       "taxes on imported food",
+       "rules about hiring workers",
+       "limits on stock prices"
+      ],
+      0
+     ],
+     [
+      "To “testify” means to…",
+      [
+       "sign a contract",
+       "answer questions officially",
+       "buy shares",
+       "leave a company"
+      ],
+      1
+     ],
+     [
+      "The “backbone” of something is…",
+      [
+       "its weakest part",
+       "its most important supporting part",
+       "its newest product",
+       "its oldest office"
+      ],
+      1
+     ]
+    ],
+    "comp": [
+     [
+      "How did Nvidia change under Huang?",
+      [
+       "From a phone maker to a car maker",
+       "From a maker of gaming graphics cards to the backbone of the AI boom",
+       "From a software company to a bank",
+       "It stayed the same"
+      ],
+      1
+     ],
+     [
+      "Why does Alice Huang's link to Megaspeed matter?",
+      [
+       "Megaspeed is a news company",
+       "Megaspeed had bought billions of dollars' worth of Nvidia chips",
+       "Megaspeed is owned by Jensen Huang",
+       "Megaspeed makes graphics cards"
+      ],
+      1
+     ],
+     [
+      "According to the article, what changed the board's position?",
+      [
+       "A new chip launch",
+       "Reports of another relationship and a falling share price",
+       "A court ruling",
+       "Huang's retirement plan"
+      ],
+      1
+     ],
+     [
+      "Why do analysts think the scandal matters for U.S.–China trade?",
+      [
+       "Huang was the strongest voice against strict chip export limits",
+       "Nvidia will stop selling chips",
+       "China banned Nvidia",
+       "Huang moved to China"
+      ],
+      0
+     ],
+     [
+      "What will investors pay attention to on November 17?",
+      [
+       "Only the share price",
+       "The numbers and how confidently Nvidia describes its future",
+       "The new chair's salary",
+       "Huang's testimony"
+      ],
+      1
+     ]
+    ]
+   }
+  }
+ }
+};
+const GLOSS = {};
+const SRC_ORDER = ["owlish"];
+const LVL_ORDER = ["a2", "b1", "b2"];
+const TAPS = false;             // tap-a-word-to-play is a paid-pack feature
+let currentSource = "owlish";
+let currentLevel = "b1";
+let rate = 0.85;
+
+function cur(){ return SOURCES[currentSource].levels[currentLevel]; }
+
+/* ===================== RENDER ===================== */
+function buildSourceToggle(){
+  const wrap=document.getElementById("sourceToggle"); wrap.innerHTML="";
+  SRC_ORDER.forEach(k=>{
+    const s=SOURCES[k];
+    const b=document.createElement("button");
+    b.innerHTML=`${s.short}<small>${s.outlet.replace("The ","")}</small>`;
+    b.dataset.key=k;
+    if(k===currentSource) b.classList.add("active");
+    b.onclick=()=>setSource(k);
+    wrap.appendChild(b);
+  });
+}
+function buildLevelToggle(){
+  const wrap=document.getElementById("levelToggle"); wrap.innerHTML="";
+  LVL_ORDER.forEach(k=>{
+    const d=SOURCES[currentSource].levels[k];
+    const b=document.createElement("button");
+    const desc=(d.label.split(" (")[1]||"").replace(")","");
+    b.innerHTML=`<span class="lv">${d.name}</span>${desc}`;
+    b.dataset.key=k;
+    if(k===currentLevel) b.classList.add("active");
+    b.onclick=()=>setLevel(k);
+    wrap.appendChild(b);
+  });
+}
+function renderCite(){
+  const s=SOURCES[currentSource];
+  if(s.url){document.getElementById("sourceCite").innerHTML=`Source: <strong>${s.outlet}</strong>${s.byline?` (${s.byline})`:""} — <a href="${s.url}" target="_blank" rel="noopener">Watch the original ▶</a>`;return;}
+  if(s.cite){document.getElementById("sourceCite").innerHTML=s.cite;return;}
+  document.getElementById("sourceCite").innerHTML=`Written by Owlish English from data and reporting by: <strong>${s.outlet}</strong>${s.checked?` <span class="checked">· Facts checked: ${s.checked}</span>`:""}`;
+}
+function renderLevel(){
+  const d=cur();
+  document.getElementById("reading").innerHTML=`<h2>${d.title}</h2>`+d.paragraphs.map((p,pi)=>/^## /.test(p)?`<h3 class="sub">${wrapWords(p.slice(3),pi)}</h3>`:`<p>${wrapWords(p,pi)}</p>`).join("");
+  buildWordMap();
+  document.getElementById("vocabLevelLabel").textContent=`${SOURCES[currentSource].short} · ${d.label}`;
+  document.getElementById("vocabBody").innerHTML=d.vocab.map(v=>`<tr><td class="word">${v[0]}</td><td class="pos">${v[1]}</td><td>${v[2]}</td></tr>`).join("");
+  renderQuiz("vocab",d.vocabQuiz,"vocabQuiz");
+  renderQuiz("comp",d.comp,"compQuiz");
+  document.getElementById("vocabScore").textContent="";
+  document.getElementById("compScore").textContent="";
+  renderCite();
+  resetAudio();
+}
+function renderQuiz(kind,items,mountId){
+  const L=["A","B","C","D"];
+  document.getElementById(mountId).innerHTML=items.map((it,qi)=>{
+    const opts=it[1].map((o,oi)=>`<label class="opt" data-q="${qi}" data-o="${oi}"><input type="radio" name="${kind}_${qi}" value="${oi}"><span class="ltr">${L[oi]}.</span><span>${o}</span></label>`).join("");
+    return `<div class="q" data-q="${qi}"><div class="stem"><span class="num">${qi+1}.</span>${it[0]}</div>${opts}</div>`;
+  }).join("");
+}
+function checkQuiz(kind){
+  const items=kind==="vocab"?cur().vocabQuiz:cur().comp;
+  const mount=document.getElementById(kind==="vocab"?"vocabQuiz":"compQuiz");
+  let correct=0;
+  items.forEach((it,qi)=>{
+    const ans=it[2];
+    const chosen=mount.querySelector(`input[name="${kind}_${qi}"]:checked`);
+    const opts=mount.querySelectorAll(`label.opt[data-q="${qi}"]`);
+    opts.forEach(o=>{o.classList.remove("correct","wrong");o.classList.add("locked");});
+    opts[ans].classList.add("correct");
+    if(chosen){const ci=parseInt(chosen.value); if(ci===ans) correct++; else opts[ci].classList.add("wrong");}
+  });
+  const total=items.length;
+  const el=document.getElementById(kind==="vocab"?"vocabScore":"compScore");
+  el.textContent=`Score: ${correct} / ${total}`;
+  el.className="score "+(correct===total?"good":correct>=Math.ceil(total/2)?"mid":"");
+}
+function setSource(k){
+  currentSource=k;
+  document.querySelectorAll("#sourceToggle button").forEach(b=>b.classList.toggle("active",b.dataset.key===k));
+  buildLevelToggle();
+  renderLevel();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function setLevel(k){
+  currentLevel=k;
+  document.querySelectorAll("#levelToggle button").forEach(b=>b.classList.toggle("active",b.dataset.key===k));
+  renderLevel();
+}
+
+/* ===================== TTS ===================== */
+let queue=[],qi=0;
+let audioState="idle";              // idle | playing | paused
+let selectedVoice=null;
+let speakToken=0;                   // invalidates stale utterance callbacks
+let durations=[],starts=[],totalDur=0;
+let lastSyncElapsed=0,lastSyncWall=0,playElapsed=0,scrubbing=false;
+const playBtn=document.getElementById("playBtn");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+const track=document.getElementById("track");
+const tFill=document.getElementById("tFill");
+const tHandle=document.getElementById("tHandle");
+const tCur=document.getElementById("tCur");
+const tTot=document.getElementById("tTot");
+const ticksEl=document.getElementById("ticks");
+
+function loadVoice(){
+  if(!(!!window.speechSynthesis)) return;
+  const all=speechSynthesis.getVoices();
+  if(!all.length) return; // fires again via onvoiceschanged
+  // macOS/iOS list joke voices (Albert, Bubbles, Bad News…) as en-US, and they
+  // sort first alphabetically — never pick those.
+  const NOVELTY=/^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)\b/i;
+  const en=all.filter(v=>/^en/i.test(v.lang)&&!NOVELTY.test(v.name));
+  const us=en.filter(v=>/en[-_]?US/i.test(v.lang));
+  const PREFERRED=[/^Google US English$/,/Microsoft (Aria|Jenny|Ava|Andrew|Emma|Guy).*Natural/i,/^Samantha/,/^Ava/,/^Allison/,/^Alex$/,/Microsoft (Zira|David)/i];
+  selectedVoice=null;
+  for(const re of PREFERRED){ selectedVoice=us.find(v=>re.test(v.name)); if(selectedVoice)break; }
+  selectedVoice = selectedVoice ||
+    us.find(v=>v.default) || us.find(v=>v.localService) || us[0] ||   // any normal US English
+    en[0] || null;                                                   // any English (else browser default)
+}
+if(!!window.speechSynthesis){
+  loadVoice();
+  speechSynthesis.onvoiceschanged=loadVoice;
+}
+
+// --- Spoken-only number normalization -------------------------------------
+// Converts figures to written words for the TTS engine ONLY. The displayed
+// reading text is never touched. e.g. "$1.1 trillion" is spoken as
+// "one point one trillion dollars" instead of "one dollar one trillion".
+const _ones=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+const _tens=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+function _threeDigits(n){
+  let s="";
+  if(n>=100){ s+=_ones[Math.floor(n/100)]+" hundred"; n%=100; if(n)s+=" "; }
+  if(n>=20){ s+=_tens[Math.floor(n/10)]; const r=n%10; if(r)s+="-"+_ones[r]; }
+  else if(n>0){ s+=_ones[n]; }
+  return s;
+}
+function _intToWords(n){
+  if(n===0)return "zero";
+  const groups=["","thousand","million","billion","trillion","quadrillion"];
+  let parts=[],g=0;
+  while(n>0){ const c=n%1000; if(c)parts.unshift(_threeDigits(c)+(groups[g]?" "+groups[g]:"")); n=Math.floor(n/1000); g++; }
+  return parts.join(" ");
+}
+function numToWords(numStr){
+  numStr=numStr.replace(/,/g,"");
+  if(numStr.includes(".")){
+    const p=numStr.split(".");
+    return _intToWords(parseInt(p[0]||"0",10))+" point "+p[1].split("").map(d=>_ones[+d]).join(" ");
+  }
+  return _intToWords(parseInt(numStr,10));
+}
+function speechText(t){
+  return t
+    // "U.S." -> "US" so the voice reads it as letters ("you ess") and the
+    // sentence splitter doesn't break at the dots. Keep one period only when
+    // it genuinely ends a sentence (next word is capitalized).
+    .replace(/\bU\.S\.A\./g,"USA")
+    .replace(/\bU\.S\.(?=\s+[A-Z])/g,"US.")
+    .replace(/\bU\.S\./g,"US")
+    // $X[.Y] trillion/billion/million  ->  words + magnitude + "dollars"
+    .replace(/\$(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s+(trillion|billion|million)/gi,(m,n,mag)=>numToWords(n)+" "+mag.toLowerCase()+" dollars")
+    // remaining $X  ->  words + "dollar(s)"
+    .replace(/\$(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)/g,(m,n)=>numToWords(n)+(n==="1"?" dollar":" dollars"))
+    // X%  ->  words + "percent"
+    .replace(/(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)%/g,(m,n)=>numToWords(n)+" percent")
+    // standalone figures (skips ordinals like "20th" — digits followed by a letter)
+    .replace(/\b(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\b(?![%A-Za-z]|[.,]\d)/g,(m,n,off,str)=>{ if(/^(19|20)\d\d$/.test(n)) return n; if(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+$/.test(str.slice(Math.max(0,off-12),off))) return n; return numToWords(n); });
+}
+function buildChunks(){
+  const d=cur();
+  const chunks=[{text:speechText(d.title.replace(/[.?!]+$/,""))+".",pauseAfter:2000}];
+  d.paragraphs.forEach(p=>paraPieces(p).forEach(x=>chunks.push({text:x,pauseAfter:0})));
+  return chunks;
+}
+function paraPieces(p){
+  if(/^## /.test(p)) p=p.slice(3).replace(/[.?!:]*$/,".");   // a sub-heading is read as its own sentence
+  const sp=speechText(p),out=[];
+  (sp.match(/[^.!?]+[.!?]+/g)||[sp]).forEach(s=>{const t=s.trim();if(t)splitLong(t).forEach(x=>out.push(x));});
+  return out;
+}
+// Chrome's Google voices cut off any single utterance after ~15 s and then never
+// fire onend, which freezes playback. Split long sentences at commas/dashes so
+// each piece stays well under that, even at the slowest speed.
+const MAX_WORDS=20;
+function splitLong(t){
+  const n=s=>s.trim().split(/\s+/).length;
+  if(n(t)<=MAX_WORDS) return [t];
+  const parts=t.split(/(?<=[,;:—–])\s+/);
+  const out=[];let buf="";
+  parts.forEach(pt=>{
+    if(buf && n(buf+" "+pt)>MAX_WORDS){out.push(buf);buf=pt;}
+    else buf=buf?buf+" "+pt:pt;
+  });
+  if(buf)out.push(buf);
+  // a single comma-free run that is still too long: cut it at word boundaries
+  return out.flatMap(s=>{
+    if(n(s)<=MAX_WORDS+6) return [s];
+    const w=s.split(/\s+/),r=[];for(let i=0;i<w.length;i+=MAX_WORDS)r.push(w.slice(i,i+MAX_WORDS).join(" "));return r;
+  });
+}
+/* ----- audio script for the MP3 generator -------------------------------------
+   GitHub (tools/make_audio.py) calls this to get exactly what the page would say
+   for every version, and records it as MP3. Keys look like "wsj-a2". */
+window.owlishAudioScript=function(){
+  const keep=[currentSource,currentLevel],out={};
+  SRC_ORDER.forEach(s=>LVL_ORDER.forEach(l=>{
+    currentSource=s;currentLevel=l;
+    out[s+"-"+l]=buildChunks().map(c=>({text:c.text,pauseAfter:c.pauseAfter||0}));
+  }));
+  [currentSource,currentLevel]=keep;
+  return out;
+};
+
+/* ----- recorded audio (MP3) ------------------------------------------------------
+   If GitHub has made an MP3 for this version and its text still matches the page,
+   play that: it works inside the Naver/KakaoTalk app browsers, speed is exact, and
+   pause/seek are real. Otherwise fall back to the browser's own voice below. */
+const AUDIO_BASE=(location.pathname.split("/").pop()||"").replace(/\.html$/i,"")||"jensen-huang-resigns";
+let MANIFEST=null, mode="tts";
+const audioEl=new Audio();
+audioEl.preload="auto";
+try{audioEl.preservesPitch=true;audioEl.webkitPreservesPitch=true;}catch(_){}
+function versionKey(){return currentSource+"-"+currentLevel;}
+function mp3For(){
+  if(!MANIFEST||!MANIFEST.versions)return null;
+  const v=MANIFEST.versions[versionKey()];
+  if(!v)return null;
+  const now=buildChunks().map(c=>c.text).join("\n");
+  return v.text===now?v:null;           // text edited since the MP3 was made -> don't use it
+}
+function useMp3IfReady(){
+  const v=mp3For();
+  if(!v){mode="tts";return false;}
+  mode="mp3";
+  const url="audio/"+AUDIO_BASE+"/"+v.file+(MANIFEST.build?"?v="+MANIFEST.build:"");
+  if(audioEl.dataset.src!==url){audioEl.src=url;audioEl.dataset.src=url;}
+  audioEl.playbackRate=rate;
+  starts=v.starts.slice();totalDur=v.duration;
+  if(tTot)tTot.textContent=fmt(totalDur);
+  renderTicks();
+  const box=document.getElementById("appNotice");if(box)box.hidden=true;  // audio will work here
+  return true;
+}
+fetch("audio/"+AUDIO_BASE+"/manifest.json",{cache:"no-cache"})
+  .then(r=>r.ok?r.json():null)
+  .then(m=>{ if(!m)return; MANIFEST=m; if(audioState==="idle"){resetAudio();} })
+  .catch(()=>{});
+audioEl.addEventListener("ended",()=>{ if(mode==="mp3")finishAudio(); });
+audioEl.addEventListener("error",()=>{            // file missing/broken -> browser voice
+  if(mode!=="mp3")return;
+  MANIFEST=null;mode="tts";audioEl.removeAttribute("src");delete audioEl.dataset.src;
+  const wasPlaying=audioState==="playing";resetAudio();
+  showAppNotice(false);
+  if(wasPlaying)togglePlay();
+});
+
+/* ----- tap a word to play from it ------------------------------------------------
+   Every word in the reading is a span. A quick tap plays from that word. Press-and-
+   hold is left alone, so the phone's own look-up / translate still works. Each shown
+   word is matched to the spoken words (numbers are spoken as words, so "$100" ->
+   "one hundred dollars"), giving the sentence and the word inside it to start from. */
+function wrapWords(p,pi){
+  if(!TAPS) return p;
+  let wi=0;
+  return p.split(/(\s+)/).map(tok=>/^\s+$/.test(tok)||tok===""?tok:`<span class="w" data-p="${pi}" data-w="${wi++}">${tok}</span>`).join("");
+}
+let WORDMAP={};      // "pi:wi" -> [chunkIndex, wordIndexInChunk]
+const norm=w=>w.toLowerCase().replace(/[^a-z]/g,"");
+function buildWordMap(){
+  WORDMAP={};
+  const d=cur(); let ci=1;                                   // chunk 0 is the title
+  d.paragraphs.forEach((p,pi)=>{
+    const spoken=[];                                          // [chunk, wordInChunk, normalized]
+    paraPieces(p).forEach(piece=>{ piece.split(/\s+/).forEach((w,k)=>spoken.push([ci,k,norm(w)])); ci++; });
+    const shown=p.replace(/^## /,"").split(/\s+/).filter(Boolean);
+    let j=0;
+    shown.forEach((w,wi)=>{
+      const n=norm(w);
+      if(n){ for(let k=j;k<Math.min(spoken.length,j+8);k++){ if(spoken[k][2]===n){ j=k; break; } } }
+      const hit=spoken[Math.min(j,spoken.length-1)];
+      WORDMAP[pi+":"+wi]=[hit[0],hit[1]];
+      if(n&&spoken[j]&&spoken[j][2]===n) j++;
+    });
+  });
+}
+let startWordInChunk=0;                                       // used once by the next speak
+function playFromWord(ci,wi){
+  ensureQueue(); if(ci>=queue.length) return;
+  if(mode==="mp3"){
+    const v=mp3For(); let t=starts[ci]||0;
+    const wt=v&&v.words&&v.words[ci];
+    if(wt&&wt.length) t=(starts[ci]||0)+(wt[Math.min(wi,wt.length-1)]||0);
+    else{ const next=(starts[ci+1]||totalDur), n=queue[ci].text.split(/\s+/).length; t+=Math.max(0,(next-t-0.2))*(wi/n); }
+    qi=ci; audioState="playing";
+    try{audioEl.currentTime=Math.max(0,t-0.05);}catch(_){}
+    audioEl.playbackRate=rate; const pr=audioEl.play(); if(pr&&pr.catch)pr.catch(()=>{audioState="paused";setUI();});
+    setUI(); return;
+  }
+  if(!window.speechSynthesis){showAppNotice(true);return;}
+  speakToken++; speechSynthesis.cancel();
+  qi=ci; startWordInChunk=wi; audioState="playing"; setUI();
+  setTimeout(()=>{ if(audioState==="playing") speakCurrent(); },60);
+}
+/* ----- double-tap a word: Korean meaning bubble -------------------------------- */
+const TAP2_MS=300; let tapTimer=null, tapWord=null;
+const glossKey=t=>t.toLowerCase().replace(/[’]/g,"'").replace(/[^a-z0-9'$%.,-]/g,"").replace(/^[.,'-]+|[.,'-]+$/g,"");
+const glossBox=document.createElement("div"); glossBox.className="gloss"; glossBox.hidden=true; glossBox.setAttribute("role","status");
+document.body.appendChild(glossBox);
+function showGloss(w){
+  const word=w.textContent.replace(/^[^A-Za-z0-9$]+|[^A-Za-z0-9%]+$/g,""), ko=GLOSS[glossKey(w.textContent)];
+  if(!ko) return;
+  glossBox.innerHTML=`<b>${word}</b><span>${ko}</span>`; glossBox.hidden=false;
+  document.querySelectorAll("#reading span.w.glossed").forEach(x=>x.classList.remove("glossed")); w.classList.add("glossed");
+  const r=w.getBoundingClientRect(), bw=glossBox.offsetWidth, bh=glossBox.offsetHeight, vw=document.documentElement.clientWidth;
+  let left=r.left+r.width/2-bw/2; left=Math.max(8,Math.min(left,vw-bw-8));
+  let top=r.top-bh-10; glossBox.classList.toggle("below",top<8); if(top<8) top=r.bottom+10;
+  glossBox.style.left=(left+scrollX)+"px"; glossBox.style.top=(top+scrollY)+"px";
+}
+function hideGloss(){ glossBox.hidden=true; document.querySelectorAll("#reading span.w.glossed").forEach(x=>x.classList.remove("glossed")); }
+document.addEventListener("click",e=>{ if(!(e.target.closest&&(e.target.closest("span.w")||e.target.closest(".gloss")))) hideGloss(); });
+window.addEventListener("resize",hideGloss);
+(function(){
+  const box=document.getElementById("reading"); let down=null;
+  box.addEventListener("pointerdown",e=>{ down={x:e.clientX,y:e.clientY,t:performance.now()}; });
+  box.addEventListener("click",e=>{
+    const w=e.target.closest&&e.target.closest("span.w"); if(!w) return;
+    const sel=window.getSelection&&String(window.getSelection()); if(sel&&sel.trim()&&!(tapTimer&&tapWord===w)) return;   // selecting text, not tapping
+    if(down&&(Math.abs(e.clientX-down.x)>8||Math.abs(e.clientY-down.y)>8||performance.now()-down.t>500)) return; // swipe or long-press
+    const m=WORDMAP[w.dataset.p+":"+w.dataset.w]; if(!m) return;
+    // a second tap on the same word within TAP2_MS = show its meaning instead of playing
+    if(tapTimer&&tapWord===w){ clearTimeout(tapTimer); tapTimer=null; tapWord=null; showGloss(w); return; }
+    clearTimeout(tapTimer); tapWord=w; hideGloss();
+    tapTimer=setTimeout(()=>{
+      tapTimer=null; tapWord=null;
+      box.querySelectorAll("span.w.tapped").forEach(x=>x.classList.remove("tapped"));
+      w.classList.add("tapped"); setTimeout(()=>w.classList.remove("tapped"),900);
+      playFromWord(m[0],m[1]);
+    },TAP2_MS);
+  });
+  // a desktop double-click would otherwise select the word
+  box.addEventListener("mousedown",e=>{ if(e.detail>1&&e.target.closest&&e.target.closest("span.w")) e.preventDefault(); });
+})();
+
+/* ----- timeline model ----------------------------------------------------- */
+const BASE_WPS=2.8;                 // approx words/sec at rate 1 (estimate only)
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+function estimate(){
+  if(mode==="mp3"){audioEl.playbackRate=rate;return;}
+  durations=queue.map(c=>{
+    const words=(c.text.trim().split(/\s+/).length)||1;
+    const speak=Math.max(0.45, words/(BASE_WPS*rate));
+    return speak + (c.pauseAfter||0)/1000 + 0.18;   // + inter-sentence gap
+  });
+  starts=[];let acc=0;durations.forEach(d=>{starts.push(acc);acc+=d;});
+  totalDur=acc;
+  if(tTot)tTot.textContent=fmt(totalDur);
+}
+function renderTicks(){
+  if(!ticksEl)return;ticksEl.innerHTML="";
+  if(totalDur<=0)return;
+  for(let i=1;i<starts.length;i++){
+    const t=document.createElement("i");
+    t.style.left=(starts[i]/totalDur*100)+"%";
+    ticksEl.appendChild(t);
+  }
+}
+function ensureQueue(){
+  if(!queue.length){queue=buildChunks();qi=0;if(!useMp3IfReady()){estimate();renderTicks();}}
+}
+function setUI(){
+  const pct=totalDur>0?Math.min(100,(playElapsed/totalDur)*100):0;
+  if(tFill)tFill.style.width=pct+"%";
+  if(tHandle)tHandle.style.left=pct+"%";
+  if(tCur)tCur.textContent=fmt(playElapsed);
+  if(track)track.setAttribute("aria-valuenow",Math.round(playElapsed));
+  playBtn.textContent = audioState==="playing" ? "⏸ Pause" : (audioState==="paused" ? "▶ Resume" : "▶ Listen");
+  playBtn.classList.toggle("playing", audioState!=="idle");
+}
+function syncTo(i){lastSyncElapsed=starts[i]||0;lastSyncWall=performance.now();playElapsed=lastSyncElapsed;}
+(function raf(){
+  if(audioState==="playing" && !scrubbing){
+    if(mode==="mp3"){playElapsed=Math.min(totalDur,audioEl.currentTime||0);qi=timeToChunk(playElapsed);}
+    else playElapsed=Math.min(totalDur, lastSyncElapsed+(performance.now()-lastSyncWall)/1000);
+    setUI();
+  }
+  requestAnimationFrame(raf);
+})();
+
+/* ----- speaking ----------------------------------------------------------- */
+function playMp3From(i){
+  try{audioEl.currentTime=starts[i]||0;}catch(_){}
+  audioEl.playbackRate=rate;
+  const p=audioEl.play();
+  if(p&&p.catch)p.catch(()=>{audioState="paused";setUI();});   // e.g. autoplay blocked: wait for a tap
+}
+function speakCurrent(){
+  if(mode==="mp3"){ if(audioState!=="playing")return; playMp3From(qi); return; }
+  if(!window.speechSynthesis){audioState="idle";setUI();showAppNotice(true);return;}
+  if(audioState!=="playing")return;
+  if(qi>=queue.length){finishAudio();return;}
+  const myToken=++speakToken;
+  const c=queue[qi];
+  syncTo(qi);
+  let say=c.text;
+  if(startWordInChunk>0){ say=c.text.split(/\s+/).slice(startWordInChunk).join(" ")||c.text; startWordInChunk=0; }
+  const u=new SpeechSynthesisUtterance(say);
+  u.rate=rate;
+  if(selectedVoice){u.voice=selectedVoice;u.lang=selectedVoice.lang;}
+  else u.lang="en-US";
+  let done=false;
+  const advance=()=>{
+    if(done)return;done=true;clearTimeout(watchdog);
+    if(myToken!==speakToken||audioState!=="playing")return;  // stale or stopped
+    qi++;
+    if(qi>=queue.length){finishAudio();return;}
+    const gap=c.pauseAfter||0;
+    if(gap) setTimeout(()=>{if(myToken===speakToken&&audioState==="playing")speakCurrent();},gap);
+    else speakCurrent();
+  };
+  u.onend=advance;
+  // a voice that errors out would otherwise leave playback stuck forever
+  u.onerror=e=>{ if(e&&(e.error==="interrupted"||e.error==="canceled"))return; advance(); };
+  // last resort: if the engine never reports the end, move on anyway
+  const words=c.text.split(/\s+/).length;
+  // (generous: twice the slowest plausible speaking time, plus 4 s)
+  const watchdog=setTimeout(()=>{ if(myToken===speakToken&&audioState==="playing"&&!done){(window.speechSynthesis&&speechSynthesis.cancel());advance();} },
+                            (words/(BASE_WPS*0.5*rate))*1000+4000);
+  speechSynthesis.speak(u);
+}
+function finishAudio(){
+  if(mode==="mp3")audioEl.pause();
+  speakToken++;audioState="idle";(window.speechSynthesis&&speechSynthesis.cancel());
+  playElapsed=totalDur;qi=queue.length;setUI();
+}
+function timeToChunk(t){
+  let i=0;for(let k=0;k<starts.length;k++){if(t>=starts[k])i=k;else break;}return i;
+}
+function seekToTime(t,play){
+  ensureQueue();if(totalDur<=0)return;
+  t=Math.max(0,Math.min(totalDur,t));
+  qi=timeToChunk(t);
+  if(mode==="mp3"){
+    playElapsed=starts[qi];
+    if(play){audioState="playing";playMp3From(qi);}
+    else{try{audioEl.currentTime=starts[qi];}catch(_){}}
+    setUI();return;
+  }
+  playElapsed=starts[qi];           // snap handle to the sentence we'll speak
+  syncTo(qi);
+  if(play){audioState="playing";speakToken++;(window.speechSynthesis&&speechSynthesis.cancel());speakCurrent();}
+  setUI();
+}
+
+/* ----- transport controls ------------------------------------------------- */
+/* ----- in-app browsers (KakaoTalk, Naver, Instagram…) ------------------------
+   Links tapped inside these apps open in a built-in browser that often has no
+   speech voice (always on Android). Tell the reader and offer the real browser. */
+const UA=navigator.userAgent||"";
+const IN_APP=/KAKAOTALK|NAVER\(inapp|; ?wv\)|Instagram|FBAN|FBAV|Line\//i.test(UA);
+const IS_ANDROID=/Android/i.test(UA), IS_IOS=/iPhone|iPad|iPod/i.test(UA);
+function externalUrl(){
+  const here=location.href;
+  if(/KAKAOTALK/i.test(UA)) return "kakaotalk://web/openExternal?url="+encodeURIComponent(here);
+  if(IS_ANDROID) return "intent://"+here.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end";
+  return here;
+}
+function showAppNotice(force){
+  const box=document.getElementById("appNotice");if(!box)return;
+  if(mode==="mp3"){box.hidden=true;return;}
+  const noVoice=!(!!window.speechSynthesis);
+  if(!(force||noVoice||IN_APP))return;
+  const msg=document.getElementById("appNoticeMsg"),btn=document.getElementById("appNoticeBtn");
+  if(IS_IOS && !/KAKAOTALK/i.test(UA)){
+    msg.textContent = noVoice
+      ? "이 앱 안에서는 오디오가 나오지 않아요. 앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요."
+      : "소리가 안 나면 앱의 ··· 메뉴에서 'Safari로 열기'나 '다른 브라우저로 열기'를 눌러주세요.";
+    btn.hidden=true;
+  } else {
+    msg.textContent = noVoice
+      ? "이 앱 안에서는 오디오가 나오지 않아요. 아래 버튼을 눌러 브라우저에서 열어주세요."
+      : "이 앱 안에서는 오디오가 나오지 않을 수 있어요. 소리가 안 나면 브라우저에서 열어주세요.";
+    btn.href=externalUrl();
+  }
+  box.hidden=false;
+}
+showAppNotice(false);
+
+function togglePlay(){
+  ensureQueue();
+  if(mode==="mp3"){
+    if(audioState==="playing"){audioState="paused";audioEl.pause();playElapsed=audioEl.currentTime||0;setUI();}
+    else if(audioState==="paused"){audioState="playing";audioEl.playbackRate=rate;const p=audioEl.play();if(p&&p.catch)p.catch(()=>{audioState="paused";setUI();});setUI();}
+    else{let t=playElapsed;if(t>=totalDur)t=0;seekToTime(t,true);}
+    return;
+  }
+  if(!(!!window.speechSynthesis)){showAppNotice(true);document.getElementById("appNotice").scrollIntoView({behavior:"smooth",block:"center"});return;}
+  ensureQueue();
+  // Pause = stop the voice and remember the sentence; Resume = say that sentence
+  // again. speechSynthesis.pause()/resume() is broken on Chrome's Google voices
+  // and on Android, and it keeps the OLD speed if the speed is changed while paused.
+  if(audioState==="playing"){                       // -> pause
+    audioState="paused";speakToken++;(window.speechSynthesis&&speechSynthesis.cancel());
+    playElapsed=starts[qi]||0;lastSyncElapsed=playElapsed;setUI();
+  } else if(audioState==="paused"){                  // -> resume (current sentence, current speed)
+    audioState="playing";speakCurrent();setUI();
+  } else {                                           // idle -> play
+    let t=playElapsed;if(t>=totalDur)t=0;
+    seekToTime(t,true);
+  }
+}
+function stopTTS(){speakToken++;audioState="idle";(window.speechSynthesis&&speechSynthesis.cancel());try{audioEl.pause();}catch(_){}}
+function resetAudio(){
+  stopTTS();queue=[];qi=0;playElapsed=0;
+  ensureQueue();playElapsed=0;setUI();
+}
+playBtn.onclick=togglePlay;
+// Space bar = play / pause (except while typing in a form field)
+document.addEventListener("keydown",e=>{
+  if(e.code!=="Space"&&e.key!==" ")return;
+  const t=e.target, tag=(t&&t.tagName)||"";
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(tag)||(t&&t.isContentEditable)||e.altKey||e.ctrlKey||e.metaKey)return;
+  e.preventDefault();                 // no page scroll, and no second "click" on a focused button
+  if(!e.repeat)togglePlay();
+});
+prevBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.max(0,qi-1)]||0,true);};
+nextBtn.onclick=()=>{ensureQueue();seekToTime(starts[Math.min(queue.length-1,qi+1)]||0,true);};
+
+/* ----- scrubbing ---------------------------------------------------------- */
+function clientXToTime(clientX){
+  const r=track.getBoundingClientRect();
+  const frac=Math.max(0,Math.min(1,(clientX-r.left)/r.width));
+  return frac*totalDur;
+}
+track.addEventListener("pointerdown",e=>{
+  ensureQueue();if(totalDur<=0)return;
+  scrubbing=true;try{track.setPointerCapture(e.pointerId);}catch(_){}
+  playElapsed=clientXToTime(e.clientX);setUI();
+});
+track.addEventListener("pointermove",e=>{
+  if(!scrubbing)return;playElapsed=clientXToTime(e.clientX);setUI();
+});
+function endScrub(e){
+  if(!scrubbing)return;scrubbing=false;
+  try{track.releasePointerCapture(e.pointerId);}catch(_){}
+  seekToTime(clientXToTime(e.clientX),true);
+}
+track.addEventListener("pointerup",endScrub);
+track.addEventListener("pointercancel",endScrub);
+track.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"){e.preventDefault();nextBtn.onclick();}
+  else if(e.key==="ArrowLeft"){e.preventDefault();prevBtn.onclick();}
+  else if(e.key===" "||e.key==="Enter"){e.preventDefault();togglePlay();}
+});
+
+/* ----- speed -------------------------------------------------------------- */
+document.querySelectorAll(".speeds button").forEach(b=>{
+  b.onclick=()=>{
+    const wasPlaying=audioState==="playing",at=qi;
+    rate=parseFloat(b.dataset.rate);
+    document.querySelectorAll(".speeds button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    if(mode==="mp3"){audioEl.playbackRate=rate;return;}
+    if(queue.length){estimate();renderTicks();}
+    if(wasPlaying){seekToTime(starts[at]||0,true);}
+    else{if(queue.length)playElapsed=starts[Math.min(qi,starts.length-1)]||0;setUI();}
+  };
+});
+
+/* ===================== PDF ===================== */
+function buildDoc(items, combined){
+  const { jsPDF }=window.jspdf;
+  const doc=new jsPDF({unit:"pt",format:"a4"});prepDoc(doc);
+  const M=48,W=595,RW=W-M*2,BOTTOM=792,L=["A","B","C","D"];
+  let y=54;
+  const H=()=>{doc.setFont("helvetica","bold");doc.setFontSize(15);doc.setTextColor(14,76,79);doc.text("Owlish English",M,y);
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(9);doc.setTextColor(120);doc.text("Graded Reading Worksheet",W-M,y,{align:"right"});
+    y+=10;doc.setDrawColor(224,138,43);doc.setLineWidth(1.5);doc.line(M,y,W-M,y);y+=22;doc.setTextColor(20);};
+  const newPage=(withHead)=>{doc.addPage();y=54;if(withHead)H();};
+  const need=(hh)=>{if(y+hh>BOTTOM)newPage(true);};
+  const h3=(t)=>{need(34);doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(14,76,79);doc.text(t,M,y);y+=6;doc.setDrawColor(230);doc.setLineWidth(.6);doc.line(M,y,W-M,y);y+=16;doc.setTextColor(20);};
+  const para=(t,size,gap)=>{doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(size);doc.splitTextToSize(t,RW).forEach(ln=>{need(size*1.4);doc.text(ln,M,y);y+=size*1.4;});y+=(gap||6);};
+  const mc=(it,i)=>{need(24);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.splitTextToSize(`${i+1}. ${it[0]}`,RW).forEach(ln=>{need(14);doc.text(ln,M,y);y+=14;});
+    doc.setFont(PDF_TEXT_FONT,"normal");it[1].forEach((o,oi)=>{doc.splitTextToSize(`${L[oi]}. ${o}`,RW-24).forEach(ln=>{need(13);doc.text(ln,M+18,y);y+=13;});});y+=8;};
+
+  if(combined){
+    H();
+    doc.setFont("helvetica","bold");doc.setFontSize(20);doc.text("Jensen Huang Resigns: The Nvidia Spy Scandal",M,y+8);y+=38;
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(12);doc.setTextColor(90);
+    doc.text("Owlish English \u00b7 Graded Reading \u2014 Original / A2 / B1-B2",M,y);y+=22;doc.setTextColor(20);
+    doc.setFontSize(11);
+    items.forEach((it,i)=>{const s=SOURCES[it.src],lv=s.levels[it.lvl];need(15);doc.text(`${i+1}.  ${s.short} — ${lv.name}`,M+10,y);y+=15;});
+  }
+
+  let firstDone=false;
+  items.forEach(it=>{
+    const s=SOURCES[it.src], d=s.levels[it.lvl];
+    if(combined||firstDone) newPage(false);
+    H();
+    doc.setFont("helvetica","bold");doc.setFontSize(16);doc.splitTextToSize(d.title,RW).forEach(ln=>{doc.text(ln,M,y);y+=18;});
+    doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(10);doc.setTextColor(110);
+    doc.text(`Owlish English · Graded Reading  ·  Level: ${d.label}`,M,y);y+=13;
+    doc.splitTextToSize(`Source: ${s.url?s.outlet+(s.byline?" ("+s.byline+")":""):(s.cite||s.outlet).replace(/<[^>]+>/g,"")}`,RW).forEach(ln=>{doc.text(ln,M,y);y+=12;});
+    doc.setTextColor(20);y+=8;
+    if(!combined){doc.setFontSize(11);doc.text("Name: ______________________________",M,y);doc.text("Date: ________________",W-M-150,y);y+=22;}
+    h3("Reading");
+    doc.setFont("helvetica","bold");doc.setFontSize(12);need(18);doc.splitTextToSize(d.title,RW).forEach(ln=>{doc.text(ln,M,y);y+=16;});
+    d.paragraphs.forEach(p=>{ if(/^## /.test(p)){need(30);doc.setFont("helvetica","bold");doc.setFontSize(11.5);doc.text(p.slice(3),M,y+4);y+=20;} else para(p,11,8); });y+=4;
+    h3("Vocabulary");
+    d.vocab.forEach(v=>{need(20);doc.setFont("helvetica","bold");doc.setFontSize(11);const wl=doc.splitTextToSize(`${v[0]} (${v[1]})`,150);doc.text(wl,M,y);doc.setFont(PDF_TEXT_FONT,"normal");const dl=doc.splitTextToSize(pdfSafe(v[2]),RW-160);doc.text(dl,M+160,y);y+=Math.max(wl.length,dl.length)*13+5;});y+=4;
+    h3("Vocab Quiz  (circle the best answer)");
+    d.vocabQuiz.forEach((q,i)=>mc(q,i));
+    h3("Comprehension  (circle the best answer)");
+    d.comp.forEach((q,i)=>mc(q,i));
+    if(!combined){
+      newPage(false);H();h3("Answer Key");
+      doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(11);
+      const vk=d.vocabQuiz.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ");
+      const ck=d.comp.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ");
+      doc.setFont("helvetica","bold");doc.text("Vocab Quiz:",M,y);doc.setFont(PDF_TEXT_FONT,"normal");doc.text(vk,M+78,y);y+=18;
+      doc.setFont("helvetica","bold");doc.text("Comprehension:",M,y);doc.setFont(PDF_TEXT_FONT,"normal");doc.text(ck,M+98,y);y+=18;
+    }
+    firstDone=true;
+  });
+
+  if(combined){
+    newPage(false);H();h3("Answer Keys — all readings");
+    items.forEach(it=>{
+      const s=SOURCES[it.src],d=s.levels[it.lvl];
+      need(42);
+      doc.setFont("helvetica","bold");doc.setFontSize(11);doc.setTextColor(14,76,79);doc.text(`${s.short} — ${d.name}`,M,y);y+=14;doc.setTextColor(20);
+      doc.setFont(PDF_TEXT_FONT,"normal");
+      doc.text(`Vocab: ${d.vocabQuiz.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ")}`,M+10,y);y+=13;
+      doc.text(`Comprehension: ${d.comp.map((q,i)=>`${i+1}-${L[q[2]]}`).join("   ")}`,M+10,y);y+=16;
+    });
+  }
+
+  const pages=doc.getNumberOfPages();
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFont(PDF_TEXT_FONT,"normal");doc.setFontSize(9);doc.setTextColor(140);doc.text("Owlish English",M,812);doc.text(`Page ${p} of ${pages}`,W-M,812,{align:"right"});}
+  return doc;
+}
+/* Korean in the vocab list needs a Korean font: the PDF tool's built-in fonts have
+   no Hangul. Nanum Gothic (free, OFL) is loaded from fonts/ only when someone
+   downloads, then reused. If it can't load, the PDF is still made, and the Korean
+   meanings are left out instead of coming out garbled. */
+let PDF_TEXT_FONT="helvetica", koreanFontB64=null, koreanFontTried=false;
+function ab2b64(buf){let s="",b=new Uint8Array(buf);for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s);}
+async function ensureKoreanFont(){
+  if(koreanFontB64||koreanFontTried)return;
+  koreanFontTried=true;
+  try{const r=await fetch("fonts/NanumGothic-Regular.ttf");if(r.ok)koreanFontB64=ab2b64(await r.arrayBuffer());}catch(_){}
+}
+function prepDoc(doc){
+  if(koreanFontB64){doc.addFileToVFS("NanumGothic.ttf",koreanFontB64);doc.addFont("NanumGothic.ttf","NanumGothic","normal");PDF_TEXT_FONT="NanumGothic";}
+  else PDF_TEXT_FONT="helvetica";
+}
+function pdfSafe(t){ return koreanFontB64 ? t : String(t).replace(/[\u3131-\u318E\uAC00-\uD7A3][^·]*·\s*/g,"").replace(/[^\x00-\xFF]/g,""); }
+async function withPdf(btn,fn){
+  const label=btn.innerHTML;btn.disabled=true;btn.innerHTML="⏳ Making PDF…";
+  try{await ensureKoreanFont();fn();}finally{btn.disabled=false;btn.innerHTML=label;}
+}
+document.getElementById("pdfBtn").onclick=function(){
+  withPdf(this,()=>buildDoc([{src:currentSource,lvl:currentLevel}],false).save(`Owlish-Jensen-Huang-${cur().name}.pdf`));
+};
+document.getElementById("pdfAllBtn").onclick=function(){
+  const items=[];
+  SRC_ORDER.forEach(s=>LVL_ORDER.forEach(l=>items.push({src:s,lvl:l})));
+  withPdf(this,()=>buildDoc(items,true).save("Owlish-Jensen-Huang-ALL-LEVELS.pdf"));
+};
+
+/* ===================== INIT ===================== */
+buildSourceToggle();
+buildLevelToggle();
+renderLevel();
+window.addEventListener("beforeunload",stopTTS);
+// phones stop the voice when the screen locks or the app is switched; pause
+// cleanly so Resume picks up at the same sentence instead of skipping ahead
+// Switching tabs keeps playing. Only on phones, where the browser voice is cut off in
+// the background, pause cleanly so Resume picks up the same sentence. (Recorded audio
+// keeps going even with the screen locked.)
+document.addEventListener("visibilitychange",()=>{ if(document.hidden&&audioState==="playing"&&mode!=="mp3"&&(IS_ANDROID||IS_IOS))togglePlay(); });
+</script>
+</body>
+</html>
