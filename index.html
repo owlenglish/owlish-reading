@@ -15,9 +15,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
   :root{
-    --mint-50:#F4FBF7; --mint-100:#E6F6EE; --mint-200:#D3EFE1; --mint-300:#B9E4CE;
-    --coral:#E8514A; --coral-deep:#D6403A;
-    --ink:#2B3142; --muted:#586074; --line:#D2E6DB; --white:#FFFFFF;
+    --bg:#F1F1F6; --bg-deep:#E4E3EF;
+    --sky-100:#E6F2FA; --sky-200:#CFE5F5;
+    --purple:#7D3AF6; --purple-deep:#6A2BDE; --pink:#E86AB5;
+    --grad:linear-gradient(180deg,var(--pink) 0%,var(--purple) 100%);
+    --ink:#2B3142; --muted:#586074; --line:#D9DBE6; --white:#FFFFFF;
     --display:"Bricolage Grotesque","Pretendard Variable",Pretendard,system-ui,sans-serif;
     --text:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
   }
@@ -25,7 +27,7 @@
   [hidden]{display:none !important}
   html{scroll-behavior:smooth}
   body{
-    margin:0;background:var(--mint-50);color:var(--ink);
+    margin:0;background:var(--bg);color:var(--ink);
     font-family:var(--text);font-size:17px;line-height:1.7;word-break:keep-all;
     -webkit-font-smoothing:antialiased;
   }
@@ -34,7 +36,7 @@
   .wrap{max-width:960px;margin:0 auto;padding:0 20px}
 
   /* ── Hero ── */
-  .hero{background:var(--mint-200);border-radius:0 0 44px 44px;padding-bottom:56px}
+  .hero{background:var(--bg-deep);border-radius:0 0 44px 44px;padding-bottom:56px}
   .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
   .wordmark{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.01em;text-decoration:none}
   .pill{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
@@ -45,20 +47,11 @@
   .navlinks{display:inline-flex;gap:8px}
   .nav .pill,.wordmark{white-space:nowrap}
   @media (max-width:420px){ .nav .pill{padding:10px 13px;font-size:14px} .wordmark{font-size:17px} .navlinks{gap:6px} }
-  .pill.solid{background:var(--coral-deep);border-color:var(--coral-deep);color:var(--white)}
+  .pill.solid{background:var(--purple);border-color:var(--purple);color:var(--white)}
   .pill.solid:hover{background:var(--ink);border-color:var(--ink)}
 
   .herogrid{display:grid;gap:30px;align-items:center;padding-top:14px}
-  .owl{justify-self:start;--eye:clamp(78px,24vw,128px);
-    background:var(--mint-300);border-radius:50%;
-    padding:calc(var(--eye)*.42) calc(var(--eye)*.34) calc(var(--eye)*.5);
-    position:relative;display:flex;gap:calc(var(--eye)*.14)}
-  .eye{width:var(--eye);height:var(--eye);border-radius:50%;background:var(--white);
-    border:calc(var(--eye)*.15) solid var(--coral);position:relative;--px:0px;--py:0px}
-  .pupil{position:absolute;left:50%;top:50%;width:34%;height:34%;border-radius:50%;background:var(--ink);
-    transform:translate(calc(-50% + var(--px)),calc(-50% + var(--py)));transition:transform .12s ease-out}
-  .beak{position:absolute;left:50%;bottom:calc(var(--eye)*.2);width:calc(var(--eye)*.2);height:calc(var(--eye)*.2);
-    background:var(--coral);transform:translateX(-50%) rotate(45deg);border-radius:3px}
+  .logo{justify-self:start;display:block;width:clamp(150px,40vw,230px);height:auto}
   h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,6.2vw,54px);line-height:1.16;
     letter-spacing:-.025em;margin:0 0 16px;text-wrap:balance}
   .sub{font-size:19px;color:var(--ink);max-width:34em;margin:0 0 26px}
@@ -67,7 +60,7 @@
 
   @media (min-width:760px){
     .herogrid{grid-template-columns:1.4fr .6fr;gap:40px}
-    .owl{order:2;justify-self:center;--eye:clamp(96px,14vw,128px)}
+    .logo{order:2;justify-self:center;width:clamp(180px,26vw,260px)}
   }
 
   /* ── Readings ── */
@@ -79,21 +72,21 @@
   .row{display:grid;gap:18px;padding:26px 28px;text-decoration:none;color:inherit;
     border-top:1px solid var(--line);transition:background .15s ease}
   .row:first-child{border-top:0}
-  .row:hover{background:var(--mint-100)}
+  .row:hover{background:var(--sky-100)}
   .row h3{font-family:var(--display);font-weight:700;font-size:24px;line-height:1.22;letter-spacing:-.015em;margin:0 0 6px}
   .row p{margin:0;color:var(--muted);font-size:16px;line-height:1.6;max-width:44em}
   .side{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
   .lvwrap{display:inline-flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
   .ladder{display:inline-flex;align-items:flex-end;gap:6px}
-  .xtag{font-size:12px;font-weight:800;color:var(--ink);background:var(--mint-200);border-radius:999px;padding:5px 11px;line-height:1}
+  .xtag{font-size:12px;font-weight:800;color:var(--ink);background:var(--sky-200);border-radius:999px;padding:5px 11px;line-height:1}
   .step{display:flex;flex-direction:column;align-items:center;gap:4px;width:26px}
-  .step i{display:block;width:100%;height:var(--h);border-radius:7px 7px 3px 3px;background:var(--mint-200)}
+  .step i{display:block;width:100%;height:var(--h);border-radius:7px 7px 3px 3px;background:var(--sky-200)}
   .step b{font-size:12px;font-weight:600;color:#8A93A5;line-height:1}
-  .step.on i{background:var(--coral)}
+  .step.on i{background:var(--grad)}
   .step.on b{color:var(--ink);font-weight:800}
   .readbtn{font-weight:800;font-size:15px;padding:11px 20px;border-radius:999px;background:var(--ink);color:var(--white);
     transition:background .15s ease}
-  .row:hover .readbtn{background:var(--coral-deep)}
+  .row:hover .readbtn{background:var(--purple)}
   .msg{padding:34px 28px;color:var(--muted);text-align:center}
   .note{color:var(--muted);font-size:15px;margin:14px 4px 0}
 
@@ -101,19 +94,19 @@
   .pack{padding-top:56px}
   .hero .pack{padding:4px 0 34px}
   .packcard{background:var(--white);border:2px solid var(--ink);border-radius:28px;padding:30px 26px 26px}
-  .kicker{margin:0 0 6px;font-size:14px;font-weight:800;color:var(--coral-deep)}
+  .kicker{margin:0 0 6px;font-size:14px;font-weight:800;color:var(--purple-deep)}
   .packcard h2{margin:0 0 10px}
   .packlede{margin:0 0 22px;font-size:17px;max-width:36em}
   .chain{list-style:none;margin:0 0 22px;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;counter-reset:c}
-  .chain li{counter-increment:c;background:var(--mint-100);border-radius:14px;padding:12px 8px;text-align:center;position:relative;line-height:1.3}
-  .chain li::before{content:counter(c);display:block;font-size:12px;font-weight:800;color:var(--coral-deep);margin-bottom:2px}
+  .chain li{counter-increment:c;background:var(--sky-100);border-radius:14px;padding:12px 8px;text-align:center;position:relative;line-height:1.3}
+  .chain li::before{content:counter(c);display:block;font-size:12px;font-weight:800;color:var(--purple-deep);margin-bottom:2px}
   .chain li:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);font-weight:800;color:var(--muted);font-size:13px}
   .chain b{display:block;font-size:15px}
   .chain span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
   .inside{margin:0 0 20px;padding-left:20px;font-size:16px}
   .inside li{margin-bottom:6px}
   .pprice{font-family:var(--display);font-weight:800;font-size:32px;margin:0 0 14px;letter-spacing:-.02em}
-  .pprice span{font-family:var(--text);font-size:14px;font-weight:800;color:var(--coral-deep);margin-left:8px;letter-spacing:0}
+  .pprice span{font-family:var(--text);font-size:14px;font-weight:800;color:var(--purple-deep);margin-left:8px;letter-spacing:0}
   .packbtns{display:flex;gap:12px;flex-wrap:wrap}
   .packbtns .pill{padding:14px 22px;font-size:16px;line-height:1.3;text-align:center;flex-wrap:wrap;column-gap:.3em;row-gap:0}
   .nowrap{white-space:nowrap}
@@ -141,20 +134,20 @@
   }
 
   /* ── About ── */
-  .about{background:var(--ink);color:#F1F6F3;margin-top:64px;border-radius:40px 40px 0 0;padding:56px 0 60px}
+  .about{background:var(--ink);color:#F1F2F6;margin-top:64px;border-radius:40px 40px 0 0;padding:56px 0 60px}
   .about h2{color:var(--white);margin-bottom:14px}
   .about p{max-width:36em;margin:0 0 .9em;font-size:18px;line-height:1.75}
-  .about p.dim{color:#B7C4BD;font-size:16px}
+  .about p.dim{color:#B9BFCC;font-size:16px}
 
   /* ── Contact ── */
-  .contact{background:var(--mint-200);padding:56px 0 64px}
+  .contact{background:var(--bg-deep);padding:56px 0 64px}
   .contact h2{margin-bottom:10px}
   .contact p{max-width:34em;margin:0 0 20px;font-size:18px}
   .contact p.en{color:var(--muted);font-size:15px;margin:18px 0 0}
   .contact .pill{padding:16px 26px;font-size:17px}
   .actions{display:flex;gap:12px;flex-wrap:wrap}
 
-  footer{background:var(--mint-200);padding:0 0 36px;color:var(--muted);font-size:14px;text-align:center}
+  footer{background:var(--bg-deep);padding:0 0 36px;color:var(--muted);font-size:14px;text-align:center}
 
   @media (max-width:520px){
     .row{padding:22px 20px}
@@ -163,7 +156,7 @@
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
-    .pupil,.row,.pill,.readbtn{transition:none}
+    .row,.pill,.readbtn{transition:none}
   }
 </style>
 <script>
@@ -209,11 +202,7 @@
       </div>
     </section>
     <div class="herogrid" id="top">
-      <div class="owl" aria-hidden="true">
-        <div class="eye"><div class="pupil"></div></div>
-        <div class="eye"><div class="pupil"></div></div>
-        <div class="beak"></div>
-      </div>
+      <img class="logo" src="owl-logo.png" width="260" height="260" alt="Owlish English 로고">
       <div>
         <h1>내 레벨로 읽고,<br>들으면서 배우는 영어</h1>
         <p class="sub">시사 기사를 초급부터 고급까지 레벨별 리딩으로 만들었어요. 오디오와 함께 무료로 읽어보세요.</p>
@@ -279,25 +268,6 @@
       b.href = BLOG_URL;
       b.hidden = false;
     }
-  })();
-</script>
-
-<script>
-  /* Owl pupils follow the pointer (or a finger dragging). Off when reduced motion is set. */
-  (function(){
-    var eyes = [].slice.call(document.querySelectorAll(".eye"));
-    if(!eyes.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    function look(x, y){
-      eyes.forEach(function(e){
-        var r = e.getBoundingClientRect();
-        var dx = x - (r.left + r.width/2), dy = y - (r.top + r.height/2);
-        var d = Math.sqrt(dx*dx + dy*dy) || 1;
-        var reach = r.width * 0.17 * Math.min(1, d/180);
-        e.style.setProperty("--px", (dx/d*reach) + "px");
-        e.style.setProperty("--py", (dy/d*reach) + "px");
-      });
-    }
-    window.addEventListener("pointermove", function(ev){ look(ev.clientX, ev.clientY); }, {passive:true});
   })();
 </script>
 
